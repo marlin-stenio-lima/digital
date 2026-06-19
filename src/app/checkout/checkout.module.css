@@ -1,0 +1,573 @@
+/* ========================================
+   CHECKOUT PAGE - CSS MODULE
+   Light, trust-building checkout design
+   ======================================== */
+
+/* Page wrapper */
+.checkoutPage {
+  min-height: 100vh;
+  background-color: #fafafa;
+  padding: 20px 16px 40px;
+  font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', sans-serif;
+  color: #333;
+}
+
+/* Main container */
+.container {
+  max-width: 480px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* ========================================
+   ORDER SUMMARY CARD
+   ======================================== */
+.orderSummary {
+  background: #ffffff;
+  border: 1px dashed #22c55e;
+  border-radius: 12px;
+  padding: 24px 20px;
+  margin-bottom: 24px;
+  text-align: center;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.productTitle {
+  font-size: 22px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0 0 4px;
+  line-height: 1.3;
+}
+
+.productSubtitle {
+  font-size: 14px;
+  color: #666;
+  margin: 0 0 20px;
+  font-weight: 400;
+}
+
+.bonusList {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 20px;
+  text-align: left;
+}
+
+.bonusItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 0;
+  font-size: 14px;
+  color: #333;
+}
+
+.bonusCheck {
+  flex-shrink: 0;
+  font-size: 16px;
+}
+
+.bonusStrikePrice {
+  text-decoration: line-through;
+  color: #999;
+  font-size: 13px;
+  margin-left: 4px;
+}
+
+.divider {
+  height: 1px;
+  background: #e8e8e8;
+  margin: 16px 0;
+  border: none;
+}
+
+.originalPrice {
+  font-size: 15px;
+  color: #888;
+  margin: 0 0 8px;
+}
+
+.originalPriceStrike {
+  text-decoration: line-through;
+  color: #cc3333;
+}
+
+.finalPriceRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 0;
+}
+
+.finalPriceLabel {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+}
+
+.finalPrice {
+  font-size: 32px;
+  font-weight: 800;
+  color: #2ecc40;
+  line-height: 1;
+}
+
+/* ========================================
+   CHECKOUT FORM
+   ======================================== */
+.formSection {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 24px 20px;
+  margin-bottom: 24px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+}
+
+.formTitle {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0 0 20px;
+  text-align: center;
+}
+
+.formGroup {
+  margin-bottom: 16px;
+}
+
+.formLabel {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: #444;
+  margin-bottom: 6px;
+}
+
+.required {
+  color: #e74c3c;
+  margin-left: 2px;
+}
+
+.formInput {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1.5px solid #ddd;
+  border-radius: 8px;
+  font-size: 15px;
+  color: #333;
+  background: #fafafa;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.formInput::placeholder {
+  color: #aaa;
+}
+
+.formInput:focus {
+  border-color: #2ecc40;
+  box-shadow: 0 0 0 3px rgba(46, 204, 64, 0.12);
+  background: #fff;
+}
+
+.formInput.inputError {
+  border-color: #e74c3c;
+  box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.1);
+}
+
+.errorText {
+  font-size: 12px;
+  color: #e74c3c;
+  margin-top: 4px;
+  display: block;
+}
+
+/* Submit button */
+.submitButton {
+  width: 100%;
+  padding: 16px 24px;
+  background: linear-gradient(135deg, #2ecc40 0%, #27ae60 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  position: relative;
+  overflow: hidden;
+}
+
+.submitButton::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.15),
+    transparent
+  );
+  animation: shimmer 3s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+.submitButton:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(46, 204, 64, 0.35);
+}
+
+.submitButton:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(46, 204, 64, 0.25);
+}
+
+.submitButton:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.submitButton:disabled::after {
+  display: none;
+}
+
+/* ========================================
+   ORDER BUMPS
+   ======================================== */
+.orderBumpsSection {
+  margin-bottom: 24px;
+}
+
+.orderBumpsTitle {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0 0 16px;
+  text-align: center;
+}
+
+.bumpCard {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}
+
+.bumpCard:hover {
+  border-color: #cbd5e1;
+  background-color: #f8fafc;
+}
+
+.bumpCardSelected {
+  border-color: #22c55e;
+  background-color: #f0fdf4;
+  box-shadow: 0 4px 12px rgba(34, 197, 94, 0.1);
+}
+
+.bumpCheckbox {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  border: 2px solid #cbd5e1;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  background: #fff;
+}
+
+.bumpCheckboxChecked {
+  background: #22c55e;
+  border-color: #22c55e;
+}
+
+.bumpCheckmark {
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.bumpImageWrapper {
+  flex-shrink: 0;
+  width: 70px;
+  height: 70px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+  background: #f8fafc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bumpImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.bumpImagePlaceholder {
+  flex-shrink: 0;
+  width: 60px;
+  height: 60px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.bumpContent {
+  flex: 1;
+  min-width: 0;
+}
+
+.bumpBadge {
+  display: inline-block;
+  background: #2ecc40;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 4px;
+  margin-bottom: 4px;
+  letter-spacing: 0.3px;
+}
+
+.bumpName {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin: 0 0 2px;
+  line-height: 1.3;
+}
+
+.bumpSavings {
+  font-size: 12px;
+  color: #2ecc40;
+  font-weight: 600;
+  margin: 0 0 2px;
+}
+
+.bumpUrgency {
+  font-size: 11px;
+  color: #e67e22;
+  margin: 0 0 4px;
+}
+
+.bumpPricing {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.bumpOriginalPrice {
+  text-decoration: line-through;
+  color: #999;
+  font-size: 13px;
+}
+
+.bumpSalePrice {
+  font-size: 16px;
+  font-weight: 700;
+  color: #2ecc40;
+}
+
+/* ========================================
+   TRUST FOOTER
+   ======================================== */
+.trustFooter {
+  text-align: center;
+  padding: 20px 0;
+  margin-top: 8px;
+}
+
+.trustBadges {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.trustBadge {
+  font-size: 13px;
+  color: #666;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.trustBadgeIcon {
+  font-size: 16px;
+}
+
+.supportLink {
+  font-size: 13px;
+  color: #888;
+  text-decoration: underline;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+.supportLink:hover {
+  color: #555;
+}
+
+/* ========================================
+   LOADING SPINNER
+   ======================================== */
+.spinner {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ========================================
+   TOTAL DISPLAY
+   ======================================== */
+.totalDisplay {
+  background: #f0fdf4;
+  border: 1px solid #c6f6d5;
+  border-radius: 10px;
+  padding: 16px 20px;
+  margin: 16px 0 0;
+  text-align: center;
+}
+
+.totalLabel {
+  font-size: 14px;
+  color: #555;
+  margin: 0 0 4px;
+}
+
+.totalAmount {
+  font-size: 28px;
+  font-weight: 800;
+  color: #2ecc40;
+  margin: 0;
+}
+
+/* ========================================
+   RESPONSIVE DESIGN
+   ======================================== */
+@media (max-width: 520px) {
+  .checkoutPage {
+    padding: 12px 10px 32px;
+  }
+
+  .container {
+    max-width: 100%;
+  }
+
+  .orderSummary {
+    padding: 20px 16px;
+  }
+
+  .productTitle {
+    font-size: 20px;
+  }
+
+  .finalPrice {
+    font-size: 28px;
+  }
+
+  .formSection {
+    padding: 20px 16px;
+  }
+
+  .submitButton {
+    font-size: 16px;
+    padding: 14px 20px;
+  }
+
+  .bumpCard {
+    padding: 12px;
+    gap: 10px;
+  }
+
+  .bumpImagePlaceholder {
+    width: 50px;
+    height: 50px;
+    font-size: 15px;
+  }
+
+  .bumpName {
+    font-size: 13px;
+  }
+
+  .trustBadges {
+    gap: 16px;
+  }
+}
+
+@media (max-width: 360px) {
+  .productTitle {
+    font-size: 18px;
+  }
+
+  .finalPrice {
+    font-size: 24px;
+  }
+
+  .bumpCard {
+    flex-wrap: wrap;
+  }
+
+  .bumpImagePlaceholder {
+    width: 44px;
+    height: 44px;
+    font-size: 13px;
+  }
+
+  .trustBadges {
+    flex-direction: column;
+    gap: 8px;
+  }
+}
