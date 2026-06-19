@@ -1,6 +1,23 @@
+'use client';
+
+import { useEffect } from 'react';
 import styles from './obrigado.module.css';
 
 export default function ObrigadoPage() {
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      const val = params.get('v');
+      
+      if (val && (window as any).fbq) {
+        (window as any).fbq('track', 'Purchase', { 
+          currency: 'BRL', 
+          value: Number(val) 
+        });
+      }
+    }
+  }, []);
+
   return (
     <div className={styles.container}>
       <div className={styles.card}>

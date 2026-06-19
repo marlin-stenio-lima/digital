@@ -52,10 +52,7 @@ export default function PixDisplay({ billingId, brCode, qrCodeBase64, amount, cu
         if (data.status === 'PAID') {
           setIsPaid(true);
           clearInterval(pollInterval);
-          if (typeof window !== 'undefined' && (window as any).fbq) {
-            (window as any).fbq('track', 'Purchase', { currency: 'BRL', value: amount });
-          }
-          window.location.href = '/obrigado';
+          window.location.href = `/obrigado?v=${amount}`;
         }
       } catch (err) {
         console.error('Erro ao verificar status:', err);
