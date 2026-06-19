@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import styles from './page.module.css';
+import styles from '../page.module.css';
 
 export default function Home() {
   const [showFloating, setShowFloating] = useState(false);
@@ -58,11 +58,11 @@ export default function Home() {
           <div className={styles.heroContent}>
             
             <h1 className={styles.heroTitle}>
-              <span className={styles.orangeText}>O Segredo das Serralherias de Sucesso:</span> 600 Projetos Prontos para Cortar, Soldar e Lucrar!
+              <span className={styles.orangeText}>Pare de Quebrar a Cabeça com Medidas:</span> Tenha Acesso a 600 Projetos Prontos de Móveis Industriais
             </h1>
             
             <p className={styles.heroSubtitle}>
-              Pule a etapa chata de desenhar e calcular medidas. Baixe agora os mapas de corte exatos e comece a faturar até 5x mais fabricando móveis industriais que vendem sozinhos.
+              Nunca mais desperdice material com cortes errados. Transforme sua oficina com o Arsenal do Serralheiro Mestre e receba o passo a passo milimétrico para qualquer projeto.
             </p>
             <p className={styles.heroSubtitleSmall}>
               O orgulho da sua oficina começa aqui.
