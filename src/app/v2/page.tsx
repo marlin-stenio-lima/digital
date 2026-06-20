@@ -68,9 +68,15 @@ export default function Home() {
               O orgulho da sua oficina começa aqui.
             </p>
 
+            <div className={styles.heroPriceBox}>
+              <span className={styles.heroOldPrice}>R$ 47,00</span>
+              <span className={styles.heroNewPrice}>R$ 13,90</span>
+            </div>
+            <p className={styles.heroPriceSub}>Pagamento único • Acesso vitalício</p>
+
             <div className={styles.ctaWrapper}>
               <Link href="/checkout" className={styles.ctaButtonOrange}>
-                QUERO ACESSO IMEDIATO - R$ 13,90
+                QUERO ACESSO IMEDIATO
               </Link>
             </div>
 
@@ -252,7 +258,7 @@ export default function Home() {
       {/* ===== FLOATING CTA MOBILE ===== */}
       <div className={`${styles.floatingCta} ${showFloating ? styles.floatingVisible : ''}`}>
         <Link href="/checkout" className={styles.ctaButtonOrange}>
-          QUERO MEUS PROJETOS AGORA
+          QUERO ACESSO IMEDIATO - R$ 13,90
         </Link>
       </div>
     </main>

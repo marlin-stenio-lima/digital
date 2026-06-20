@@ -120,6 +120,35 @@
   margin-bottom: 2rem;
 }
 
+.heroPriceBox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  margin-bottom: 0.3rem;
+}
+
+.heroOldPrice {
+  font-size: 1.2rem;
+  color: #94a3b8;
+  text-decoration: line-through;
+  font-weight: 600;
+}
+
+.heroNewPrice {
+  font-size: 2.8rem;
+  color: #ea580c;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.heroPriceSub {
+  text-align: center;
+  color: #64748b;
+  font-size: 0.85rem;
+  margin-bottom: 1.5rem;
+}
+
 .socialProofHero {
   font-size: 0.85rem;
   color: #64748b;
