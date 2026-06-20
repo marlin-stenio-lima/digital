@@ -207,37 +207,37 @@ export default function Home() {
       {/* ===== FINAL CTA / OFERTA ===== */}
       <section className={styles.finalCta}>
         <div className={styles.container}>
-          <h2 className={styles.finalTitle}>Resumo da sua oferta hoje:</h2>
+          <h2 className={styles.finalTitleOrange}>
+            SUA SERRALHERIA NO PRÓXIMO NÍVEL<br/>
+            <span className={styles.orangeText}>COMEÇA AGORA!</span>
+          </h2>
           
-          <div className={styles.offerStack}>
-            <div className={styles.offerItem}>
-              <span>✅ 600 Projetos de Móveis Industriais em PDF</span>
-              <span className={styles.itemValue}>R$ 197,00</span>
-            </div>
-            <div className={styles.offerItem}>
-              <span>✅ Bônus: Projetos de Carretinhas, Academia e Perfuratriz</span>
-              <span className={styles.itemValue}>R$ 76,00</span>
-            </div>
-            
-            <div className={styles.offerDivider}></div>
-            
-            <div className={styles.offerTotal}>
-              <span>Valor Total:</span>
-              <span className={styles.totalValueStrike}>R$ 273,00</span>
-            </div>
-            
-            <div className={styles.offerFinalPrice}>
-              <p>Levando tudo HOJE você paga apenas:</p>
-              <div className={styles.priceContainerFinal}>
-                  <span className={styles.currentPriceFinal}>R$ 13,90</span>
-              </div>
-            </div>
+          <p className={styles.finalSubtitle}>
+            Garanta seus projetos e o acesso EXCLUSIVO à Plataforma de Orçamentos. Comece a produzir e lucrar com móveis industriais hoje!
+          </p>
+
+          <div className={styles.finalPriceBox}>
+            <span className={styles.finalOldPrice}>R$ 47,00</span>
+            <span className={styles.finalNewPrice}>R$ 13,90</span>
           </div>
+          <p className={styles.finalPriceSub}>Pagamento único • Acesso vitalício</p>
 
           <div className={styles.ctaWrapper}>
-            <Link href="/checkout" className={styles.ctaButtonFinal}>
-               QUERO O PACOTE COMPLETO AGORA
+            <Link href="/checkout" className={styles.ctaButtonOrange}>
+               QUERO ACESSO IMEDIATO - R$ 13,90
             </Link>
+          </div>
+
+          <div className={styles.trustBadges}>
+            <span>⚡ Acesso imediato</span>
+            <span>✅ Compra 100% segura</span>
+          </div>
+
+          <div className={styles.supportLinkWrapper}>
+            <a href="https://wa.me/5586995485600" target="_blank" rel="noreferrer" className={styles.supportLink}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+              Entrar em contato com o suporte
+            </a>
           </div>
         </div>
       </section>

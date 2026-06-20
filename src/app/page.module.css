@@ -372,124 +372,74 @@
 /* FINAL CTA E OFERTA */
 .finalCta {
   padding: 6rem 0;
-  background-color: var(--bg-darker);
+  background-color: #fff;
   border-top: 1px solid var(--border-color);
 }
 
-.finalTitle {
-  font-size: 2.5rem;
+.finalTitleOrange {
+  font-size: 2.2rem;
   font-weight: 800;
-  margin-bottom: 2.5rem;
+  margin-bottom: 1rem;
   text-align: center;
-  color: var(--text-primary);
+  color: #1e293b;
+  line-height: 1.2;
 }
 
-.offerStack {
-  background: #fff;
-  border-radius: var(--radius-lg);
-  border: 1px solid var(--border-color);
-  padding: 2.5rem;
+.finalSubtitle {
+  font-size: 1.1rem;
+  color: #475569;
+  text-align: center;
   max-width: 600px;
   margin: 0 auto 2.5rem;
-  box-shadow: var(--shadow);
+  line-height: 1.6;
 }
 
-.offerItem {
+.finalPriceBox {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 1rem 0;
-  border-bottom: 1px dashed var(--border-color);
-  font-weight: 500;
-  color: var(--text-secondary);
-}
-
-.offerItem:last-of-type {
-  border-bottom: none;
-}
-
-.itemValue {
-  color: var(--text-muted);
-  text-decoration: line-through;
-}
-
-.offerDivider {
-  height: 2px;
-  background: var(--border-color);
-  margin: 1rem 0;
-}
-
-.offerTotal {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 1.2rem;
-  font-weight: 700;
-  color: var(--text-primary);
-  margin-bottom: 1.5rem;
-}
-
-.totalValueStrike {
-  color: var(--danger);
-  text-decoration: line-through;
-}
-
-.offerFinalPrice {
-  text-align: center;
-  background: #f9fafb;
-  padding: 1.5rem;
-  border-radius: var(--radius);
-  border: 1px dashed #32bcad;
-}
-
-.offerFinalPrice p {
-  font-weight: 500;
-  color: #059669; /* Verde mais escuro e elegante */
+  justify-content: center;
+  gap: 1rem;
   margin-bottom: 0.5rem;
-  font-size: 0.95rem;
 }
 
-.priceContainerFinal {
-  margin-bottom: 0;
+.finalOldPrice {
+  font-size: 1.5rem;
+  color: #94a3b8;
+  text-decoration: line-through;
+  font-weight: 600;
 }
 
-.currentPriceFinal {
-  font-size: 3rem; /* Fonte menor, menos agressiva */
-  font-weight: 800;
-  color: #1f2937; /* Cinza escuro em vez de preto puro */
+.finalNewPrice {
+  font-size: 3.5rem;
+  color: #ea580c;
+  font-weight: 900;
   line-height: 1;
 }
 
-.guaranteeBox {
-  display: flex;
-  align-items: flex-start;
-  gap: 1.2rem;
-  background: #fff;
-  padding: 2rem;
-  border-radius: var(--radius-lg);
-  border: 1px solid var(--border-color);
-  max-width: 600px;
-  margin: 2.5rem auto 0;
-  text-align: left;
-  box-shadow: var(--shadow);
-}
-
-.guaranteeIcon {
-  font-size: 2.5rem;
-  flex-shrink: 0;
-}
-
-.guaranteeBox strong {
-  display: block;
-  font-size: 1.1rem;
-  color: var(--text-primary);
-  margin-bottom: 0.5rem;
-}
-
-.guaranteeBox p {
-  color: var(--text-secondary);
+.finalPriceSub {
+  text-align: center;
+  color: #64748b;
   font-size: 0.95rem;
-  line-height: 1.5;
+  margin-bottom: 2rem;
+}
+
+.supportLinkWrapper {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.supportLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #64748b;
+  font-size: 0.95rem;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.supportLink:hover {
+  color: #475569;
 }
 
 /* FOOTER */
