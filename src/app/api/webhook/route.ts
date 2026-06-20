@@ -239,7 +239,7 @@ async function sendDeliveryEmail(email: string, customerName: string, productsBo
 
   try {
     const data = await resend.emails.send({
-      from: \`Arsenal do Serralheiro <\${fromEmail}>\`,
+      from: `Arsenal do Serralheiro <${fromEmail}>`,
       to: email,
       subject: '📦 Seu material chegou! (Projetos de Móveis Industriais)',
       html: htmlContent,
