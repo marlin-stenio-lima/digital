@@ -70,7 +70,7 @@ export default function Home() {
 
             <div className={styles.ctaWrapper}>
               <Link href="/checkout" className={styles.ctaButtonOrange}>
-                QUERO ACESSO IMEDIATO - R$ 15,90
+                QUERO ACESSO IMEDIATO - R$ 13,90
               </Link>
             </div>
 
@@ -229,7 +229,7 @@ export default function Home() {
             <div className={styles.offerFinalPrice}>
               <p>Levando tudo HOJE você paga apenas:</p>
               <div className={styles.priceContainerFinal}>
-                  <span className={styles.currentPriceFinal}>R$ 15,90</span>
+                  <span className={styles.currentPriceFinal}>R$ 13,90</span>
               </div>
             </div>
           </div>

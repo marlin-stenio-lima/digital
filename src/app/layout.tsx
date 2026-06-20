@@ -12,7 +12,7 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: 'Arsenal do Serralheiro Mestre | 600 Projetos Prontos',
   description:
-    'Transforme sua serralheria com 600 projetos prontos de móveis industriais. Plano de corte detalhado, gerador de orçamentos automático e suporte completo. Comece a lucrar hoje mesmo por apenas R$ 15,90.',
+    'Transforme sua serralheria com 600 projetos prontos de móveis industriais. Plano de corte detalhado, gerador de orçamentos automático e suporte completo. Comece a lucrar hoje mesmo por apenas R$ 13,90.',
   keywords: [
     'serralheiro',
     'projetos de móveis industriais',

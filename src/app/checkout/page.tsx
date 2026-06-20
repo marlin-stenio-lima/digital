@@ -77,7 +77,7 @@ const ORDER_BUMPS: OrderBumpProduct[] = [
   },
 ];
 
-const BASE_PRICE = 15.90;
+const BASE_PRICE = 13.90;
 const COMBO_PRICE = 19.90;
 
 function formatPhone(value: string): string {
@@ -354,7 +354,7 @@ export default function CheckoutPage() {
 
           <p className={styles.finalPriceRow}>
             <span className={styles.finalPriceLabel}>Você paga:</span>
-            <span className={styles.finalPrice}>R$ 15,90</span>
+            <span className={styles.finalPrice}>R$ 13,90</span>
           </p>
         </div>
 
