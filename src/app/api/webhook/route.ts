@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import crypto from 'crypto';
 
 interface AbacatePayWebhookEvent {
   event?: string;
@@ -137,6 +138,55 @@ async function sendWhatsAppMessage(phone: string, message: string): Promise<void
   console.log('[Webhook] WhatsApp message sent successfully.');
 }
 
+async function sendFacebookCapiPurchase(phone: string, email: string, amount: number) {
+  const pixelId = process.env.NEXT_PUBLIC_PIXEL_ID;
+  const token = process.env.META_PIXEL_TOKEN;
+
+  if (!pixelId || !token) {
+    console.log('[Webhook] Missing Facebook Pixel ID or Token. Skipping CAPI.');
+    return;
+  }
+
+  try {
+    const hashData = (data: string) => crypto.createHash('sha256').update(data.trim().toLowerCase()).digest('hex');
+
+    const ph = phone ? hashData(phone.replace(/\D/g, '')) : undefined;
+    const em = email ? hashData(email) : undefined;
+
+    const payload = {
+      data: [
+        {
+          event_name: 'Purchase',
+          event_time: Math.floor(Date.now() / 1000),
+          action_source: 'website',
+          user_data: {
+            ph: ph ? [ph] : undefined,
+            em: em ? [em] : undefined,
+          },
+          custom_data: {
+            currency: 'BRL',
+            value: amount
+          }
+        }
+      ]
+    };
+
+    const response = await fetch(`https://graph.facebook.com/v19.0/${pixelId}/events?access_token=${token}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+
+    if (!response.ok) {
+      console.error('[Webhook] Facebook CAPI Error:', await response.text());
+    } else {
+      console.log('[Webhook] Facebook CAPI Purchase event sent successfully.');
+    }
+  } catch (err) {
+    console.error('[Webhook] Facebook CAPI Exception:', err);
+  }
+}
+
 export async function POST(request: Request) {
   try {
     const body: AbacatePayWebhookEvent = await request.json();
@@ -184,6 +234,11 @@ export async function POST(request: Request) {
     } catch (whatsappError) {
       console.error('[Webhook] Failed to send WhatsApp message:', whatsappError);
     }
+
+    // Dispara o Pixel de Compra direto do Servidor (CAPI)
+    const amountValue = body.data?.pixQrCode?.amount ? body.data.pixQrCode.amount / 100 : 0;
+    const customerEmail = body.data?.pixQrCode?.customer?.metadata?.email || body.data?.pixQrCode?.metadata?.email || '';
+    await sendFacebookCapiPurchase(customerPhone, customerEmail, amountValue);
 
     return NextResponse.json(
       { received: true, action: 'processed' },
