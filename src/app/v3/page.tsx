@@ -163,7 +163,7 @@ export default function Home() {
           </div>
 
           <div className={styles.ctaWrapper}>
-             <Link href="/checkout" className={styles.ctaButton}>
+             <Link href="/checkout" className={styles.ctaButtonOrange}>
               SIM, QUERO GARANTIR MEU ACESSO
             </Link>
           </div>
