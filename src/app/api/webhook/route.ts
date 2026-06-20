@@ -222,17 +222,23 @@ export async function POST(request: Request) {
 
     const message = buildMessage(customerName, productsBought);
 
+    // 1. Envia para o cliente
     try {
       await sendWhatsAppMessage(customerPhone, message);
       console.log(`[Webhook] Successfully processed payment for ${customerName} (${customerPhone}).`);
+    } catch (whatsappError) {
+      console.error('[Webhook] Failed to send WhatsApp message to customer:', whatsappError);
+    }
       
+    // 2. Envia para o Admin
+    try {
       const adminPhone = '5586995485600';
       const amountValue = body.data?.pixQrCode?.amount ? body.data.pixQrCode.amount / 100 : 0;
       const formattedAmount = amountValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
       const adminMessage = `✅ *Pix Pago!*\n\nNome: ${customerName}\nValor: ${formattedAmount}\nNúmero: ${customerPhone}`;
       await sendWhatsAppMessage(adminPhone, adminMessage);
-    } catch (whatsappError) {
-      console.error('[Webhook] Failed to send WhatsApp message:', whatsappError);
+    } catch (adminWhatsappError) {
+      console.error('[Webhook] Failed to send WhatsApp message to admin:', adminWhatsappError);
     }
 
     // Dispara o Pixel de Compra direto do Servidor (CAPI)
