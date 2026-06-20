@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import crypto from 'crypto';
+import { Resend } from 'resend';
 
 interface AbacatePayWebhookEvent {
   event?: string;
@@ -187,6 +188,68 @@ async function sendFacebookCapiPurchase(phone: string, email: string, amount: nu
   }
 }
 
+async function sendDeliveryEmail(email: string, customerName: string, productsBought: string[]) {
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) {
+    console.warn('[Webhook] RESEND_API_KEY not found. Skipping email.');
+    return;
+  }
+
+  if (!email || !email.includes('@')) {
+    console.warn('[Webhook] Invalid customer email. Skipping email sending.', email);
+    return;
+  }
+
+  const resend = new Resend(apiKey);
+  const fromEmail = process.env.RESEND_FROM_EMAIL || 'onboarding@resend.dev';
+  const firstName = customerName.split(' ')[0];
+
+  const linkPrincipal = process.env.PDF_LINK || 'https://link-pendente';
+  const linkCarretinha = process.env.PDF_LINK_CARRETINHA || '';
+  const linkAcademia = process.env.PDF_LINK_ACADEMIA || '';
+  const linkPerfuratriz = process.env.PDF_LINK_PERFURATRIZ || '';
+
+  let htmlContent = `
+    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+      <h2 style="color: #ea580c;">🎉 Pagamento Confirmado!</h2>
+      <p>Olá <strong>${firstName}</strong>, seu pagamento foi aprovado com sucesso!</p>
+      <p>Aqui estão os links para baixar o seu material:</p>
+      <div style="background-color: #f8fafc; padding: 20px; border-radius: 8px; margin: 20px 0;">
+        <p>📥 <strong>600 Projetos de Móveis Industriais:</strong><br/>
+        <a href="${linkPrincipal}" style="color: #32bcad;">Clique aqui para acessar</a></p>
+  `;
+
+  if (productsBought.includes('carretinha') && linkCarretinha) {
+    htmlContent += `<p>📥 <strong>Projetos de Carretinha:</strong><br/><a href="${linkCarretinha}" style="color: #32bcad;">Clique aqui para acessar</a></p>`;
+  }
+  if (productsBought.includes('academia') && linkAcademia) {
+    htmlContent += `<p>📥 <strong>Projetos de Academia:</strong><br/><a href="${linkAcademia}" style="color: #32bcad;">Clique aqui para acessar</a></p>`;
+  }
+  if (productsBought.includes('perfuratriz') && linkPerfuratriz) {
+    htmlContent += `<p>📥 <strong>Projeto da Perfuratriz:</strong><br/><a href="${linkPerfuratriz}" style="color: #32bcad;">Clique aqui para acessar</a></p>`;
+  }
+
+  htmlContent += `
+      </div>
+      <p><strong>Dicas:</strong> Recomendamos baixar no computador para melhor visualização.</p>
+      <p>Qualquer dúvida, responda este e-mail.</p>
+      <p>Bons projetos! 🔧</p>
+    </div>
+  `;
+
+  try {
+    const data = await resend.emails.send({
+      from: \`Arsenal do Serralheiro <\${fromEmail}>\`,
+      to: email,
+      subject: '📦 Seu material chegou! (Projetos de Móveis Industriais)',
+      html: htmlContent,
+    });
+    console.log('[Webhook] Resend email sent successfully:', data);
+  } catch (error) {
+    console.error('[Webhook] Failed to send email via Resend:', error);
+  }
+}
+
 export async function POST(request: Request) {
   try {
     const body: AbacatePayWebhookEvent = await request.json();
@@ -245,6 +308,13 @@ export async function POST(request: Request) {
     const amountValue = body.data?.pixQrCode?.amount ? body.data.pixQrCode.amount / 100 : 0;
     const customerEmail = body.data?.pixQrCode?.customer?.metadata?.email || body.data?.pixQrCode?.metadata?.email || '';
     await sendFacebookCapiPurchase(customerPhone, customerEmail, amountValue);
+
+    // Envia o email via Resend
+    try {
+      await sendDeliveryEmail(customerEmail, customerName, productsBought);
+    } catch (emailError) {
+      console.error('[Webhook] Error executing sendDeliveryEmail:', emailError);
+    }
 
     return NextResponse.json(
       { received: true, action: 'processed' },
