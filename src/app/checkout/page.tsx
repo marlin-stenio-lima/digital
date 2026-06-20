@@ -81,7 +81,18 @@ const BASE_PRICE = 15.90;
 const COMBO_PRICE = 19.90;
 
 function formatPhone(value: string): string {
-  const digits = value.replace(/\D/g, '');
+  // Remove visualmente o +55 se a pessoa colar
+  if (value.trim().startsWith('+55')) {
+    value = value.replace('+55', '');
+  }
+
+  let digits = value.replace(/\D/g, '');
+
+  // Se a pessoa digitou 55 e continuou até passar de 11 dígitos, sabemos que o 55 era DDI e não DDD
+  if (digits.startsWith('55') && digits.length >= 12) {
+    digits = digits.slice(2);
+  }
+
   const limited = digits.slice(0, 11);
 
   if (limited.length <= 2) {
@@ -370,18 +381,21 @@ export default function CheckoutPage() {
 
           <div className={styles.formGroup}>
             <label className={styles.formLabel} htmlFor="phone">
-              Telefone <span className={styles.required}>*</span>
+              Telefone (WhatsApp) <span className={styles.required}>*</span>
             </label>
-            <input
-              id="phone"
-              name="phone"
-              type="tel"
-              className={`${styles.formInput} ${formErrors.phone ? styles.inputError : ''}`}
-              placeholder="(11) 99999-9999"
-              value={formData.phone}
-              onChange={handleInputChange}
-              autoComplete="tel"
-            />
+            <div className={styles.phoneInputWrapper}>
+              <span className={styles.phonePrefix}>🇧🇷 +55</span>
+              <input
+                id="phone"
+                name="phone"
+                type="tel"
+                className={`${styles.formInput} ${styles.phoneInputWithPrefix} ${formErrors.phone ? styles.inputError : ''}`}
+                placeholder="(11) 99999-9999"
+                value={formData.phone}
+                onChange={handleInputChange}
+                autoComplete="tel"
+              />
+            </div>
             {formErrors.phone && <span className={styles.errorText}>{formErrors.phone}</span>}
           </div>
 
