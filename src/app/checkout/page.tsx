@@ -53,7 +53,7 @@ const ORDER_BUMPS: OrderBumpProduct[] = [
     savings: 197.10,
     discount: 'ÚNICA CHANCE',
     image: '/images/upsell_mentoria.png',
-    description: 'Sou especialista em vendas e vou fazer 2 calls individuais com você para analisar seu negócio e dar dicas práticas de alavancagem.',
+    description: 'Vou abrir a caixa preta da minha operação em 2 calls individuais no Meet. Vou te entregar o método exato para fechar orçamentos de alto valor e fazer a sua serralheria vender 10X MAIS!',
   },
   {
     id: 'carretinha',
