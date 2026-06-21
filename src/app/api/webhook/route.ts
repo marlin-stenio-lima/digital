@@ -289,6 +289,25 @@ export async function POST(request: Request) {
     try {
       await sendWhatsAppMessage(customerPhone, message);
       console.log(`[Webhook] Successfully processed payment for ${customerName} (${customerPhone}).`);
+
+      // Verifica se comprou a mentoria para mandar mensagem separada
+      if (productsBought.includes('mentoria')) {
+        const mentoriaMessage = `🤝 *Sobre o seu Treinamento de Vendas!*\n\n` +
+          `Vi aqui que você também garantiu as 2 Calls de Mentoria comigo! Sou especialista em vendas e vou te ajudar a alavancar seus resultados.\n\n` +
+          `Por favor, me responda esta mensagem informando qual o melhor dia e horário para agendarmos a nossa primeira call no Google Meet.\n\n` +
+          `Aguardo seu retorno para deixarmos tudo marcado! 🚀`;
+
+        // Dá um pequeno delay para a mensagem não chegar atropelada
+        setTimeout(async () => {
+          try {
+            await sendWhatsAppMessage(customerPhone, mentoriaMessage);
+            console.log(`[Webhook] Mentorship message sent to ${customerName} (${customerPhone}).`);
+          } catch (err) {
+            console.error('[Webhook] Failed to send mentorship message:', err);
+          }
+        }, 2000);
+      }
+
     } catch (whatsappError) {
       console.error('[Webhook] Failed to send WhatsApp message to customer:', whatsappError);
     }

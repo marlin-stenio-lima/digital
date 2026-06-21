@@ -39,6 +39,7 @@ interface OrderBumpProduct {
   savings: number;
   discount: string;
   image: string;
+  description?: string;
 }
 
 const ORDER_BUMPS: OrderBumpProduct[] = [
@@ -74,6 +75,18 @@ const ORDER_BUMPS: OrderBumpProduct[] = [
     savings: 19.80,
     discount: '67% OFF',
     image: '/images/upsell_perfuratriz.png',
+  },
+  {
+    id: 'mentoria',
+    name: 'Treinamento de Vendas (Google Meet)',
+    initials: 'TV',
+    color: '#ea580c',
+    originalPrice: 297.00,
+    salePrice: 99.90,
+    savings: 197.10,
+    discount: 'ÚNICA CHANCE',
+    image: '/images/upsell_mentoria.png',
+    description: 'Sou especialista em vendas e vou fazer 2 calls individuais com você para analisar seu negócio e dar dicas práticas de alavancagem.',
   },
 ];
 
@@ -153,7 +166,7 @@ export default function CheckoutPage() {
   });
 
   const [formErrors, setFormErrors] = useState<FormErrors>({});
-  const [selectedBumps, setSelectedBumps] = useState<boolean[]>([false, false, false]);
+  const [selectedBumps, setSelectedBumps] = useState<boolean[]>([false, false, false, false]);
   const [showUpsellPopup, setShowUpsellPopup] = useState(false);
   const [showPixDisplay, setShowPixDisplay] = useState(false);
   const [pixData, setPixData] = useState<PixData | null>(null);
@@ -321,7 +334,7 @@ export default function CheckoutPage() {
   function handleUpsellAccept() {
     setShowUpsellPopup(false);
     setAcceptedCombo(true);
-    setSelectedBumps([true, true, true]);
+    setSelectedBumps([true, true, true, false]); // Não incluir mentoria no combo padrão
 
     const comboTotal = BASE_PRICE + COMBO_PRICE;
     const allProducts = ['serralheiro-pack', ...ORDER_BUMPS.map((b) => b.id)];
@@ -498,6 +511,7 @@ export default function CheckoutPage() {
                 <div className={styles.bumpContent}>
                   <span className={styles.bumpBadge}>{bump.discount}</span>
                   <p className={styles.bumpName}>{bump.name}</p>
+                  {bump.description && <p className={styles.bumpDescription}>{bump.description}</p>}
                   <p className={styles.bumpSavings}>Economize R$ {bump.savings.toFixed(2).replace('.', ',')}</p>
                   <p className={styles.bumpUrgency}>🔥 Apenas nesta compra</p>
                   <div className={styles.bumpPricing}>
