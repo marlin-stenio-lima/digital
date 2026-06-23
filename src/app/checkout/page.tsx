@@ -171,6 +171,7 @@ export default function CheckoutPage() {
   const [showPixDisplay, setShowPixDisplay] = useState(false);
   const [pixData, setPixData] = useState<PixData | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [acceptedCombo, setAcceptedCombo] = useState(false);
   const [totalAmount, setTotalAmount] = useState(BASE_PRICE);
 
@@ -294,7 +295,7 @@ export default function CheckoutPage() {
       setShowPixDisplay(true);
     } catch (error) {
       console.error('Checkout error:', error);
-      alert(error instanceof Error ? error.message : 'Erro ao gerar pagamento. Tente novamente.');
+      setErrorMessage(error instanceof Error ? error.message : 'Erro ao gerar pagamento. Tente novamente.');
     } finally {
       setIsLoading(false);
     }
@@ -558,6 +559,25 @@ export default function CheckoutPage() {
           customerPhone={pixData.customerPhone}
           productsBought={pixData.productsBought}
         />
+      )}
+
+      {/* ============ ERROR MODAL ============ */}
+      {errorMessage && (
+        <div className={styles.errorModalOverlay}>
+          <div className={styles.errorModalContent}>
+            <div className={styles.errorIconWrapper}>
+              <span className={styles.errorIcon}>⚠️</span>
+            </div>
+            <h3 className={styles.errorModalTitle}>Atenção</h3>
+            <p className={styles.errorModalText}>{errorMessage}</p>
+            <button 
+              className={styles.errorModalButton} 
+              onClick={() => setErrorMessage(null)}
+            >
+              Corrigir Dados
+            </button>
+          </div>
+        </div>
       )}
     </div>
   );
