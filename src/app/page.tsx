@@ -70,7 +70,7 @@ export default function Home() {
 
             <div className={styles.heroPriceBox}>
               <span className={styles.heroOldPrice}>R$ 47,00</span>
-              <span className={styles.heroNewPrice}>R$ 13,90</span>
+              <span className={styles.heroNewPrice}>R$ 9,90</span>
             </div>
             <p className={styles.heroPriceSub}>Pagamento único • Acesso vitalício</p>
 
@@ -224,13 +224,13 @@ export default function Home() {
 
           <div className={styles.finalPriceBox}>
             <span className={styles.finalOldPrice}>R$ 47,00</span>
-            <span className={styles.finalNewPrice}>R$ 13,90</span>
+            <span className={styles.finalNewPrice}>R$ 9,90</span>
           </div>
           <p className={styles.finalPriceSub}>Pagamento único • Acesso vitalício</p>
 
           <div className={styles.ctaWrapper}>
             <Link href="/checkout" className={styles.ctaButtonOrange}>
-               QUERO ACESSO IMEDIATO - R$ 13,90
+               QUERO ACESSO IMEDIATO - R$ 9,90
             </Link>
           </div>
 
@@ -258,7 +258,7 @@ export default function Home() {
       {/* ===== FLOATING CTA MOBILE ===== */}
       <div className={`${styles.floatingCta} ${showFloating ? styles.floatingVisible : ''}`}>
         <Link href="/checkout" className={styles.ctaButtonOrange}>
-          QUERO ACESSO IMEDIATO - R$ 13,90
+          QUERO ACESSO IMEDIATO - R$ 9,90
         </Link>
       </div>
     </main>
