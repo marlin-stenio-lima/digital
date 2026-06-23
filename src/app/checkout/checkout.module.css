@@ -456,6 +456,9 @@
 }
 
 .trustBadgeIcon {
+  font-size: 1.2rem;
+}
+
 .supportLink {
   font-size: 13px;
   color: #888;
