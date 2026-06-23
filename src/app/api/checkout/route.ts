@@ -170,9 +170,18 @@ export async function POST(request: Request) {
 
     if (!abacateResponse.ok) {
       console.error('[Checkout] Abacate Pay API error:', JSON.stringify(responseData));
+      
+      let friendlyError = 'Erro ao processar pagamento com o banco. Tente novamente.';
+      
+      if (responseData?.error === 'Invalid taxId') {
+        friendlyError = 'O CPF informado é inválido ou irregular. Por favor, verifique os números e tente novamente.';
+      } else if (typeof responseData?.error === 'string') {
+        friendlyError = `Falha no pagamento: ${responseData.error}`;
+      }
+
       return NextResponse.json(
         {
-          error: `Erro Abacate: ${JSON.stringify(responseData)}`,
+          error: friendlyError,
           details: responseData,
         },
         { status: abacateResponse.status }
