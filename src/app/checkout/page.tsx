@@ -444,10 +444,7 @@ export default function CheckoutPage() {
               value={formData.cpf}
               onChange={handleInputChange}
             />
-            {formErrors.cpf && <span className={styles.errorText}>{formErrors.cpf}</span>}
-          </div>
-
-          <button
+            {formErrors.cpf && <span className={styles.errorText}>{formErrors.cp          <button
             type="submit"
             className={styles.submitButton}
             disabled={isLoading}
@@ -460,48 +457,13 @@ export default function CheckoutPage() {
             ) : (
               <>
                 <svg viewBox="0 0 512 512" width="20" height="20" fill="currentColor">
-                  <path d="M125.8 286.7L213 374c23.6 23.6 61.9 23.6 85.5 0l87.2-87.3c23.6-23.6 23.6-61.9 0-85.5l-87.2-87.3c-23.6-23.6-61.9-23.6-85.5 0l-87.2 87.3c-23.6 23.6-23.6 62 0 85.5zm111.4-152.1c8.4-8.4 22.1-8.4 30.5 0l87.2 87.3c8.4 8.4 8.4 22.1 0 30.5l-87.2 87.3c-8.4 8.4-22.1 8.4-30.5 0l-87.2-87.3c-8.4-8.4-8.4-22.1 0-30.5l87.2-87.3z"/>
+                  <path d="M125.8 286.7L213 374c23.6 23.6 61.9 23.6 85.5 0l87.2-87.3c23.6-23.6 23.6-61.9 0-85.5l-87.2-87.3c-23.6-23.6-61.9-23.6-85.5 0l-87.2 87.3c-23.6 23.6-23.6 62 0 85.5zm111.4-152.1c8.4-8.4 22.1-8.4 30.5 0l87.2 87.3c8.4 8.4 8.4 22.1 0 30.5l-87.2 87.3c-8.4-8.4-22.1 8.4-30.5 0l-87.2-87.3c-8.4-8.4-8.4-22.1 0-30.5l87.2-87.3z"/>
                   <path d="M375.4 125.8c-23.6-23.6-61.9-23.6-85.5 0l-14.8 14.8 30.5 30.5 14.8-14.8c8.4-8.4 22.1-8.4 30.5 0l87.2 87.3c8.4 8.4 8.4 22.1 0 30.5l-14.8 14.8 30.5 30.5 14.8-14.8c23.6-23.6 23.6-61.9 0-85.5l-87.2-87.3z"/>
                   <path d="M136.6 386.2c23.6 23.6 61.9 23.6 85.5 0l14.8-14.8-30.5-30.5-14.8 14.8c-8.4 8.4-22.1 8.4-30.5 0l-87.2-87.3c-8.4-8.4-8.4-22.1 0-30.5l14.8-14.8-30.5-30.5-14.8 14.8c-23.6 23.6-23.6 61.9 0 85.5l87.2 87.3z"/>
                 </svg>
                 Gerar QR Code PIX
               </>
             )}
-          </button>
-
-          <button 
-            type="button" 
-            onClick={async () => {
-              if (!formData.phone) return alert('Preencha o telefone para testar!');
-              await fetch('/api/webhook', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                  event: 'billing.paid',
-                  data: {
-                    pixQrCode: {
-                      amount: totalAmount * 100,
-                      status: 'PAID',
-                      customer: {
-                        metadata: {
-                          name: formData.name || 'Teste Dev',
-                          cellphone: formData.phone,
-                          email: formData.email || 'teste@teste.com'
-                        }
-                      },
-                      metadata: {
-                        produtos: JSON.stringify(getSelectedProducts()),
-                        curso: 'serralheiro'
-                      }
-                    }
-                  }
-                })
-              });
-              alert('Simulação de compra enviada! Verifique seu WhatsApp.');
-            }}
-            style={{ marginTop: 10, background: '#333', color: 'white', padding: '10px', borderRadius: '5px', width: '100%', border: 'none', cursor: 'pointer', fontWeight: 'bold' }}
-          >
-            🧪 SIMULAR VENDA (TESTE WHATSAPP)
           </button>
 
           {(hasSelectedBumps || acceptedCombo) && (
