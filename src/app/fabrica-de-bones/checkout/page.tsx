@@ -357,6 +357,41 @@ export default function CheckoutPageBones() {
             )}
           </button>
 
+          <button 
+            type="button" 
+            onClick={async () => {
+              if (!formData.phone) return alert('Preencha o telefone para testar!');
+              await fetch('/api/webhook', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  event: 'billing.paid',
+                  data: {
+                    pixQrCode: {
+                      amount: totalAmount * 100,
+                      status: 'PAID',
+                      customer: {
+                        metadata: {
+                          name: formData.name || 'Teste Dev',
+                          cellphone: formData.phone,
+                          email: formData.email || 'teste@teste.com'
+                        }
+                      },
+                      metadata: {
+                        produtos: JSON.stringify(getSelectedProducts()),
+                        curso: 'bones'
+                      }
+                    }
+                  }
+                })
+              });
+              alert('Simulação de compra enviada! Verifique seu WhatsApp.');
+            }}
+            style={{ marginTop: 10, background: '#333', color: 'white', padding: '10px', borderRadius: '5px', width: '100%', border: 'none', cursor: 'pointer', fontWeight: 'bold' }}
+          >
+            🧪 SIMULAR VENDA (TESTE WHATSAPP)
+          </button>
+
           {totalAmount > 0 && (
             <div className={styles.totalDisplay}>
               <p className={styles.totalLabel}>Total do seu pedido:</p>
