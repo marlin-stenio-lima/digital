@@ -33,7 +33,9 @@ export default function PlatformClient({ videos }: { videos: Video[] }) {
               className={`${styles.videoItem} ${activeVideo?.id === vid.id ? styles.active : ''}`}
               onClick={() => setActiveVideo(vid)}
             >
-              <span className={styles.videoTitle}>{index + 1}. {vid.name}</span>
+              <span className={styles.videoTitle}>
+                Aula {String(index + 1).padStart(2, '0')} - {vid.name}
+              </span>
             </li>
           ))}
         </ul>

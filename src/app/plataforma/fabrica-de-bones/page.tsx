@@ -28,13 +28,27 @@ export default async function PlataformaBones() {
     const { data: files, error } = await supabaseAdmin.storage.from('bones_videos').list();
     if (!error && files) {
       videos = files
-        .filter(f => f.name.endsWith('.mp4'))
+        .filter(f => f.name.toLowerCase().endsWith('.mp4'))
         .sort((a, b) => a.name.localeCompare(b.name))
         .map(f => {
           const { data } = supabaseAdmin.storage.from('bones_videos').getPublicUrl(f.name);
+          
+          let cleanName = f.name.replace(/\.mp4/gi, '').replace(/^[\d\s\-\.]+/g, '').trim().toLowerCase();
+          
+          let beautifulTitle = cleanName.charAt(0).toUpperCase() + cleanName.slice(1);
+          if (cleanName.includes('boas vindas')) beautifulTitle = 'Boas-Vindas e Introdução';
+          if (cleanName.includes('fornecedores')) beautifulTitle = 'Encontrando Fornecedores';
+          if (cleanName.includes('primeiros modelos')) beautifulTitle = 'Como Escolher os Primeiros Modelos';
+          if (cleanName.includes('melhor loja')) beautifulTitle = 'Montando a Melhor Loja';
+          if (cleanName.includes('iniciar as vendas')) beautifulTitle = 'Como Iniciar as Vendas';
+          if (cleanName.includes('tecnicas de vendas')) beautifulTitle = 'Técnicas de Vendas';
+          if (cleanName.includes('segredo dos 15 mil')) beautifulTitle = 'O Segredo dos 15 Mil';
+          if (cleanName.includes('modelos sazonais')) beautifulTitle = 'Escolhendo Modelos Sazonais';
+          if (cleanName.includes('influenciadores')) beautifulTitle = 'Marketing com Influenciadores';
+
           return {
             id: f.id,
-            name: f.name.replace('.mp4', ''),
+            name: beautifulTitle,
             url: data.publicUrl
           };
         });
