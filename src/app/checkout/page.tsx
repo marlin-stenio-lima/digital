@@ -444,7 +444,10 @@ export default function CheckoutPage() {
               value={formData.cpf}
               onChange={handleInputChange}
             />
-            {formErrors.cpf && <span className={styles.errorText}>{formErrors.cp          <button
+            {formErrors.cpf && <span className={styles.errorText}>{formErrors.cpf}</span>}
+          </div>
+
+          <button
             type="submit"
             className={styles.submitButton}
             disabled={isLoading}
