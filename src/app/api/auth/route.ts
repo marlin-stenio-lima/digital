@@ -49,7 +49,8 @@ export async function POST(request: Request) {
     }
 
     // Set cookie
-    cookies().set({
+    const cookieStore = await cookies();
+    cookieStore.set({
       name: 'bones_session',
       value: user.telefone,
       httpOnly: true,

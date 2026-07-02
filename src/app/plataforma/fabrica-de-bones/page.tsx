@@ -4,7 +4,7 @@ import PlatformClient from './PlatformClient';
 import { supabaseAdmin } from '@/lib/supabase';
 
 export default async function PlataformaBones() {
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   const session = cookieStore.get('bones_session');
 
   if (!session || !session.value) {
