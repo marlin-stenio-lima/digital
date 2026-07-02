@@ -26,7 +26,7 @@ export default function FabricaDeBonesLP() {
             </p>
             
             <Link href="/fabrica-de-bones/checkout" className={styles.ctaButton}>
-              QUERO CRIAR MINHA FÁBRICA AGORA
+              COMEÇAR MINHA FÁBRICA
               <span className={styles.ctaSub}>Por apenas R$ 89,90</span>
             </Link>
             
@@ -144,15 +144,29 @@ export default function FabricaDeBonesLP() {
         {/* FINAL CTA */}
         <section className={styles.finalCta}>
           <div className={styles.finalBox}>
-            <h2>Não perca mais tempo!</h2>
-            <p>Oportunidades como essa não duram para sempre. Dê o primeiro passo para a sua independência financeira hoje mesmo.</p>
+            <div className={styles.urgentBadge}>⏳ ÚLTIMAS VAGAS DISPONÍVEIS</div>
+            <h2>Sua chance de lucrar alto!</h2>
+            <p>Garanta agora o <strong>Mini-Curso Fábrica de Bonés</strong> e receba todo o método prático para montar sua primeira empresa do zero.</p>
+            
+            <div className={styles.offerItems}>
+              <span>✅ Acesso Imediato ao Método</span>
+              <span>✅ Lista de Fornecedores VIP</span>
+              <span>✅ Suporte e Garantia de 7 Dias</span>
+            </div>
+
             <div className={styles.priceTag}>
               De <del>R$ 297,00</del> por apenas<br/>
               <span className={styles.priceHighlight}>R$ 89,90</span>
+              <span className={styles.installments}>ou em até 12x no cartão</span>
             </div>
+            
             <Link href="/fabrica-de-bones/checkout" className={styles.ctaButtonPulse}>
-              GARANTIR MEU ACESSO AGORA
+              QUERO GARANTIR MINHA VAGA AGORA
             </Link>
+
+            <div className={styles.guaranteeText}>
+              🛡️ Risco Zero: Você tem 7 dias de garantia incondicional.
+            </div>
           </div>
         </section>
       </main>
