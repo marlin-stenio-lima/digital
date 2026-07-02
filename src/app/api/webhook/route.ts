@@ -16,6 +16,7 @@ interface AbacatePayWebhookEvent {
           cellphone?: string;
           taxId?: string;
         };
+      };
       metadata?: {
         produtos?: string;
         telefone?: string;
