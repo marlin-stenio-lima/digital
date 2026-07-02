@@ -135,7 +135,7 @@ export default function FabricaDeBonesLP() {
               
               <div className={styles.solutionImageWrapper}>
                 <Image 
-                  src="/images/ricardo.jpeg" 
+                  src="/images/ricardo2.png" 
                   alt="Ricardo Castro" 
                   width={400} 
                   height={500} 
