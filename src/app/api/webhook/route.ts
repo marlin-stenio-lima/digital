@@ -16,12 +16,12 @@ interface AbacatePayWebhookEvent {
           cellphone?: string;
           taxId?: string;
         };
-      };
       metadata?: {
         produtos?: string;
         telefone?: string;
         email?: string;
         nome?: string;
+        curso?: string;
       };
     };
   };
@@ -100,9 +100,9 @@ function buildMessage(customerName: string, productsBought: string[]): string {
   );
 }
 
-async function sendWhatsAppMessage(phone: string, message: string): Promise<void> {
+async function sendWhatsAppMessage(phone: string, message: string, instanceName?: string): Promise<void> {
   const evolutionApiUrl = process.env.EVOLUTION_API_URL;
-  const evolutionInstance = process.env.EVOLUTION_INSTANCE;
+  const evolutionInstance = instanceName || process.env.EVOLUTION_INSTANCE;
   const evolutionApiKey = process.env.EVOLUTION_API_KEY;
 
   if (!evolutionApiUrl || !evolutionInstance || !evolutionApiKey) {
@@ -283,29 +283,61 @@ export async function POST(request: Request) {
       console.error('[Webhook] Falha ao fazer parse dos produtos:', e);
     }
 
-    const message = buildMessage(customerName, productsBought);
+    const cursoId = body.data?.pixQrCode?.metadata?.curso || 'serralheiro';
 
     // 1. Envia para o cliente
     try {
-      await sendWhatsAppMessage(customerPhone, message);
-      console.log(`[Webhook] Successfully processed payment for ${customerName} (${customerPhone}).`);
+      if (cursoId === 'bones') {
+        const bonesInstance = process.env.EVOLUTION_INSTANCE_BONES || process.env.EVOLUTION_INSTANCE;
+        const linkAcesso = process.env.BONES_PLATAFORMA_LINK || 'https://suaplataforma.com/acesso';
+        
+        const message = `🎉 *Pagamento confirmado!* 🎉\n\n` +
+          `Olá, ${customerName.split(' ')[0]}! Seu pagamento do mini-curso Fábrica de Bonés foi aprovado com sucesso.\n\n` +
+          `📦 *O seu acesso já está liberado:*\n` +
+          `${linkAcesso}\n\n` +
+          `Para acessar, utilize o email da sua compra: ${body.data?.pixQrCode?.customer?.metadata?.email || body.data?.pixQrCode?.metadata?.email || ''}\n\n` +
+          `Qualquer dúvida, me chame aqui! 🚀`;
 
-      // Verifica se comprou a mentoria para mandar mensagem separada
-      if (productsBought.includes('mentoria')) {
-        const mentoriaMessage = `🤝 *Sobre o seu Treinamento de Vendas!*\n\n` +
-          `Vi aqui que você também garantiu as 2 Calls de Mentoria comigo! Sou especialista em vendas e vou te ajudar a alavancar seus resultados.\n\n` +
-          `Por favor, me responda esta mensagem informando qual o melhor dia e horário para agendarmos a nossa primeira call no Google Meet.\n\n` +
-          `Aguardo seu retorno para deixarmos tudo marcado! 🚀`;
+        await sendWhatsAppMessage(customerPhone, message, bonesInstance);
+        console.log(`[Webhook] Successfully processed payment for ${customerName} (${customerPhone}) - Course: Bones.`);
 
-        // Dá um pequeno delay para a mensagem não chegar atropelada
-        setTimeout(async () => {
-          try {
-            await sendWhatsAppMessage(customerPhone, mentoriaMessage);
-            console.log(`[Webhook] Mentorship message sent to ${customerName} (${customerPhone}).`);
-          } catch (err) {
-            console.error('[Webhook] Failed to send mentorship message:', err);
-          }
-        }, 2000);
+        if (productsBought.includes('mentoria-ads')) {
+          const mentoriaAdsMessage = `🤝 *Sobre o seu Acompanhamento de Meta Ads!*\n\n` +
+            `Vi que você também garantiu o acompanhamento individual comigo para criação das suas campanhas no Instagram/Facebook.\n\n` +
+            `Por favor, me responda esta mensagem para marcarmos o dia e horário da nossa call no Google Meet onde vou te ensinar a subir o seu primeiro anúncio!\n\n` +
+            `Bora vender muito! 🧢🔥`;
+
+          setTimeout(async () => {
+            try {
+              await sendWhatsAppMessage(customerPhone, mentoriaAdsMessage, bonesInstance);
+              console.log(`[Webhook] Mentorship Ads message sent to ${customerName} (${customerPhone}).`);
+            } catch (err) {
+              console.error('[Webhook] Failed to send Mentorship Ads message:', err);
+            }
+          }, 2000);
+        }
+
+      } else {
+        // Logica Antiga do Serralheiro
+        const message = buildMessage(customerName, productsBought);
+        await sendWhatsAppMessage(customerPhone, message);
+        console.log(`[Webhook] Successfully processed payment for ${customerName} (${customerPhone}) - Course: Serralheiro.`);
+
+        if (productsBought.includes('mentoria')) {
+          const mentoriaMessage = `🤝 *Sobre o seu Treinamento de Vendas!*\n\n` +
+            `Vi aqui que você também garantiu as 2 Calls de Mentoria comigo! Sou especialista em vendas e vou te ajudar a alavancar seus resultados.\n\n` +
+            `Por favor, me responda esta mensagem informando qual o melhor dia e horário para agendarmos a nossa primeira call no Google Meet.\n\n` +
+            `Aguardo seu retorno para deixarmos tudo marcado! 🚀`;
+
+          setTimeout(async () => {
+            try {
+              await sendWhatsAppMessage(customerPhone, mentoriaMessage);
+              console.log(`[Webhook] Mentorship message sent to ${customerName} (${customerPhone}).`);
+            } catch (err) {
+              console.error('[Webhook] Failed to send mentorship message:', err);
+            }
+          }, 2000);
+        }
       }
 
     } catch (whatsappError) {
@@ -317,7 +349,8 @@ export async function POST(request: Request) {
       const adminPhone = '5586995485600';
       const amountValue = body.data?.pixQrCode?.amount ? body.data.pixQrCode.amount / 100 : 0;
       const formattedAmount = amountValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-      const adminMessage = `✅ *Pix Pago!*\n\nNome: ${customerName}\nValor: ${formattedAmount}\nNúmero: ${customerPhone}`;
+      const courseName = cursoId === 'bones' ? 'Fábrica de Bonés' : 'Serralheiro';
+      const adminMessage = `✅ *Pix Pago (${courseName})!*\n\nNome: ${customerName}\nValor: ${formattedAmount}\nNúmero: ${customerPhone}`;
       await sendWhatsAppMessage(adminPhone, adminMessage);
     } catch (adminWhatsappError) {
       console.error('[Webhook] Failed to send WhatsApp message to admin:', adminWhatsappError);

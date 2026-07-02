@@ -7,6 +7,7 @@ interface CheckoutRequestBody {
   cpf: string;
   products: string[];
   totalAmount: number;
+  course_id?: string;
 }
 
 function generateMockQrCodeSvgBase64(): string {
@@ -83,7 +84,7 @@ export async function POST(request: Request) {
   try {
     const body: CheckoutRequestBody = await request.json();
 
-    const { name, phone, email, cpf, products, totalAmount } = body;
+    const { name, phone, email, cpf, products, totalAmount, course_id } = body;
 
     if (!name || !phone || !email || !cpf || !totalAmount) {
       return NextResponse.json(
@@ -139,7 +140,7 @@ export async function POST(request: Request) {
     const abacateBody = {
       amount: priceInCents,
       expiresIn: 3600,
-      description: 'Arsenal do Serralheiro Mestre',
+      description: course_id === 'bones' ? 'Mini-curso Fábrica de Bonés' : 'Arsenal do Serralheiro Mestre',
       customer: {
         name: name,
         email: email,
@@ -152,6 +153,7 @@ export async function POST(request: Request) {
         telefone: cleanPhone,
         email: email,
         nome: name,
+        curso: course_id || 'serralheiro',
       },
     };
 
@@ -198,7 +200,8 @@ export async function POST(request: Request) {
 
     const adminPhone = '5586995485600';
     const formattedAmount = Number(totalAmount).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-    const adminMessage = `⚠️ *Pix Gerado*\n\nNome: ${name}\nValor: ${formattedAmount}\nNúmero: ${cleanPhone}`;
+    const courseName = course_id === 'bones' ? 'Fábrica de Bonés' : 'Serralheiro';
+    const adminMessage = `⚠️ *Pix Gerado (${courseName})*\n\nNome: ${name}\nValor: ${formattedAmount}\nNúmero: ${cleanPhone}`;
     
     try {
       await sendWhatsAppMessage(adminPhone, adminMessage);
