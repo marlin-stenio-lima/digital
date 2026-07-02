@@ -114,21 +114,35 @@ export default function FabricaDeBonesLP() {
 
         {/* SOLUTION & AUTHORITY SECTION */}
         <section className={styles.solutionSection}>
-          <div className={styles.solutionContent}>
+          <div className={styles.solutionContainer}>
             <h2 className={styles.sectionTitle}>A Solução: O Mercado de Bonés</h2>
-            <p className={styles.paragraph}>
-              O mercado de bonés é um dos mais lucrativos e menos explorados de forma profissional no Brasil. A margem de lucro é gigantesca e a demanda é constante.
-            </p>
-            <p className={styles.paragraph}>
-              <strong>Ricardo Castro</strong> já bateu cabeça, cometeu erros e perdeu dinheiro. Mas após anos de validação, ele desenvolveu um modelo de negócios enxuto e escalável que hoje gera mais de <strong>R$ 15.000 mensais de lucro líquido</strong>.
-            </p>
-            <p className={styles.paragraph}>
-              E agora, ele decidiu abrir a "caixa preta" da operação e te entregar o caminho das pedras para você replicar esse sucesso e construir a sua primeira empresa sólida e rentável.
-            </p>
             
-            <Link href="/fabrica-de-bones/checkout" className={styles.ctaButtonSec}>
-              SIM, EU QUERO APRENDER O MÉTODO
-            </Link>
+            <div className={styles.solutionGrid}>
+              <div className={styles.solutionText}>
+                <p className={styles.paragraph}>
+                  O mercado de bonés é um dos mais lucrativos e menos explorados de forma profissional no Brasil. A margem de lucro é gigantesca e a demanda é constante.
+                </p>
+                <p className={styles.paragraph}>
+                  <strong>Ricardo Castro</strong> já bateu cabeça, cometeu erros e perdeu dinheiro. Mas após anos de validação, ele desenvolveu um modelo de negócios enxuto e escalável que hoje gera mais de <strong>R$ 15.000 mensais de lucro líquido</strong>.
+                </p>
+                <p className={styles.paragraph}>
+                  E agora, ele decidiu abrir a "caixa preta" da operação e te entregar o caminho das pedras para você replicar esse sucesso e construir a sua primeira empresa sólida e rentável.
+                </p>
+                <Link href="/fabrica-de-bones/checkout" className={styles.ctaButtonSec}>
+                  SIM, EU QUERO APRENDER O MÉTODO
+                </Link>
+              </div>
+              
+              <div className={styles.solutionImageWrapper}>
+                <Image 
+                  src="/images/ricardo.jpeg" 
+                  alt="Ricardo Castro" 
+                  width={400} 
+                  height={500} 
+                  className={styles.ricardoImage} 
+                />
+              </div>
+            </div>
           </div>
         </section>
 
