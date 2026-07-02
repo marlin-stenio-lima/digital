@@ -9,7 +9,7 @@ export default function FabricaDeBonesLP() {
   return (
     <>
       <Head>
-        <title>Fábrica de Bonés | Ricardo Castro</title>
+        <title>Marca de Bonés | Ricardo Castro</title>
         <meta name="description" content="Aprenda a montar sua primeira empresa no ramo de bonés e gere uma renda de mais de 15 mil mensais." />
       </Head>
       <FacebookPixel />
@@ -20,7 +20,7 @@ export default function FabricaDeBonesLP() {
           <div className={styles.heroContent}>
             <div className={styles.badge}>O MÉTODO DEFINITIVO</div>
             <h1 className={styles.headline}>
-              Crie Sua Própria Fábrica de Bonés e Fature <span className={styles.highlight}>R$ 15.000+ Por Mês</span> Começando do Zero
+              Crie Sua Própria Marca de Bonés e Fature <span className={styles.highlight}>R$ 15.000+ Por Mês</span> Começando do Zero
             </h1>
             <p className={styles.subheadline}>
               O mapa prático e testado para quem quer criar a sua primeira empresa lucrativa no mercado de bonés. Descubra o método exato que o Ricardo Castro usa para lucrar alto todos os meses.
@@ -28,7 +28,7 @@ export default function FabricaDeBonesLP() {
 
             
             <Link href="/fabrica-de-bones/checkout" className={styles.ctaButton}>
-              COMEÇAR MINHA FÁBRICA
+              COMEÇAR MINHA MARCA
               <span className={styles.ctaSub}>Por apenas R$ 89,90</span>
             </Link>
             
@@ -75,7 +75,7 @@ export default function FabricaDeBonesLP() {
             <div className={styles.testimonialCard}>
               <div className={styles.stars}>★★★★★</div>
               <p className={styles.testimonialText}>
-                "Eu trabalhava de CLT ganhando 2 mil reais e sem tempo pra nada. Comecei a fábrica no quarto de casa e hoje minha renda extra já virou minha fonte de renda principal."
+                "Eu trabalhava de CLT ganhando 2 mil reais e sem tempo pra nada. Comecei a marca no quarto de casa e hoje minha renda extra já virou minha fonte de renda principal."
               </p>
               <div className={styles.testimonialAuthor}>
                 <div className={styles.authorAvatar}>J</div>
@@ -161,7 +161,7 @@ export default function FabricaDeBonesLP() {
           <div className={styles.finalBox}>
             <div className={styles.urgentBadge}>⏳ ÚLTIMAS VAGAS DISPONÍVEIS</div>
             <h2>Sua chance de lucrar alto!</h2>
-            <p>Garanta agora a <strong>Fábrica de Bonés</strong> e receba todo o método prático para montar sua primeira empresa do zero.</p>
+            <p>Garanta agora a <strong>Marca de Bonés</strong> e receba todo o método prático para montar sua primeira empresa do zero.</p>
             
             <div className={styles.offerItems}>
               <span>✅ Acesso Imediato ao Método</span>
