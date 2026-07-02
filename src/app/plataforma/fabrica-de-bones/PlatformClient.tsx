@@ -72,7 +72,7 @@ export default function PlatformClient({ videos }: { videos: Video[] }) {
               
               <div style={{ marginTop: '1.5rem', marginBottom: '1rem' }}>
                 <a 
-                  href="https://wa.me/558698114403?text=olá, vim pelo ricardo e quero saber mais!" 
+                  href="https://wa.me/5586981144003?text=olá, vim pelo ricardo e quero saber mais!" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   style={{
