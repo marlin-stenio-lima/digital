@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import crypto from 'crypto';
 import { Resend } from 'resend';
+import { supabaseAdmin } from '@/lib/supabase';
 
 interface AbacatePayWebhookEvent {
   event?: string;
@@ -290,13 +291,34 @@ export async function POST(request: Request) {
     try {
       if (cursoId === 'bones') {
         const bonesInstance = process.env.EVOLUTION_INSTANCE_BONES || process.env.EVOLUTION_INSTANCE;
-        const linkAcesso = process.env.BONES_PLATAFORMA_LINK || 'https://suaplataforma.com/acesso';
         
+        let token = crypto.randomUUID();
+        let linkAcesso = process.env.BONES_PLATAFORMA_LINK || `${new URL(request.url).origin}/plataforma/login`;
+        
+        try {
+          const { error } = await supabaseAdmin
+            .from('bones_alunos')
+            .upsert({ 
+              telefone: customerPhone, 
+              token: token,
+              comprou_ads: productsBought.includes('mentoria-ads'),
+              data_acesso: new Date().toISOString()
+            }, { onConflict: 'telefone' });
+            
+          if (error) {
+            console.error('[Webhook] Erro ao salvar aluno no Supabase:', error);
+          } else {
+             linkAcesso = `${new URL(request.url).origin}/plataforma/login?token=${token}`;
+          }
+        } catch (dbErr) {
+          console.error('[Webhook] Exception saving student:', dbErr);
+        }
+
         const message = `🎉 *Pagamento confirmado!* 🎉\n\n` +
           `Olá, ${customerName.split(' ')[0]}! Seu pagamento do mini-curso Fábrica de Bonés foi aprovado com sucesso.\n\n` +
-          `📦 *O seu acesso já está liberado:*\n` +
+          `📦 *O seu acesso já está liberado! Basta clicar no link mágico abaixo para entrar direto na plataforma:*\n` +
           `${linkAcesso}\n\n` +
-          `Para acessar, utilize o email da sua compra: ${body.data?.pixQrCode?.customer?.metadata?.email || body.data?.pixQrCode?.metadata?.email || ''}\n\n` +
+          `Se precisar, seu login de acesso é o seu próprio número de WhatsApp: ${customerPhone}\n\n` +
           `Qualquer dúvida, me chame aqui! 🚀`;
 
         await sendWhatsAppMessage(customerPhone, message, bonesInstance);
