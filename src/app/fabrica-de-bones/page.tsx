@@ -44,7 +44,6 @@ export default function FabricaDeBonesLP() {
             <div className={styles.trustIndicators}>
               <span>🔒 Compra 100% Segura</span>
               <span>⚡ Acesso Imediato</span>
-              <span>⭐ Satisfação Garantida</span>
             </div>
           </div>
         </section>
@@ -162,22 +161,17 @@ export default function FabricaDeBonesLP() {
             <div className={styles.offerItems}>
               <span>✅ Acesso Imediato ao Método</span>
               <span>✅ Lista de Fornecedores VIP</span>
-              <span>✅ Suporte e Garantia de 7 Dias</span>
+              <span>✅ Suporte Premium</span>
             </div>
 
             <div className={styles.priceTag}>
               De <del>R$ 297,00</del> por apenas<br/>
               <span className={styles.priceHighlight}>R$ 89,90</span>
-              <span className={styles.installments}>ou em até 12x no cartão</span>
             </div>
             
             <Link href="/fabrica-de-bones/checkout" className={styles.ctaButtonPulse}>
               QUERO GARANTIR MINHA VAGA AGORA
             </Link>
-
-            <div className={styles.guaranteeText}>
-              🛡️ Risco Zero: Você tem 7 dias de garantia incondicional.
-            </div>
           </div>
         </section>
       </main>
