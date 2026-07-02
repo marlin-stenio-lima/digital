@@ -51,8 +51,24 @@
 .subheadline {
   font-size: 1.2rem;
   color: #4b5563; /* Medium gray */
-  margin-bottom: 2.5rem;
+  margin-bottom: 2rem;
   font-weight: 400;
+}
+
+.heroImageWrapper {
+  margin-bottom: 2.5rem;
+  width: 100%;
+  max-width: 600px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e2e8f0;
+}
+
+.heroImage {
+  width: 100%;
+  height: auto;
+  display: block;
 }
 
 /* CTA BUTTONS */

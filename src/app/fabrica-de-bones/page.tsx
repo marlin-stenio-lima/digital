@@ -24,6 +24,17 @@ export default function FabricaDeBonesLP() {
             <p className={styles.subheadline}>
               O mapa prático e testado para quem quer criar a sua primeira empresa lucrativa no mercado de bonés. Descubra o método exato que o Ricardo Castro usa para lucrar alto todos os meses.
             </p>
+
+            <div className={styles.heroImageWrapper}>
+              <Image 
+                src="/images/bones.jpg" 
+                alt="Modelos de bonés fabricados" 
+                width={600} 
+                height={600} 
+                className={styles.heroImage}
+                priority 
+              />
+            </div>
             
             <Link href="/fabrica-de-bones/checkout" className={styles.ctaButton}>
               COMEÇAR MINHA FÁBRICA
