@@ -20,7 +20,7 @@ export default function FabricaDeBonesLP() {
           <div className={styles.heroContent}>
             <div className={styles.badge}>O MÉTODO DEFINITIVO</div>
             <h1 className={styles.headline}>
-              Crie Sua Própria Fábrica de Bonés e Fature <span className={styles.highlight}>R$ 15.000+ Por Mês</span> Começando do Zero
+              Crie Sua Própria Marca de Bonés e Fature <span className={styles.highlight}>R$ 15.000+ Por Mês</span> Começando do Zero
             </h1>
             <p className={styles.subheadline}>
               O mapa prático e testado para quem quer criar a sua primeira empresa lucrativa no mercado de bonés. Descubra o método exato que o Ricardo Castro usa para lucrar alto todos os meses.
