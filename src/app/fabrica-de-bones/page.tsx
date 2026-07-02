@@ -17,12 +17,12 @@ export default function FabricaDeBonesLP() {
         {/* HERO SECTION */}
         <section className={styles.hero}>
           <div className={styles.heroContent}>
-            <div className={styles.badge}>MÉTODO COMPROVADO</div>
+            <div className={styles.badge}>O MÉTODO DEFINITIVO</div>
             <h1 className={styles.headline}>
               Crie Sua Própria Fábrica de Bonés e Fature <span className={styles.highlight}>R$ 15.000+ Por Mês</span> Começando do Zero
             </h1>
             <p className={styles.subheadline}>
-              O mapa definitivo para quem quer criar a sua primeira empresa lucrativa no mercado de bonés. Descubra o método exato que o Ricardo Castro usa para lucrar todos os meses.
+              O mapa prático e testado para quem quer criar a sua primeira empresa lucrativa no mercado de bonés. Descubra o método exato que o Ricardo Castro usa para lucrar alto todos os meses.
             </p>
             
             <Link href="/fabrica-de-bones/checkout" className={styles.ctaButton}>
@@ -35,6 +35,56 @@ export default function FabricaDeBonesLP() {
               <span>⚡ Acesso Imediato</span>
               <span>⭐ Satisfação Garantida</span>
             </div>
+          </div>
+        </section>
+
+        {/* SOCIAL PROOF SECTION */}
+        <section className={styles.socialProof}>
+          <h2 className={styles.sectionTitle}>Quem aplica o método, tem resultados:</h2>
+          <div className={styles.testimonialsGrid}>
+            
+            <div className={styles.testimonialCard}>
+              <div className={styles.stars}>★★★★★</div>
+              <p className={styles.testimonialText}>
+                "Eu nunca tinha empreendido na vida. Segui o passo a passo dos fornecedores e a forma de vender. Em 15 dias fiz meus primeiros R$ 3.500 de lucro limpo no bolso."
+              </p>
+              <div className={styles.testimonialAuthor}>
+                <div className={styles.authorAvatar}>M</div>
+                <div className={styles.authorInfo}>
+                  <h4>Marcos Paulo</h4>
+                  <p>Lucrou R$ 3.500 no 1º mês</p>
+                </div>
+              </div>
+            </div>
+
+            <div className={styles.testimonialCard}>
+              <div className={styles.stars}>★★★★★</div>
+              <p className={styles.testimonialText}>
+                "O que o Ricardo ensina sobre posicionamento de marca é surreal. Meus bonés parecem de marca gringa e eu consigo cobrar muito mais caro por eles. Vale cada centavo!"
+              </p>
+              <div className={styles.testimonialAuthor}>
+                <div className={styles.authorAvatar}>T</div>
+                <div className={styles.authorInfo}>
+                  <h4>Thiago Silva</h4>
+                  <p>Lucra +R$ 10.000/mês</p>
+                </div>
+              </div>
+            </div>
+
+            <div className={styles.testimonialCard}>
+              <div className={styles.stars}>★★★★★</div>
+              <p className={styles.testimonialText}>
+                "Eu trabalhava de CLT ganhando 2 mil reais e sem tempo pra nada. Comecei a fábrica no quarto de casa e hoje minha renda extra já virou minha fonte de renda principal."
+              </p>
+              <div className={styles.testimonialAuthor}>
+                <div className={styles.authorAvatar}>J</div>
+                <div className={styles.authorInfo}>
+                  <h4>João Victor</h4>
+                  <p>Largou o CLT</p>
+                </div>
+              </div>
+            </div>
+
           </div>
         </section>
 
@@ -84,10 +134,10 @@ export default function FabricaDeBonesLP() {
         <section className={styles.whatYouGet}>
           <h2 className={styles.sectionTitle}>O que você vai descobrir:</h2>
           <ul className={styles.benefitsList}>
-            <li>✅ <strong>Fornecedores Secretos:</strong> Onde comprar matéria-prima com qualidade premium e preço de atacado.</li>
-            <li>✅ <strong>Modelagem de Negócio:</strong> Como estruturar sua marca para parecer gigante desde o dia 1.</li>
-            <li>✅ <strong>Estratégia de Vendas:</strong> Como atrair clientes todos os dias e vender sem precisar implorar.</li>
-            <li>✅ <strong>Gestão Simplificada:</strong> Como administrar a produção e o caixa para garantir lucros de R$ 15.000+.</li>
+            <li><strong>✅ Fornecedores Secretos:</strong> Onde comprar matéria-prima com qualidade premium e preço de atacado.</li>
+            <li><strong>✅ Modelagem de Negócio:</strong> Como estruturar sua marca para parecer gigante desde o dia 1.</li>
+            <li><strong>✅ Estratégia de Vendas:</strong> Como atrair clientes todos os dias e vender sem precisar implorar.</li>
+            <li><strong>✅ Gestão Simplificada:</strong> Como administrar a produção e o caixa para garantir lucros de R$ 15.000+.</li>
           </ul>
         </section>
 
