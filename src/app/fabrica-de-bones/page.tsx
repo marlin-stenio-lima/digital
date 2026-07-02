@@ -162,7 +162,7 @@ export default function FabricaDeBonesLP() {
           <div className={styles.finalBox}>
             <div className={styles.urgentBadge}>⏳ ÚLTIMAS VAGAS DISPONÍVEIS</div>
             <h2>Sua chance de lucrar alto!</h2>
-            <p>Garanta agora o <strong>Mini-Curso Fábrica de Bonés</strong> e receba todo o método prático para montar sua primeira empresa do zero.</p>
+            <p>Garanta agora a <strong>Fábrica de Bonés</strong> e receba todo o método prático para montar sua primeira empresa do zero.</p>
             
             <div className={styles.offerItems}>
               <span>✅ Acesso Imediato ao Método</span>

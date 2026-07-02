@@ -273,7 +273,7 @@ export default function CheckoutPageBones() {
       <div className={styles.container}>
         {/* ============ ORDER SUMMARY ============ */}
         <div className={styles.orderSummary}>
-          <h1 className={styles.productTitle}>Mini-curso Fábrica de Bonés</h1>
+          <h1 className={styles.productTitle}>Fábrica de Bonés</h1>
           <p className={styles.productSubtitle}>por Ricardo Castro</p>
 
           <hr className={styles.divider} />
