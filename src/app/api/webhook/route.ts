@@ -308,7 +308,7 @@ export async function POST(request: Request) {
           if (error) {
             console.error('[Webhook] Erro ao salvar aluno no Supabase:', error);
           } else {
-             linkAcesso = `${new URL(request.url).origin}/plataforma/login?token=${token}`;
+             linkAcesso = `${new URL(request.url).origin}/plataforma/login`;
           }
         } catch (dbErr) {
           console.error('[Webhook] Exception saving student:', dbErr);
@@ -316,9 +316,9 @@ export async function POST(request: Request) {
 
         const message = `🎉 *Pagamento confirmado!* 🎉\n\n` +
           `Olá, ${customerName.split(' ')[0]}! Seu pagamento do mini-curso Fábrica de Bonés foi aprovado com sucesso.\n\n` +
-          `📦 *O seu acesso já está liberado! Basta clicar no link mágico abaixo para entrar direto na plataforma:*\n` +
+          `📦 *O seu acesso já está liberado! Basta clicar no link abaixo para entrar na plataforma:*\n` +
           `${linkAcesso}\n\n` +
-          `Se precisar, seu login de acesso é o seu próprio número de WhatsApp: ${customerPhone}\n\n` +
+          `Seu login e senha de acesso é o seu próprio número de WhatsApp: ${customerPhone}\n\n` +
           `Qualquer dúvida, me chame aqui! 🚀`;
 
         await sendWhatsAppMessage(customerPhone, message, bonesInstance);
