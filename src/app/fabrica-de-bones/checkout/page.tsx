@@ -245,11 +245,6 @@ export default function CheckoutPageBones() {
 
     if (Object.keys(errors).length > 0) return;
 
-    if (!selectedBumps[0]) {
-      setShowUpsellPopup(true);
-      return;
-    }
-
     const products = getSelectedProducts();
     generatePix(totalAmount, products);
   }
