@@ -420,6 +420,49 @@
   font-weight: 500;
 }
 
+.scarcityText {
+  background-color: #fffbeb;
+  border-left: 4px solid #fbbf24;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  border-radius: 4px;
+  text-align: left;
+  font-size: 0.95rem;
+  color: #92400e;
+}
+
+.priceAnchoring {
+  background-color: #f8fafc;
+  padding: 1.5rem;
+  border-radius: 12px;
+  margin-bottom: 1.5rem;
+  text-align: left;
+  border: 1px dashed #cbd5e1;
+}
+
+.anchorList {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1rem 0;
+}
+
+.anchorList li {
+  color: #64748b;
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 0.5rem;
+}
+
+.totalAnchor {
+  font-weight: 800;
+  font-size: 1.2rem;
+  color: #ef4444;
+  text-align: right;
+}
+
 @media (max-width: 768px) {
   .headline {
     font-size: 2rem;

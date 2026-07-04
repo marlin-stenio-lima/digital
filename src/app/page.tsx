@@ -163,15 +163,25 @@ export default function FabricaDeBonesLP() {
             <h2>Sua chance de lucrar alto!</h2>
             <p>Garanta agora a <strong>Marca de Bonés</strong> e receba todo o método prático para montar sua primeira empresa do zero.</p>
             
-            <div className={styles.offerItems}>
-              <span>✅ Acesso Imediato ao Método</span>
-              <span>✅ Lista de Fornecedores VIP</span>
-              <span>✅ Suporte Premium</span>
+            <div className={styles.scarcityText}>
+              <p>🚨 <strong>Atenção:</strong> Só tenho capacidade para dar suporte premium para 50 pessoas nessa nova turma. Assim que as vagas baterem, o preço volta para R$ 297.</p>
+            </div>
+
+            <div className={styles.priceAnchoring}>
+              <ul className={styles.anchorList}>
+                <li><span>Curso Marca de Bonés:</span> <del>R$ 497,00</del></li>
+                <li><span>Bônus Planilha:</span> <del>R$ 97,00</del></li>
+                <li><span>Bônus Lista Fornecedores:</span> <del>R$ 197,00</del></li>
+              </ul>
+              <div className={styles.totalAnchor}>
+                Valor Total: <del>R$ 791,00</del>
+              </div>
             </div>
 
             <div className={styles.priceTag}>
-              De <del>R$ 297,00</del> por apenas<br/>
+              Hoje para você: Apenas<br/>
               <span className={styles.priceHighlight}>R$ 89,90</span>
+              <span className={styles.installments}>(ou 12x de R$ 8,99)</span>
             </div>
             
             <Link href="/fabrica-de-bones/checkout" className={styles.ctaButtonPulse}>
