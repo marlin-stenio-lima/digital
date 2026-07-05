@@ -30,7 +30,7 @@ export default function FabricaDeBonesLP() {
             
             <Link href="/fabrica-de-bones/checkout" className={styles.ctaButton}>
               COMEÇAR MINHA FÁBRICA
-              <span className={styles.ctaSub}>Por apenas R$ 49,90</span>
+              <span className={styles.ctaSub}>Por apenas R$ 27,90</span>
             </Link>
             
             <div className={styles.trustIndicators}>
@@ -172,7 +172,7 @@ export default function FabricaDeBonesLP() {
 
             <div className={styles.priceTag}>
               De <del>R$ 297,00</del> por apenas<br/>
-              <span className={styles.priceHighlight}>R$ 49,90</span>
+              <span className={styles.priceHighlight}>R$ 27,90</span>
             </div>
             
             <Link href="/fabrica-de-bones/checkout" className={styles.ctaButtonPulse}>
