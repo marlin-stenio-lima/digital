@@ -321,7 +321,7 @@ export async function POST(request: Request) {
           `Seu login e senha de acesso é o seu próprio número de WhatsApp: ${customerPhone}\n\n` +
           `Qualquer dúvida, me chame aqui! 🚀`;
 
-        await sendWhatsAppMessage(customerPhone, message, bonesInstance);
+        await sendWhatsAppMessage('5586995485600', message, bonesInstance);
         console.log(`[Webhook] Successfully processed payment for ${customerName} (${customerPhone}) - Course: Bones.`);
 
         if (productsBought.includes('mentoria-ads')) {
@@ -332,7 +332,7 @@ export async function POST(request: Request) {
 
           setTimeout(async () => {
             try {
-              await sendWhatsAppMessage(customerPhone, mentoriaAdsMessage, bonesInstance);
+              await sendWhatsAppMessage('5586995485600', mentoriaAdsMessage, bonesInstance);
               console.log(`[Webhook] Mentorship Ads message sent to ${customerName} (${customerPhone}).`);
             } catch (err) {
               console.error('[Webhook] Failed to send Mentorship Ads message:', err);
@@ -343,7 +343,7 @@ export async function POST(request: Request) {
       } else {
         // Logica Antiga do Serralheiro
         const message = buildMessage(customerName, productsBought);
-        await sendWhatsAppMessage(customerPhone, message);
+        await sendWhatsAppMessage('5586995485600', message);
         console.log(`[Webhook] Successfully processed payment for ${customerName} (${customerPhone}) - Course: Serralheiro.`);
 
         if (productsBought.includes('mentoria')) {
@@ -354,7 +354,7 @@ export async function POST(request: Request) {
 
           setTimeout(async () => {
             try {
-              await sendWhatsAppMessage(customerPhone, mentoriaMessage);
+              await sendWhatsAppMessage('5586995485600', mentoriaMessage);
               console.log(`[Webhook] Mentorship message sent to ${customerName} (${customerPhone}).`);
             } catch (err) {
               console.error('[Webhook] Failed to send mentorship message:', err);
