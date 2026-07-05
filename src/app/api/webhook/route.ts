@@ -3,7 +3,8 @@ import crypto from 'crypto';
 import { Resend } from 'resend';
 import { supabaseAdmin } from '@/lib/supabase';
 
-const recentWebhooks = new Set<string>();
+// Keep track of recently processed Pix IDs to avoid duplicate handling
+const recentPixIds = new Set<string>();
 
 interface AbacatePayWebhookEvent {
   event?: string;
@@ -268,20 +269,19 @@ export async function POST(request: Request) {
       );
     }
 
-    const pixId = body.data?.pixQrCode?.id || 'unknown';
+    // Identify the unique Pix ID for this webhook
+    const pixId = body.data?.pixQrCode?.id;
+    if (pixId) {
+      if (recentPixIds.has(pixId)) {
+        console.log('[Webhook] Duplicate webhook detected for Pix ID:', pixId);
+        return NextResponse.json({ received: true, action: 'ignored', reason: 'duplicate pix' }, { status: 200 });
+      }
+      recentPixIds.add(pixId);
+      setTimeout(() => recentPixIds.delete(pixId), 30000); // keep for 30 seconds
+    }
+
     const customerPhone = extractCustomerPhone(body);
     const customerName = extractCustomerName(body);
-
-    const dedupKey = `${pixId}-${customerPhone}`;
-    if (recentWebhooks.has(dedupKey)) {
-      console.log('[Webhook] Duplicate webhook detected for key:', dedupKey);
-      return NextResponse.json(
-        { received: true, action: 'ignored', reason: 'duplicate webhook' },
-        { status: 200 }
-      );
-    }
-    recentWebhooks.add(dedupKey);
-    setTimeout(() => recentWebhooks.delete(dedupKey), 60000);
 
     if (!customerPhone) {
       console.error('[Webhook] Payment confirmed but no customer phone found in webhook data.');
@@ -356,7 +356,7 @@ export async function POST(request: Request) {
       } else {
         // Logica Antiga do Serralheiro
         const message = buildMessage(customerName, productsBought);
-        await sendWhatsAppMessage(customerPhone, message, '86995485600');
+        await sendWhatsAppMessage(customerPhone, message);
         console.log(`[Webhook] Successfully processed payment for ${customerName} (${customerPhone}) - Course: Serralheiro.`);
 
         if (productsBought.includes('mentoria')) {
