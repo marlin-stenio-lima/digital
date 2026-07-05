@@ -29,9 +29,11 @@ export async function GET(request: Request) {
       return NextResponse.json({ error: 'Erro ao verificar status', details: data }, { status: response.status });
     }
 
+    const billingData = data.data || data;
+
     return NextResponse.json({
       success: true,
-      status: data.data?.status || 'PENDING',
+      status: billingData.status || 'PENDING',
     });
   } catch (error) {
     console.error('[Status Check] Unexpected error:', error);
