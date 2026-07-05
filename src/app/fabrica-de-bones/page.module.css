@@ -463,7 +463,119 @@
   text-align: right;
 }
 
+/* VSL SECTIONS */
+.storySection {
+  padding: 5rem 1rem;
+  background-color: #f8fafc;
+}
+
+.storyContainer {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.storyText {
+  font-size: 1.15rem;
+  color: #374151;
+  line-height: 1.8;
+}
+
+.storyText p {
+  margin-bottom: 1.5rem;
+}
+
+.highlightBox {
+  background-color: #ffffff;
+  border-left: 4px solid #16a34a;
+  padding: 2rem;
+  margin-top: 2rem;
+  border-radius: 0 12px 12px 0;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.highlightBox h3 {
+  color: #111827;
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+  font-weight: 800;
+}
+
+.offerSection {
+  padding: 5rem 1rem;
+  background-color: #ffffff;
+}
+
+.offerContainer {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.paragraphCenter {
+  font-size: 1.2rem;
+  color: #4b5563;
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
+
+.valueComparison {
+  background-color: #fffbeb;
+  padding: 2rem;
+  border-radius: 12px;
+  border: 1px dashed #fbbf24;
+  margin-bottom: 2rem;
+}
+
+.valueComparison p {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #92400e;
+  margin-bottom: 0.5rem;
+}
+
+.valueComparison p:last-child {
+  margin-bottom: 0;
+  color: #b45309;
+  font-size: 1.4rem;
+}
+
+/* STICKY CTA */
+.stickyMobileCta {
+  display: none;
+}
+
 @media (max-width: 768px) {
+  .container {
+    padding-bottom: 90px;
+  }
+  
+  .stickyMobileCta {
+    display: block;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #ffffff;
+    padding: 1rem;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
+    text-align: center;
+  }
+
+  .stickyButton {
+    display: inline-block;
+    background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+    color: #fff;
+    font-weight: 800;
+    font-size: 1.1rem;
+    padding: 1rem;
+    border-radius: 9999px;
+    width: 100%;
+    text-decoration: none;
+    box-shadow: 0 4px 6px -1px rgba(22, 163, 74, 0.4);
+    animation: pulseGreen 2s infinite;
+  }
+
   .headline {
     font-size: 2rem;
   }

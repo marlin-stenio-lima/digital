@@ -15,26 +15,43 @@ export default function FabricaDeBonesLP() {
       <FacebookPixel />
       
       <main className={styles.container}>
-        {/* HERO SECTION */}
+        {/* HERO SECTION - PROMESSA FORTE */}
         <section className={styles.hero}>
           <div className={styles.heroContent}>
-            <div className={styles.badge}>O MÉTODO DEFINITIVO</div>
+            <div className={styles.badge}>O SEGREDO REVELADO</div>
             <h1 className={styles.headline}>
-              Crie Sua Própria Marca de Bonés e Fature <span className={styles.highlight}>R$ 15.000+ Por Mês</span> Começando do Zero
+              Como um simples "pedaço de tecido" me fez sair do zero e construir um negócio de <span className={styles.highlight}>R$ 15.000 mensais</span> (Trabalhando no meu próprio quarto).
             </h1>
             <p className={styles.subheadline}>
-              O mapa prático e testado para quem quer criar a sua primeira empresa lucrativa no mercado de bonés. Descubra o método exato que o Ricardo Castro usa para lucrar alto todos os meses.
+              Você não precisa de máquinas caras, não precisa de galpão e nem de experiência. Se você me der 2 minutos, vou te mostrar como eu "hackeei" o mercado de Marcas de Bonés Premium.
             </p>
 
-            
-            <Link href="/fabrica-de-bones/checkout" className={styles.ctaButton}>
-              COMEÇAR MINHA MARCA
-              <span className={styles.ctaSub}>Por apenas R$ 49,90</span>
+            <Link href="/fabrica-de-bones/checkout" className={styles.ctaButtonPulse}>
+              QUERO CRIAR MINHA MARCA AGORA
+              <span className={styles.ctaSub}>Por apenas R$ 27,90</span>
             </Link>
             
             <div className={styles.trustIndicators}>
               <span>🔒 Compra 100% Segura</span>
               <span>⚡ Acesso Imediato</span>
+            </div>
+          </div>
+        </section>
+
+        {/* THE REVELATION & PAIN */}
+        <section className={styles.storySection}>
+          <div className={styles.storyContainer}>
+            <h2 className={styles.sectionTitle}>A Realidade que Ninguém te Conta</h2>
+            <div className={styles.storyText}>
+              <p>Talvez você trabalhe o mês inteiro, bata ponto, pegue trânsito e quando chega o dia 5, o seu salário já acabou. Você sabe que precisa empreender, mas morre de medo de perder o pouco dinheiro que juntou.</p>
+              <p>Você pensa: <em>"Como vou abrir um negócio se não tenho R$ 50 mil para investir em maquinário?"</em></p>
+              <p>Foi exatamente o que eu pensei. E foi aí que eu descobri o <strong>Método da Terceirização Inteligente</strong>.</p>
+              
+              <div className={styles.highlightBox}>
+                <h3>A Grande Sacada 💡</h3>
+                <p>Eu descobri que as maiores marcas do Brasil <strong>NÃO</strong> fabricam os próprios bonés. Elas usam fábricas secretas. Eu encontrei essas fábricas. Elas pegam a sua logo, colocam no boné mais premium do mercado, embalam e entregam pronto.</p>
+                <p>O custo? Quase nada. O valor de venda? O quão forte for a sua marca. Eu transformei R$ 30 de custo em R$ 120, R$ 150 de faturamento por peça. Todos os dias.</p>
+              </div>
             </div>
           </div>
         </section>
@@ -89,82 +106,28 @@ export default function FabricaDeBonesLP() {
           </div>
         </section>
 
-        {/* PAIN SECTION */}
-        <section className={styles.painSection}>
-          <h2 className={styles.sectionTitle}>Você está cansado de...</h2>
-          <div className={styles.painCards}>
-            <div className={styles.painCard}>
-              <div className={styles.painIcon}>💸</div>
-              <h3>Falta de Dinheiro</h3>
-              <p>Trabalhar o mês inteiro e ver o salário acabar na primeira semana, sem conseguir guardar nada ou fazer uma renda extra.</p>
-            </div>
-            <div className={styles.painCard}>
-              <div className={styles.painIcon}>⏰</div>
-              <h3>Falta de Tempo</h3>
-              <p>Ser refém de um emprego que suga suas energias e não te dá liberdade para aproveitar a vida e a família.</p>
-            </div>
-            <div className={styles.painCard}>
-              <div className={styles.painIcon}>📉</div>
-              <h3>Medo de Empreender</h3>
-              <p>Querer montar um negócio, mas não saber por onde começar, com medo de falhar e perder suas economias.</p>
+        {/* THE OFFER */}
+        <section className={styles.offerSection}>
+          <div className={styles.offerContainer}>
+            <h2 className={styles.sectionTitle}>Eu decidi abrir a "caixa preta"</h2>
+            <p className={styles.paragraphCenter}>
+              Peguei minha lista de fornecedores secretos (aquela que as marcas grandes rezam para você nunca descobrir), o meu método de criação de marca, e o meu script exato de vendas no Instagram.
+            </p>
+            <div className={styles.valueComparison}>
+              <p>Tudo isso poderia facilmente ser vendido por <strong>R$ 997</strong>.</p>
+              <p>Mas hoje, você não vai pagar R$ 997, nem R$ 497, e nem mesmo R$ 97.</p>
             </div>
           </div>
-        </section>
-
-        {/* SOLUTION & AUTHORITY SECTION */}
-        <section className={styles.solutionSection}>
-          <div className={styles.solutionContainer}>
-            <h2 className={styles.sectionTitle}>A Solução: O Mercado de Bonés</h2>
-            
-            <div className={styles.solutionGrid}>
-              <div className={styles.solutionText}>
-                <p className={styles.paragraph}>
-                  O mercado de bonés é um dos mais lucrativos e menos explorados de forma profissional no Brasil. A margem de lucro é gigantesca e a demanda é constante.
-                </p>
-                <p className={styles.paragraph}>
-                  <strong>Ricardo Castro</strong> já bateu cabeça, cometeu erros e perdeu dinheiro. Mas após anos de validação, ele desenvolveu um modelo de negócios enxuto e escalável que hoje gera mais de <strong>R$ 15.000 mensais de lucro líquido</strong>.
-                </p>
-                <p className={styles.paragraph}>
-                  E agora, ele decidiu abrir a "caixa preta" da operação e te entregar o caminho das pedras para você replicar esse sucesso e construir a sua primeira empresa sólida e rentável.
-                </p>
-                <Link href="/fabrica-de-bones/checkout" className={styles.ctaButtonSec}>
-                  SIM, EU QUERO APRENDER O MÉTODO
-                </Link>
-              </div>
-              
-              <div className={styles.solutionImageWrapper}>
-                <Image 
-                  src="/images/ricardo2.png" 
-                  alt="Ricardo Castro" 
-                  width={400} 
-                  height={500} 
-                  className={styles.ricardoImage} 
-                />
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* WHAT YOU GET SECTION */}
-        <section className={styles.whatYouGet}>
-          <h2 className={styles.sectionTitle}>O que você vai descobrir:</h2>
-          <ul className={styles.benefitsList}>
-            <li><strong>✅ Fornecedores Secretos:</strong> Onde comprar matéria-prima com qualidade premium e preço de atacado.</li>
-            <li><strong>✅ Modelagem de Negócio:</strong> Como estruturar sua marca para parecer gigante desde o dia 1.</li>
-            <li><strong>✅ Estratégia de Vendas:</strong> Como atrair clientes todos os dias e vender sem precisar implorar.</li>
-            <li><strong>✅ Gestão Simplificada:</strong> Como administrar a produção e o caixa para garantir lucros de R$ 15.000+.</li>
-          </ul>
         </section>
 
         {/* FINAL CTA */}
         <section className={styles.finalCta}>
           <div className={styles.finalBox}>
-            <div className={styles.urgentBadge}>⏳ ÚLTIMAS VAGAS DISPONÍVEIS</div>
-            <h2>Sua chance de lucrar alto!</h2>
-            <p>Garanta agora a <strong>Marca de Bonés</strong> e receba todo o método prático para montar sua primeira empresa do zero.</p>
+            <div className={styles.urgentBadge}>⏳ APENAS 50 VAGAS DISPONÍVEIS</div>
+            <h2>Leve o Método + Lista de Fornecedores</h2>
             
             <div className={styles.scarcityText}>
-              <p>🚨 <strong>Atenção:</strong> Só tenho capacidade para dar suporte premium para 50 pessoas nessa nova turma. Assim que as vagas baterem, o preço volta para R$ 297.</p>
+              <p>🚨 <strong>Atenção:</strong> Por motivos óbvios, as fábricas parceiras não dão conta de milhares de pessoas fazendo pedidos. Para manter a qualidade, limitei o acesso a essa turma. Assim que as vagas baterem, o preço volta para R$ 297.</p>
             </div>
 
             <div className={styles.priceAnchoring}>
@@ -180,15 +143,22 @@ export default function FabricaDeBonesLP() {
 
             <div className={styles.priceTag}>
               Hoje para você: Apenas<br/>
-              <span className={styles.priceHighlight}>R$ 49,90</span>
-              <span className={styles.installments}>(ou 12x de R$ 4,99)</span>
+              <span className={styles.priceHighlight}>R$ 27,90</span>
+              <span className={styles.installments}>(ou 12x de R$ 2,79)</span>
             </div>
             
             <Link href="/fabrica-de-bones/checkout" className={styles.ctaButtonPulse}>
-              QUERO GARANTIR MINHA VAGA AGORA
+              QUERO CRIAR MINHA MARCA AGORA
             </Link>
           </div>
         </section>
+
+        {/* STICKY MOBILE CTA */}
+        <div className={styles.stickyMobileCta}>
+          <Link href="/fabrica-de-bones/checkout" className={styles.stickyButton}>
+            COMEÇAR POR R$ 27,90
+          </Link>
+        </div>
       </main>
     </>
   );
