@@ -3,6 +3,8 @@ import crypto from 'crypto';
 import { Resend } from 'resend';
 import { supabaseAdmin } from '@/lib/supabase';
 
+const recentWebhooks = new Set<string>();
+
 interface AbacatePayWebhookEvent {
   event?: string;
   data?: {
@@ -266,8 +268,20 @@ export async function POST(request: Request) {
       );
     }
 
+    const pixId = body.data?.pixQrCode?.id || 'unknown';
     const customerPhone = extractCustomerPhone(body);
     const customerName = extractCustomerName(body);
+
+    const dedupKey = `${pixId}-${customerPhone}`;
+    if (recentWebhooks.has(dedupKey)) {
+      console.log('[Webhook] Duplicate webhook detected for key:', dedupKey);
+      return NextResponse.json(
+        { received: true, action: 'ignored', reason: 'duplicate webhook' },
+        { status: 200 }
+      );
+    }
+    recentWebhooks.add(dedupKey);
+    setTimeout(() => recentWebhooks.delete(dedupKey), 60000);
 
     if (!customerPhone) {
       console.error('[Webhook] Payment confirmed but no customer phone found in webhook data.');

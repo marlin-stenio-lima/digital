@@ -46,7 +46,7 @@ export default function PixDisplay({ billingId, brCode, qrCodeBase64, amount, cu
 
     const pollInterval = setInterval(async () => {
       try {
-        const res = await fetch(`/api/checkout/status?id=${billingId}&phone=${customerPhone}`);
+        const res = await fetch(`/api/checkout/status?id=${billingId}&phone=${encodeURIComponent(customerPhone)}`);
         const data = await res.json();
         
         const currentStatus = data.status ? String(data.status).toUpperCase() : '';
