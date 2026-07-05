@@ -290,7 +290,7 @@ export async function POST(request: Request) {
     // 1. Envia para o cliente
     try {
       if (cursoId === 'bones') {
-        const adminTestPhone = '5586995485600';
+        const bonesInstance = '86995485600';
         
         let token = crypto.randomUUID();
         let linkAcesso = process.env.BONES_PLATAFORMA_LINK || `${new URL(request.url).origin}/plataforma/login`;
@@ -321,8 +321,8 @@ export async function POST(request: Request) {
           `Seu login e senha de acesso é o seu próprio número de WhatsApp: ${customerPhone}\n\n` +
           `Qualquer dúvida, me chame aqui! 🚀`;
 
-        await sendWhatsAppMessage(adminTestPhone, message);
-        console.log(`[Webhook] Successfully processed payment for ${customerName} (${customerPhone}) - Course: Bones. Sent to adminTestPhone.`);
+        await sendWhatsAppMessage(customerPhone, message, bonesInstance);
+        console.log(`[Webhook] Successfully processed payment for ${customerName} (${customerPhone}) - Course: Bones. Sent to customerPhone.`);
 
         if (productsBought.includes('mentoria-ads')) {
           const mentoriaAdsMessage = `🤝 *Sobre o seu Acompanhamento de Meta Ads!*\n\n` +
@@ -332,8 +332,8 @@ export async function POST(request: Request) {
 
           setTimeout(async () => {
             try {
-              await sendWhatsAppMessage(adminTestPhone, mentoriaAdsMessage);
-              console.log(`[Webhook] Mentorship Ads message sent to ${customerName} (${customerPhone}) via adminTestPhone.`);
+              await sendWhatsAppMessage(customerPhone, mentoriaAdsMessage, bonesInstance);
+              console.log(`[Webhook] Mentorship Ads message sent to ${customerName} (${customerPhone}) via customerPhone.`);
             } catch (err) {
               console.error('[Webhook] Failed to send Mentorship Ads message:', err);
             }
