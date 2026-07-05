@@ -49,7 +49,8 @@ export default function PixDisplay({ billingId, brCode, qrCodeBase64, amount, cu
         const res = await fetch(`/api/checkout/status?id=${billingId}`);
         const data = await res.json();
         
-        if (data.status === 'PAID') {
+        const currentStatus = data.status ? String(data.status).toUpperCase() : '';
+        if (currentStatus === 'PAID' || currentStatus === 'COMPLETED') {
           setIsPaid(true);
           clearInterval(pollInterval);
           window.location.href = `/obrigado?v=${amount}`;
