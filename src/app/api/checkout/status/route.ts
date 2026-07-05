@@ -70,6 +70,10 @@ export async function GET(request: Request) {
       
       const isPaid2 = await checkDatabase(cleanPhone);
       if (isPaid2) return NextResponse.json({ success: true, status: 'PAID' });
+      
+      let digitsOnly = phone.replace(/\D/g, '');
+      const isPaid3 = await checkDatabase(digitsOnly);
+      if (isPaid3) return NextResponse.json({ success: true, status: 'PAID' });
     }
 
     return NextResponse.json({
