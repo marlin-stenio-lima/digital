@@ -44,24 +44,31 @@ export default function PixDisplay({ billingId, brCode, qrCodeBase64, amount, cu
   useEffect(() => {
     if (!billingId || isPaid || timeLeft <= 0) return;
 
+    // Limpar telefone para enviar apenas dígitos (match exato com webhook/Supabase)
+    const cleanPhone = customerPhone.replace(/\D/g, '');
+    console.log('[PixDisplay] Polling iniciado. Phone limpo:', cleanPhone, '| billingId:', billingId);
+
     const pollInterval = setInterval(async () => {
       try {
-        const res = await fetch(`/api/checkout/status?id=${billingId}&phone=${encodeURIComponent(customerPhone)}&_t=${Date.now()}`, { cache: 'no-store' });
+        const res = await fetch(`/api/checkout/status?phone=${cleanPhone}&_t=${Date.now()}`, { cache: 'no-store' });
         const data = await res.json();
+        
+        console.log('[PixDisplay] Status response:', data);
         
         const currentStatus = data.status ? String(data.status).toUpperCase() : '';
         if (currentStatus === 'PAID' || currentStatus === 'COMPLETED') {
+          console.log('[PixDisplay] PAGAMENTO CONFIRMADO! Redirecionando...');
           setIsPaid(true);
           clearInterval(pollInterval);
           window.location.href = `/obrigado?v=${amount}`;
         }
       } catch (err) {
-        console.error('Erro ao verificar status:', err);
+        console.error('[PixDisplay] Erro ao verificar status:', err);
       }
     }, 3000);
 
     return () => clearInterval(pollInterval);
-  }, [billingId, isPaid, timeLeft]);
+  }, [billingId, isPaid, timeLeft, customerPhone, amount]);
 
   const formatTime = useCallback((seconds: number): string => {
     const mins = Math.floor(seconds / 60);

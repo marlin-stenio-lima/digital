@@ -6,82 +6,61 @@ export const dynamic = 'force-dynamic';
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
-    const id = searchParams.get('id');
     const phone = searchParams.get('phone');
 
-    if (!id) {
-      return NextResponse.json({ error: 'Missing id parameter' }, { status: 400 });
+    if (!phone) {
+      return NextResponse.json({ error: 'Missing phone parameter' }, { status: 400 });
     }
 
-    const apiKey = process.env.ABACATE_PAY_API_KEY || 'abc_prod_yzd2JJtJ2RKeCDZF5rtXpfHN';
-    let abacateStatus = 'PENDING';
+    // Extrair apenas dígitos do telefone
+    const digitsOnly = phone.replace(/\D/g, '');
 
-    try {
-      const response = await fetch(`https://api.abacatepay.com/v1/pixQrCode/check?id=${encodeURIComponent(id)}`, {
-        method: 'GET',
-        headers: {
-          'Authorization': `Bearer ${apiKey}`,
-          'Content-Type': 'application/json',
-        },
-        cache: 'no-store'
-      });
+    console.log('[Status] Checking payment for phone digits:', digitsOnly);
 
-      const data = await response.json();
-      if (response.ok) {
-        const billingData = data.data || data;
-        abacateStatus = billingData.status || 'PENDING';
+    // Checar DIRETO no Supabase - dados salvos pelo webhook
+    const { data: aluno, error } = await supabaseAdmin
+      .from('bones_alunos')
+      .select('data_acesso, telefone')
+      .eq('telefone', digitsOnly)
+      .single();
+
+    if (!error && aluno && aluno.data_acesso) {
+      const acessoTime = new Date(aluno.data_acesso).getTime();
+      const now = Date.now();
+      const diffMinutes = (now - acessoTime) / (1000 * 60);
+
+      console.log('[Status] Found record for', digitsOnly, '- data_acesso:', aluno.data_acesso, '- diff minutes:', diffMinutes.toFixed(1));
+
+      if (diffMinutes < 60) {
+        console.log('[Status] Payment CONFIRMED via Supabase for', digitsOnly);
+        return NextResponse.json({ success: true, status: 'PAID' });
       }
-    } catch (err) {
-      console.error('[Status Check] Abacate Pay error:', err);
     }
 
-    const upperStatus = String(abacateStatus).toUpperCase();
-    if (upperStatus === 'PAID' || upperStatus === 'COMPLETED') {
-      return NextResponse.json({ success: true, status: 'PAID' });
-    }
+    // Tentar também com prefixo 55
+    const withPrefix = '55' + digitsOnly;
+    const { data: aluno2, error: error2 } = await supabaseAdmin
+      .from('bones_alunos')
+      .select('data_acesso, telefone')
+      .eq('telefone', withPrefix)
+      .single();
 
-    // Fallback: Check Supabase database to see if webhook processed this user's payment recently
-    if (phone) {
-      let cleanPhone = phone.replace(/\D/g, '');
-      if (!cleanPhone.startsWith('55')) {
-        cleanPhone = '55' + cleanPhone;
+    if (!error2 && aluno2 && aluno2.data_acesso) {
+      const acessoTime = new Date(aluno2.data_acesso).getTime();
+      const now = Date.now();
+      const diffMinutes = (now - acessoTime) / (1000 * 60);
+
+      if (diffMinutes < 60) {
+        console.log('[Status] Payment CONFIRMED via Supabase (55 prefix) for', withPrefix);
+        return NextResponse.json({ success: true, status: 'PAID' });
       }
-      
-      const checkDatabase = async (telToSearch: string) => {
-        const { data: aluno, error } = await supabaseAdmin
-          .from('bones_alunos')
-          .select('data_acesso')
-          .eq('telefone', telToSearch)
-          .single();
-          
-        if (!error && aluno) {
-          const acessoTime = new Date(aluno.data_acesso).getTime();
-          const now = new Date().getTime();
-          const diffMinutes = (now - acessoTime) / (1000 * 60);
-          if (diffMinutes < 30) {
-            return true;
-          }
-        }
-        return false;
-      };
-
-      const isPaid1 = await checkDatabase(phone);
-      if (isPaid1) return NextResponse.json({ success: true, status: 'PAID' });
-      
-      const isPaid2 = await checkDatabase(cleanPhone);
-      if (isPaid2) return NextResponse.json({ success: true, status: 'PAID' });
-      
-      let digitsOnly = phone.replace(/\D/g, '');
-      const isPaid3 = await checkDatabase(digitsOnly);
-      if (isPaid3) return NextResponse.json({ success: true, status: 'PAID' });
     }
 
-    return NextResponse.json({
-      success: true,
-      status: 'PENDING',
-    });
+    console.log('[Status] No recent payment found for', digitsOnly);
+    return NextResponse.json({ success: true, status: 'PENDING' });
+
   } catch (error) {
-    console.error('[Status Check] Unexpected error:', error);
+    console.error('[Status] Unexpected error:', error);
     return NextResponse.json({ error: 'Erro interno do servidor' }, { status: 500 });
   }
 }
