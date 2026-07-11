@@ -353,6 +353,81 @@ export async function POST(request: Request) {
           }, 2000);
         }
 
+      } else if (cursoId === 'currais') {
+        // Salvar no banco para habilitar o status de redirecionamento no checkout
+        try {
+          await supabaseAdmin
+            .from('bones_alunos')
+            .upsert({ 
+              telefone: customerPhone, 
+              token: crypto.randomUUID(),
+              data_acesso: new Date().toISOString()
+            }, { onConflict: 'telefone' });
+        } catch (dbErr) {
+          console.error('[Webhook] Error saving currais status to DB:', dbErr);
+        }
+
+        const downloadLink = process.env.PDF_LINK_CURRAIS || 'https://link-pendente-currais';
+        const message = `🎉 *Pagamento confirmado!* 🎉\n\n` +
+          `Olá, ${customerName.split(' ')[0]}! Seu pagamento dos *Projetos de Currais* foi aprovado.\n\n` +
+          `📥 *Clique no link abaixo para fazer o download dos projetos e manual:*\n` +
+          `${downloadLink}\n\n` +
+          `📌 Salve esta mensagem para não perder o link do seu material!\n\n` +
+          `Bons projetos! 🔨🐂`;
+
+        await sendWhatsAppMessage(customerPhone, message);
+        console.log(`[Webhook] Successfully processed currais for ${customerName} (${customerPhone})`);
+
+      } else if (cursoId === 'acm') {
+        // Salvar no banco para habilitar o status de redirecionamento no checkout
+        try {
+          await supabaseAdmin
+            .from('bones_alunos')
+            .upsert({ 
+              telefone: customerPhone, 
+              token: crypto.randomUUID(),
+              data_acesso: new Date().toISOString()
+            }, { onConflict: 'telefone' });
+        } catch (dbErr) {
+          console.error('[Webhook] Error saving acm status to DB:', dbErr);
+        }
+
+        const downloadLink = process.env.PDF_LINK_ACM || 'https://link-pendente-acm';
+        const message = `🎉 *Pagamento confirmado!* 🎉\n\n` +
+          `Olá, ${customerName.split(' ')[0]}! Seu pagamento dos *Projetos e Guia de ACM* foi aprovado.\n\n` +
+          `📥 *Clique no link abaixo para fazer o download do material:*\n` +
+          `${downloadLink}\n\n` +
+          `📌 Salve esta mensagem para acessar as informações de dobra e instalação sempre que precisar!\n\n` +
+          `Bons projetos! 📐🏢`;
+
+        await sendWhatsAppMessage(customerPhone, message);
+        console.log(`[Webhook] Successfully processed acm for ${customerName} (${customerPhone})`);
+
+      } else if (cursoId === 'pedreiro') {
+        // Salvar no banco para habilitar o status de redirecionamento no checkout
+        try {
+          await supabaseAdmin
+            .from('bones_alunos')
+            .upsert({ 
+              telefone: customerPhone, 
+              token: crypto.randomUUID(),
+              data_acesso: new Date().toISOString()
+            }, { onConflict: 'telefone' });
+        } catch (dbErr) {
+          console.error('[Webhook] Error saving pedreiro status to DB:', dbErr);
+        }
+
+        const downloadLink = process.env.PDF_LINK_PEDREIRO || 'https://link-pendente-pedreiro';
+        const message = `🎉 *Pagamento confirmado!* 🎉\n\n` +
+          `Olá, ${customerName.split(' ')[0]}! Seu pagamento dos *Projetos Estruturais de Pedreiro* foi aprovado com sucesso.\n\n` +
+          `📥 *Baixe seu material com guias de ferragens e concreto no link abaixo:*\n` +
+          `${downloadLink}\n\n` +
+          `📌 Lembre-se de baixar e salvar no seu celular para olhar direto no canteiro de obras!\n\n` +
+          `Bons projetos! 🏗️🧱`;
+
+        await sendWhatsAppMessage(customerPhone, message);
+        console.log(`[Webhook] Successfully processed pedreiro for ${customerName} (${customerPhone})`);
+
       } else {
         // Logica Antiga do Serralheiro
         const message = buildMessage(customerName, productsBought);

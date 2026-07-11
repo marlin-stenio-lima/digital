@@ -1,9 +1,9 @@
 'use client';
 
-import { useState, useEffect, useCallback, FormEvent, ChangeEvent } from 'react';
+import { useState, useEffect, useCallback, FormEvent, ChangeEvent, Suspense } from 'react';
+import { useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 import styles from './checkout.module.css';
-import UpsellPopup from '@/components/UpsellPopup';
 import PixDisplay from '@/components/PixDisplay';
 
 interface FormData {
@@ -29,85 +29,47 @@ interface PixData {
   productsBought: string[];
 }
 
-interface OrderBumpProduct {
+interface ProductDetails {
   id: string;
   name: string;
-  initials: string;
-  color: string;
+  description: string;
   originalPrice: number;
   salePrice: number;
-  savings: number;
-  discount: string;
-  image: string;
-  description?: string;
 }
 
-const ORDER_BUMPS: OrderBumpProduct[] = [
-  {
-    id: 'mentoria',
-    name: 'Treinamento de Vendas (Google Meet)',
-    initials: 'TV',
-    color: '#ea580c',
-    originalPrice: 297.00,
-    salePrice: 99.90,
-    savings: 197.10,
-    discount: 'ÚNICA CHANCE',
-    image: '/images/upsell_mentoria.png',
-    description: 'Vou abrir a caixa preta da minha operação em 2 calls individuais no Meet. Vou te entregar o método exato para fechar orçamentos de alto valor e fazer a sua serralheria vender 10X MAIS!',
-  },
-  {
-    id: 'carretinha',
-    name: 'Projeto Carretinha de Carga',
-    initials: 'CC',
-    color: '#3498db',
-    originalPrice: 29.70,
+const PRODUCTS_MAP: Record<string, ProductDetails> = {
+  currais: {
+    id: 'currais',
+    name: 'Projetos de Currais',
+    description: 'Projetos de currais modernos estruturados',
+    originalPrice: 97.00,
     salePrice: 9.90,
-    savings: 19.80,
-    discount: '67% OFF',
-    image: '/images/upsell_carretinha.png',
   },
-  {
-    id: 'academia',
-    name: 'Máquinas de Academia Profissional',
-    initials: 'MA',
-    color: '#e74c3c',
-    originalPrice: 29.70,
+  acm: {
+    id: 'acm',
+    name: 'Projetos de ACM',
+    description: 'Manual prático e projetos com placas de ACM',
+    originalPrice: 97.00,
     salePrice: 9.90,
-    savings: 19.80,
-    discount: '67% OFF',
-    image: '/images/upsell_academia.png',
   },
-  {
-    id: 'perfuratriz',
-    name: 'Perfuratriz de Poços Artesianos',
-    initials: 'PA',
-    color: '#9b59b6',
-    originalPrice: 29.70,
+  pedreiro: {
+    id: 'pedreiro',
+    name: 'Projetos de Pedreiro',
+    description: 'Guias e detalhamentos estruturais para obras',
+    originalPrice: 97.00,
     salePrice: 9.90,
-    savings: 19.80,
-    discount: '67% OFF',
-    image: '/images/upsell_perfuratriz.png',
   },
-];
-
-const BASE_PRICE = 9.90;
-const COMBO_PRICE = 19.90;
+};
 
 function formatPhone(value: string): string {
-  // Remove visualmente o +55 se a pessoa colar
   if (value.trim().startsWith('+55')) {
     value = value.replace('+55', '');
   }
-
   let digits = value.replace(/\D/g, '');
-
-  // Se a pessoa digitou 55 e continuou até passar de 11 dígitos, sabemos que o 55 era DDI e não DDD
   if (digits.startsWith('55') && digits.length >= 12) {
     digits = digits.slice(2);
   }
-
   const limited = digits.slice(0, 11);
-
   if (limited.length <= 2) {
     return limited.length > 0 ? `(${limited}` : '';
   }
@@ -120,16 +82,9 @@ function formatPhone(value: string): string {
 function formatCpf(value: string): string {
   const digits = value.replace(/\D/g, '');
   const limited = digits.slice(0, 11);
-
-  if (limited.length <= 3) {
-    return limited;
-  }
-  if (limited.length <= 6) {
-    return `${limited.slice(0, 3)}.${limited.slice(3)}`;
-  }
-  if (limited.length <= 9) {
-    return `${limited.slice(0, 3)}.${limited.slice(3, 6)}.${limited.slice(6)}`;
-  }
+  if (limited.length <= 3) return limited;
+  if (limited.length <= 6) return `${limited.slice(0, 3)}.${limited.slice(3)}`;
+  if (limited.length <= 9) return `${limited.slice(0, 3)}.${limited.slice(3, 6)}.${limited.slice(6)}`;
   return `${limited.slice(0, 3)}.${limited.slice(3, 6)}.${limited.slice(6, 9)}-${limited.slice(9)}`;
 }
 
@@ -145,19 +100,11 @@ function isValidEmail(email: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
-declare global {
-  interface Window {
-    fbq?: (...args: unknown[]) => void;
-  }
-}
+function CheckoutForm() {
+  const searchParams = useSearchParams();
+  const productId = searchParams.get('p') || 'currais';
+  const product = PRODUCTS_MAP[productId] || PRODUCTS_MAP.currais;
 
-function trackFBEvent(eventName: string, params?: Record<string, unknown>) {
-  if (typeof window !== 'undefined' && window.fbq) {
-    window.fbq('track', eventName, params);
-  }
-}
-
-export default function CheckoutPage() {
   const [formData, setFormData] = useState<FormData>({
     name: '',
     phone: '',
@@ -166,48 +113,18 @@ export default function CheckoutPage() {
   });
 
   const [formErrors, setFormErrors] = useState<FormErrors>({});
-  const [selectedBumps, setSelectedBumps] = useState<boolean[]>([false, false, false, false]);
-  const [showUpsellPopup, setShowUpsellPopup] = useState(false);
   const [showPixDisplay, setShowPixDisplay] = useState(false);
   const [pixData, setPixData] = useState<PixData | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [acceptedCombo, setAcceptedCombo] = useState(false);
-  const [totalAmount, setTotalAmount] = useState(BASE_PRICE);
-
-  useEffect(() => {
-    trackFBEvent('InitiateCheckout', {
-      content_name: '600 Projetos Móveis Industriais',
-      content_category: 'Checkout',
-      value: BASE_PRICE,
-      currency: 'BRL',
-    });
-  }, []);
-
-  useEffect(() => {
-    if (acceptedCombo) {
-      setTotalAmount(BASE_PRICE + COMBO_PRICE);
-    } else {
-      const bumpsTotal = selectedBumps.reduce((sum, selected, index) => {
-        return selected ? sum + ORDER_BUMPS[index].salePrice : sum;
-      }, 0);
-      setTotalAmount(parseFloat((BASE_PRICE + bumpsTotal).toFixed(2)));
-    }
-  }, [selectedBumps, acceptedCombo]);
 
   const handleInputChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-
     let formattedValue = value;
-
-    if (name === 'phone') {
-      formattedValue = formatPhone(value);
-    } else if (name === 'cpf') {
-      formattedValue = formatCpf(value);
-    }
+    if (name === 'phone') formattedValue = formatPhone(value);
+    else if (name === 'cpf') formattedValue = formatCpf(value);
 
     setFormData((prev) => ({ ...prev, [name]: formattedValue }));
-
     setFormErrors((prev) => {
       const newErrors = { ...prev };
       delete newErrors[name as keyof FormErrors];
@@ -215,50 +132,28 @@ export default function CheckoutPage() {
     });
   }, []);
 
-  const toggleBump = useCallback((index: number) => {
-    if (acceptedCombo) return;
-
-    setSelectedBumps((prev) => {
-      const next = [...prev];
-      next[index] = !next[index];
-      return next;
-    });
-  }, [acceptedCombo]);
-
   function validateForm(): FormErrors {
     const errors: FormErrors = {};
-
-    if (!formData.name.trim()) {
-      errors.name = 'Nome completo é obrigatório';
-    } else if (formData.name.trim().length < 3) {
-      errors.name = 'Nome deve ter pelo menos 3 caracteres';
-    }
+    if (!formData.name.trim()) errors.name = 'Nome completo é obrigatório';
+    else if (formData.name.trim().length < 3) errors.name = 'Nome deve ter pelo menos 3 caracteres';
 
     const phoneDigits = getPhoneDigits(formData.phone);
-    if (!phoneDigits) {
-      errors.phone = 'Telefone é obrigatório';
-    } else if (phoneDigits.length < 10 || phoneDigits.length > 11) {
-      errors.phone = 'Telefone inválido';
-    }
+    if (!phoneDigits) errors.phone = 'Telefone é obrigatório';
+    else if (phoneDigits.length < 10 || phoneDigits.length > 11) errors.phone = 'Telefone inválido';
 
-    if (!formData.email.trim()) {
-      errors.email = 'E-mail é obrigatório';
-    } else if (!isValidEmail(formData.email)) {
-      errors.email = 'E-mail inválido';
-    }
+    if (!formData.email.trim()) errors.email = 'E-mail é obrigatório';
+    else if (!isValidEmail(formData.email)) errors.email = 'E-mail inválido';
 
     const cpfDigits = getCpfDigits(formData.cpf);
-    if (!cpfDigits) {
-      errors.cpf = 'CPF é obrigatório';
-    } else if (cpfDigits.length !== 11) {
-      errors.cpf = 'CPF deve conter 11 dígitos';
-    }
+    if (!cpfDigits) errors.cpf = 'CPF é obrigatório';
+    else if (cpfDigits.length !== 11) errors.cpf = 'CPF deve conter 11 dígitos';
 
     return errors;
   }
 
-  const generatePix = useCallback(async (finalTotal: number, products: string[]) => {
+  const generatePix = useCallback(async () => {
     setIsLoading(true);
+    setErrorMessage(null);
 
     try {
       const response = await fetch('/api/checkout', {
@@ -269,8 +164,9 @@ export default function CheckoutPage() {
           phone: formData.phone,
           email: formData.email.trim(),
           cpf: formData.cpf,
-          products: products,
-          totalAmount: finalTotal,
+          products: [product.id],
+          totalAmount: product.salePrice,
+          course_id: product.id,
         }),
       });
 
@@ -288,10 +184,9 @@ export default function CheckoutPage() {
         qrCodeBase64: result.qrCodeBase64,
         customerName: formData.name.trim(),
         customerPhone: formData.phone,
-        productsBought: products,
+        productsBought: [product.id],
       });
 
-      setTotalAmount(finalTotal);
       setShowPixDisplay(true);
     } catch (error) {
       console.error('Checkout error:', error);
@@ -299,76 +194,30 @@ export default function CheckoutPage() {
     } finally {
       setIsLoading(false);
     }
-  }, [formData]);
-
-  function getSelectedProducts(): string[] {
-    const products: string[] = ['serralheiro-pack'];
-    selectedBumps.forEach((selected, index) => {
-      if (selected) {
-        products.push(ORDER_BUMPS[index].id);
-      }
-    });
-    return products;
-  }
+  }, [formData, product]);
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
-
     const errors = validateForm();
     setFormErrors(errors);
-
-    if (Object.keys(errors).length > 0) {
-      return;
-    }
-
-    const anyBumpSelected = selectedBumps.some((s) => s);
-
-    if (!anyBumpSelected && !acceptedCombo) {
-      setShowUpsellPopup(true);
-      return;
-    }
-
-    const products = getSelectedProducts();
-    generatePix(totalAmount, products);
+    if (Object.keys(errors).length > 0) return;
+    generatePix();
   }
-
-  function handleUpsellAccept() {
-    setShowUpsellPopup(false);
-    setAcceptedCombo(true);
-    setSelectedBumps([false, true, true, true]); // Mentoria está no index 0 agora, não incluir no combo
-
-    const comboTotal = BASE_PRICE + COMBO_PRICE;
-    const allProducts = ['serralheiro-pack', 'carretinha', 'academia', 'perfuratriz'];
-
-    generatePix(comboTotal, allProducts);
-  }
-
-  function handleUpsellDecline() {
-    setShowUpsellPopup(false);
-
-    const products = getSelectedProducts();
-    generatePix(totalAmount, products);
-  }
-
-  const hasSelectedBumps = selectedBumps.some((s) => s);
 
   return (
     <div className={styles.checkoutPage}>
       <div className={styles.container}>
         {/* ============ ORDER SUMMARY ============ */}
         <div className={styles.orderSummary}>
-          <h1 className={styles.productTitle}>600 Projetos Móveis Industriais</h1>
-          <p className={styles.productSubtitle}>Projetos prontos para construir</p>
-
+          <h1 className={styles.productTitle}>{product.name}</h1>
+          <p className={styles.productSubtitle}>{product.description}</p>
           <hr className={styles.divider} />
-
           <p className={styles.originalPrice}>
-            Valor normal: <span className={styles.originalPriceStrike}>R$ 89,90</span>
+            Valor normal: <span className={styles.originalPriceStrike}>R$ {product.originalPrice.toFixed(2).replace('.', ',')}</span>
           </p>
-
           <p className={styles.finalPriceRow}>
             <span className={styles.finalPriceLabel}>Você paga:</span>
-            <span className={styles.finalPrice}>R$ 9,90</span>
+            <span className={styles.finalPrice}>R$ {product.salePrice.toFixed(2).replace('.', ',')}</span>
           </p>
         </div>
 
@@ -377,36 +226,26 @@ export default function CheckoutPage() {
           <h2 className={styles.formTitle}>Finalizar Pedido</h2>
 
           <div className={styles.formGroup}>
-            <label className={styles.formLabel} htmlFor="name">
-              Nome Completo <span className={styles.required}>*</span>
-            </label>
+            <label className={styles.formLabel} htmlFor="name">Nome Completo <span className={styles.required}>*</span></label>
             <input
-              id="name"
-              name="name"
-              type="text"
+              id="name" name="name" type="text"
               className={`${styles.formInput} ${formErrors.name ? styles.inputError : ''}`}
               placeholder="Seu nome completo"
-              value={formData.name}
-              onChange={handleInputChange}
+              value={formData.name} onChange={handleInputChange}
               autoComplete="name"
             />
             {formErrors.name && <span className={styles.errorText}>{formErrors.name}</span>}
           </div>
 
           <div className={styles.formGroup}>
-            <label className={styles.formLabel} htmlFor="phone">
-              Telefone (WhatsApp) <span className={styles.required}>*</span>
-            </label>
+            <label className={styles.formLabel} htmlFor="phone">Telefone (WhatsApp) <span className={styles.required}>*</span></label>
             <div className={styles.phoneInputWrapper}>
               <span className={styles.phonePrefix}>🇧🇷 +55</span>
               <input
-                id="phone"
-                name="phone"
-                type="tel"
+                id="phone" name="phone" type="tel"
                 className={`${styles.formInput} ${styles.phoneInputWithPrefix} ${formErrors.phone ? styles.inputError : ''}`}
                 placeholder="(11) 99999-9999"
-                value={formData.phone}
-                onChange={handleInputChange}
+                value={formData.phone} onChange={handleInputChange}
                 autoComplete="tel"
               />
             </div>
@@ -414,44 +253,29 @@ export default function CheckoutPage() {
           </div>
 
           <div className={styles.formGroup}>
-            <label className={styles.formLabel} htmlFor="email">
-              E-mail <span className={styles.required}>*</span>
-            </label>
+            <label className={styles.formLabel} htmlFor="email">E-mail <span className={styles.required}>*</span></label>
             <input
-              id="email"
-              name="email"
-              type="email"
+              id="email" name="email" type="email"
               className={`${styles.formInput} ${formErrors.email ? styles.inputError : ''}`}
               placeholder="seuemail@exemplo.com"
-              value={formData.email}
-              onChange={handleInputChange}
+              value={formData.email} onChange={handleInputChange}
               autoComplete="email"
             />
             {formErrors.email && <span className={styles.errorText}>{formErrors.email}</span>}
           </div>
 
           <div className={styles.formGroup}>
-            <label className={styles.formLabel} htmlFor="cpf">
-              CPF <span className={styles.required}>*</span>
-            </label>
+            <label className={styles.formLabel} htmlFor="cpf">CPF <span className={styles.required}>*</span></label>
             <input
-              id="cpf"
-              name="cpf"
-              type="text"
-              inputMode="numeric"
+              id="cpf" name="cpf" type="text" inputMode="numeric"
               className={`${styles.formInput} ${formErrors.cpf ? styles.inputError : ''}`}
               placeholder="000.000.000-00"
-              value={formData.cpf}
-              onChange={handleInputChange}
+              value={formData.cpf} onChange={handleInputChange}
             />
             {formErrors.cpf && <span className={styles.errorText}>{formErrors.cpf}</span>}
           </div>
 
-          <button
-            type="submit"
-            className={styles.submitButton}
-            disabled={isLoading}
-          >
+          <button type="submit" className={styles.submitButton} disabled={isLoading}>
             {isLoading ? (
               <>
                 <span className={styles.spinner}></span>
@@ -460,7 +284,7 @@ export default function CheckoutPage() {
             ) : (
               <>
                 <svg viewBox="0 0 512 512" width="20" height="20" fill="currentColor">
-                  <path d="M125.8 286.7L213 374c23.6 23.6 61.9 23.6 85.5 0l87.2-87.3c23.6-23.6 23.6-61.9 0-85.5l-87.2-87.3c-23.6-23.6-61.9-23.6-85.5 0l-87.2 87.3c-23.6 23.6-23.6 62 0 85.5zm111.4-152.1c8.4-8.4 22.1-8.4 30.5 0l87.2 87.3c8.4 8.4 8.4 22.1 0 30.5l-87.2 87.3c-8.4-8.4-22.1 8.4-30.5 0l-87.2-87.3c-8.4-8.4-8.4-22.1 0-30.5l87.2-87.3z"/>
+                  <path d="M125.8 286.7L213 374c23.6 23.6 61.9 23.6 85.5 0l87.2-87.3c23.6-23.6 23.6-61.9 0-85.5l-87.2-87.3c-23.6-23.6-61.9-23.6-85.5 0l-87.2 87.3c-23.6 23.6-23.6 62 0 85.5zm111.4-152.1c8.4-8.4 22.1-8.4 30.5 0l87.2 87.3c8.4 8.4 8.4 22.1 0 30.5l-87.2 87.3c-8.4 8.4-22.1 8.4-30.5 0l-87.2-87.3c-8.4-8.4-8.4-22.1 0-30.5l87.2-87.3z"/>
                   <path d="M375.4 125.8c-23.6-23.6-61.9-23.6-85.5 0l-14.8 14.8 30.5 30.5 14.8-14.8c8.4-8.4 22.1-8.4 30.5 0l87.2 87.3c8.4 8.4 8.4 22.1 0 30.5l-14.8 14.8 30.5 30.5 14.8-14.8c23.6-23.6 23.6-61.9 0-85.5l-87.2-87.3z"/>
                   <path d="M136.6 386.2c23.6 23.6 61.9 23.6 85.5 0l14.8-14.8-30.5-30.5-14.8 14.8c-8.4 8.4-22.1 8.4-30.5 0l-87.2-87.3c-8.4-8.4-8.4-22.1 0-30.5l14.8-14.8-30.5-30.5-14.8 14.8c-23.6 23.6-23.6 61.9 0 85.5l87.2 87.3z"/>
                 </svg>
@@ -468,100 +292,29 @@ export default function CheckoutPage() {
               </>
             )}
           </button>
-
-          {(hasSelectedBumps || acceptedCombo) && (
-            <div className={styles.totalDisplay}>
-              <p className={styles.totalLabel}>Total do seu pedido:</p>
-              <p className={styles.totalAmount}>
-                R$ {totalAmount.toFixed(2).replace('.', ',')}
-              </p>
-            </div>
-          )}
         </form>
-
-        {/* ============ ORDER BUMPS ============ */}
-        <div className={styles.orderBumpsSection}>
-          <h2 className={styles.orderBumpsTitle}>Aproveite e adicione:</h2>
-
-          {ORDER_BUMPS.map((bump, index) => {
-            const isSelected = selectedBumps[index] || acceptedCombo;
-
-            return (
-              <div
-                key={bump.id}
-                className={`${styles.bumpCard} ${isSelected ? styles.bumpCardSelected : ''}`}
-                onClick={() => toggleBump(index)}
-                role="checkbox"
-                aria-checked={isSelected}
-                tabIndex={0}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    toggleBump(index);
-                  }
-                }}
-              >
-                <div className={`${styles.bumpCheckbox} ${isSelected ? styles.bumpCheckboxChecked : ''}`}>
-                  {isSelected && <span className={styles.bumpCheckmark}>✓</span>}
-                </div>
-
-                <div className={styles.bumpImageWrapper}>
-                  <Image src={bump.image} alt={bump.name} width={70} height={70} className={styles.bumpImage} />
-                </div>
-
-                <div className={styles.bumpContent}>
-                  <span className={styles.bumpBadge}>{bump.discount}</span>
-                  <p className={styles.bumpName}>{bump.name}</p>
-                  {bump.description && <p className={styles.bumpDescription}>{bump.description}</p>}
-                  <p className={styles.bumpSavings}>Economize R$ {bump.savings.toFixed(2).replace('.', ',')}</p>
-                  <p className={styles.bumpUrgency}>🔥 Apenas nesta compra</p>
-                  <div className={styles.bumpPricing}>
-                    <span className={styles.bumpOriginalPrice}>
-                      R$ {bump.originalPrice.toFixed(2).replace('.', ',')}
-                    </span>
-                    <span className={styles.bumpSalePrice}>
-                      R$ {bump.salePrice.toFixed(2).replace('.', ',')}
-                    </span>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
 
         {/* ============ TRUST FOOTER ============ */}
         <div className={styles.trustFooter}>
           <div className={styles.trustBadges}>
-            <span className={styles.trustBadge}>
-              <span className={styles.trustBadgeIcon}>🔒</span> Pagamento Seguro
-            </span>
-            <span className={styles.trustBadge}>
-              <span className={styles.trustBadgeIcon}>⚡</span> Entrega Imediata
-            </span>
+            <span className={styles.trustBadge}><span className={styles.trustBadgeIcon}>🔒</span> Pagamento Seguro</span>
+            <span className={styles.trustBadge}><span className={styles.trustBadgeIcon}>⚡</span> Entrega Imediata</span>
           </div>
         </div>
       </div>
-
-      {/* ============ MODALS ============ */}
-      <UpsellPopup
-        isOpen={showUpsellPopup}
-        onAccept={handleUpsellAccept}
-        onDecline={handleUpsellDecline}
-      />
 
       {showPixDisplay && pixData && (
         <PixDisplay
           billingId={pixData.billingId}
           brCode={pixData.brCode}
           qrCodeBase64={pixData.qrCodeBase64}
-          amount={totalAmount}
+          amount={product.salePrice}
           customerName={pixData.customerName}
           customerPhone={pixData.customerPhone}
           productsBought={pixData.productsBought}
         />
       )}
 
-      {/* ============ ERROR MODAL ============ */}
       {errorMessage && (
         <div className={styles.errorModalOverlay}>
           <div className={styles.errorModalContent}>
@@ -570,15 +323,20 @@ export default function CheckoutPage() {
             </div>
             <h3 className={styles.errorModalTitle}>Atenção</h3>
             <p className={styles.errorModalText}>{errorMessage}</p>
-            <button 
-              className={styles.errorModalButton} 
-              onClick={() => setErrorMessage(null)}
-            >
+            <button className={styles.errorModalButton} onClick={() => setErrorMessage(null)}>
               Corrigir Dados
             </button>
           </div>
         </div>
       )}
     </div>
+  );
+}
+
+export default function GenericCheckoutPage() {
+  return (
+    <Suspense fallback={<div className={styles.checkoutPage}><div className={styles.container}>Carregando...</div></div>}>
+      <CheckoutForm />
+    </Suspense>
   );
 }
