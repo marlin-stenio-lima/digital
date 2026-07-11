@@ -94,3 +94,17 @@
   font-size: 1rem;
   margin-top: 1rem;
 }
+
+.pedreiroLogo {
+  color: #ea580c !important;
+}
+
+.pedreiroButton {
+  background-color: #ea580c !important;
+  color: #fff !important;
+}
+
+.pedreiroButton:hover:not(:disabled) {
+  background-color: #f97316 !important;
+}
+

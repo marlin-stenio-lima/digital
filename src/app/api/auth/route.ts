@@ -23,7 +23,6 @@ export async function POST(request: Request) {
         user = data;
       }
     } else if (phone) {
-      // Clean phone number just in case
       const cleanPhone = phone.replace(/\D/g, '');
       const { data, error } = await supabaseAdmin
         .from('bones_alunos')
@@ -34,7 +33,7 @@ export async function POST(request: Request) {
       if (!error && data) {
         user = data;
       } else {
-        // Fallback: try to find matching end of string if they didn't put country code
+        // Fallback: busca parcial
         const { data: listData } = await supabaseAdmin
           .from('bones_alunos')
           .select('*');
@@ -58,7 +57,14 @@ export async function POST(request: Request) {
       maxAge: 60 * 60 * 24 * 365, // 1 year
     });
 
-    return NextResponse.json({ success: true, user: { telefone: user.telefone, comprou_ads: user.comprou_ads } });
+    return NextResponse.json({ 
+      success: true, 
+      user: { 
+        telefone: user.telefone, 
+        comprou_ads: user.comprou_ads,
+        token: user.token
+      } 
+    });
 
   } catch (error) {
     console.error('[Auth] Error:', error);

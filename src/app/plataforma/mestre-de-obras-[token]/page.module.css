@@ -1,0 +1,450 @@
+.container {
+  display: flex;
+  min-height: 100vh;
+  background-color: #0b0f19;
+  color: #f1f5f9;
+  font-family: 'Inter', sans-serif;
+}
+
+.sidebar {
+  width: 340px;
+  background-color: #0f172a;
+  border-right: 1px solid #1e293b;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebarHeader {
+  padding: 1.5rem;
+  border-bottom: 1px solid #1e293b;
+}
+
+.sidebarHeader h2 {
+  font-size: 1.3rem;
+  color: #ea580c; /* Cor laranja premium do mestre da obra */
+  margin: 0 0 0.3rem 0;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.userLabel {
+  font-size: 0.8rem;
+  color: #94a3b8;
+  display: block;
+}
+
+/* PROGRESS SECTION */
+.progressSection {
+  padding: 1.2rem 1.5rem;
+  background-color: #0b1329;
+  border-bottom: 1px solid #1e293b;
+}
+
+.progressInfo {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #e2e8f0;
+  margin-bottom: 0.5rem;
+}
+
+.progressBarBg {
+  width: 100%;
+  height: 6px;
+  background-color: #1e293b;
+  border-radius: 999px;
+  overflow: hidden;
+  margin-bottom: 0.4rem;
+}
+
+.progressBarFill {
+  height: 100%;
+  background-color: #ea580c;
+  border-radius: 999px;
+  transition: width 0.3s ease;
+}
+
+.progressStats {
+  font-size: 0.75rem;
+  color: #94a3b8;
+}
+
+/* NAVIGATION */
+.navigation {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem 0;
+}
+
+.moduleWrapper {
+  margin-bottom: 0.5rem;
+}
+
+.moduleHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  background-color: #0f172a;
+  border-bottom: 1px solid #1e293b;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.moduleHeader:hover {
+  background-color: #1e293b;
+}
+
+.moduleHeaderActive {
+  background-color: #1e293b;
+  border-left: 4px solid #ea580c;
+}
+
+.moduleMeta {
+  display: flex;
+  flex-direction: column;
+}
+
+.moduleNumber {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #ea580c;
+  text-transform: uppercase;
+  margin-bottom: 0.2rem;
+}
+
+.moduleTitle {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #f1f5f9;
+}
+
+.bonusBadge {
+  background-color: #ea580c;
+  color: #fff;
+  font-size: 0.65rem;
+  font-weight: 800;
+  padding: 2px 6px;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+
+.lockIcon {
+  font-size: 1rem;
+}
+
+/* LESSON LIST */
+.lessonList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  background-color: #0b0f19;
+}
+
+.lessonItem {
+  padding: 0.85rem 1.5rem;
+  border-bottom: 1px solid #1e293b;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.lessonItem:hover {
+  background-color: #1e293b;
+}
+
+.lessonActive {
+  background-color: #1e293b;
+}
+
+.lessonLeft {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.lessonCheckbox {
+  accent-color: #ea580c;
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+.lessonTitle {
+  font-size: 0.88rem;
+  color: #cbd5e1;
+}
+
+.lessonActive .lessonTitle {
+  color: #fff;
+  font-weight: 700;
+}
+
+/* MAIN VIEW */
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.topBar {
+  display: flex;
+  justify-content: flex-end;
+  padding: 1rem 2rem;
+  background-color: #0f172a;
+  border-bottom: 1px solid #1e293b;
+}
+
+.logoutBtn {
+  background: none;
+  border: 1px solid #334155;
+  color: #94a3b8;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.logoutBtn:hover {
+  background-color: #1e293b;
+  color: #fff;
+}
+
+.contentContainer {
+  padding: 2.5rem 2rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  max-width: 1100px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.playerView {
+  width: 100%;
+}
+
+.playerWrapper {
+  width: 100%;
+  aspect-ratio: 16/9;
+  background-color: #000;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+  border: 1px solid #1e293b;
+  margin-bottom: 1.5rem;
+}
+
+.iframePlayer {
+  width: 100%;
+  height: 100%;
+}
+
+.metaInfo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.lessonMainTitle {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #fff;
+  margin: 0;
+}
+
+.btnMarkComplete {
+  background-color: #1e293b;
+  color: #cbd5e1;
+  border: 1px solid #334155;
+  padding: 0.8rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btnMarkComplete:hover {
+  background-color: #ea580c;
+  color: #fff;
+  border-color: #ea580c;
+}
+
+.btnCompleteDone {
+  background-color: #10b981;
+  color: #fff;
+  border-color: #10b981;
+}
+
+.btnCompleteDone:hover {
+  background-color: #059669;
+  border-color: #059669;
+}
+
+.descriptionCard {
+  background-color: #0f172a;
+  border: 1px solid #1e293b;
+  padding: 1.5rem;
+  border-radius: 12px;
+  color: #94a3b8;
+  line-height: 1.6;
+}
+
+.descriptionCard h3 {
+  color: #fff;
+  margin: 0 0 0.8rem 0;
+  font-size: 1.1rem;
+}
+
+.emptyView {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #64748b;
+  text-align: center;
+  padding: 3rem;
+}
+
+/* UPSELL BLOCKER */
+.upsellBlocker {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background-color: #0f172a;
+  border: 1px solid #ea580c;
+  padding: 3rem 2rem;
+  border-radius: 16px;
+  box-shadow: 0 25px 50px -12px rgba(234, 88, 12, 0.15);
+  max-width: 600px;
+  margin: 2rem auto;
+}
+
+.lockGraphic {
+  font-size: 4rem;
+  margin-bottom: 1.5rem;
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.blockTitle {
+  font-size: 1.8rem;
+  color: #fff;
+  margin: 0 0 0.5rem 0;
+  font-weight: 800;
+}
+
+.blockDesc {
+  color: #94a3b8;
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+  line-height: 1.5;
+}
+
+.upsellBenefits {
+  text-align: left;
+  background-color: #0b0f19;
+  padding: 1.5rem;
+  border-radius: 12px;
+  border: 1px solid #1e293b;
+  width: 100%;
+  margin-bottom: 2rem;
+}
+
+.upsellBenefits h3 {
+  color: #ea580c;
+  font-size: 1rem;
+  margin: 0 0 1rem 0;
+  font-weight: 700;
+}
+
+.upsellBenefits ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.upsellBenefits li {
+  color: #cbd5e1;
+  margin-bottom: 0.8rem;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.priceContainer {
+  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.priceLabel {
+  font-size: 0.9rem;
+  color: #94a3b8;
+}
+
+.price {
+  font-size: 2.2rem;
+  font-weight: 900;
+  color: #ea580c;
+}
+
+.upsellBtn {
+  display: inline-block;
+  background-color: #ea580c;
+  color: #fff;
+  padding: 1.2rem 2.5rem;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 800;
+  text-decoration: none;
+  box-shadow: 0 10px 15px -3px rgba(234, 88, 12, 0.4);
+  transition: all 0.2s;
+  width: 100%;
+}
+
+.upsellBtn:hover {
+  background-color: #f97316;
+  transform: translateY(-2px);
+  box-shadow: 0 15px 20px -3px rgba(234, 88, 12, 0.5);
+}
+
+.guaranteeText {
+  font-size: 0.8rem;
+  color: #64748b;
+  margin-top: 1rem;
+}
+
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+  .sidebar {
+    width: 100%;
+    height: auto;
+    border-right: none;
+    border-bottom: 1px solid #1e293b;
+  }
+  .main {
+    height: auto;
+  }
+  .contentContainer {
+    padding: 1rem;
+  }
+  .lessonMainTitle {
+    font-size: 1.4rem;
+  }
+}
