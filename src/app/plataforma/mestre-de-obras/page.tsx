@@ -3,16 +3,7 @@ import { redirect } from 'next/navigation';
 import { supabaseAdmin } from '@/lib/supabase';
 import PlatformClient from './PlatformClient';
 
-interface Props {
-  params: Promise<{
-    token: string;
-  }>;
-}
-
-export default async function PlataformaPedreiro({ params }: Props) {
-  const resolvedParams = await params;
-  const urlToken = resolvedParams.token;
-
+export default async function PlataformaPedreiro() {
   const cookieStore = await cookies();
   const session = cookieStore.get('bones_session');
 
@@ -20,15 +11,14 @@ export default async function PlataformaPedreiro({ params }: Props) {
     redirect('/plataforma/login?course=pedreiro');
   }
 
-  // Verifica se o usuário correspondente à sessão realmente existe e tem esse token seguro na URL
+  // Verifica se o usuário correspondente à sessão realmente existe
   const { data: user } = await supabaseAdmin
     .from('bones_alunos')
     .select('*')
     .eq('telefone', session.value)
-    .eq('token', urlToken)
     .single();
 
-  // Se o token na URL não bater com o token do aluno logado, bloqueia
+  // Se o aluno não existir no banco, bloqueia o acesso
   if (!user) {
     redirect('/plataforma/login?course=pedreiro');
   }

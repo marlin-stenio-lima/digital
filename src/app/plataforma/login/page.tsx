@@ -11,55 +11,41 @@ function LoginContent() {
   const [phone, setPhone] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const [checkingToken, setCheckingToken] = useState(true);
   const [isPedreiro, setIsPedreiro] = useState(false);
 
   useEffect(() => {
-    // Verifica se veio de uma rota ou origem de pedreiro
     if (typeof window !== 'undefined') {
       const isPedRoute = window.location.pathname.includes('/pedreiro') || document.referrer.includes('/pedreiro');
       setIsPedreiro(isPedRoute || searchParams.get('course') === 'pedreiro');
     }
-
-    const token = searchParams.get('token');
-    if (token) {
-      handleLogin(null, token);
-    } else {
-      setCheckingToken(false);
-    }
   }, [searchParams]);
 
-  const handleLogin = async (e: React.FormEvent | null, token: string | null = null) => {
-    if (e) e.preventDefault();
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
     
     setLoading(true);
     setError('');
 
     try {
-      const payload = token ? { token } : { phone };
-      
       const res = await fetch('/api/auth', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
+        body: JSON.stringify({ phone })
       });
 
       const data = await res.json();
 
       if (data.success) {
-        // Se for o curso de pedreiros, redireciona para a rota segura
         if (isPedreiro || searchParams.get('course') === 'pedreiro') {
-          router.push(`/plataforma/mestre-de-obras-${data.user.token}`);
+          router.push('/plataforma/mestre-de-obras');
         } else {
           router.push('/plataforma/fabrica-de-bones');
         }
       } else {
         setError(data.error || 'Erro ao fazer login.');
-        setCheckingToken(false);
       }
     } catch (err) {
       setError('Erro de conexão. Tente novamente.');
-      setCheckingToken(false);
     } finally {
       setLoading(false);
     }
@@ -69,17 +55,6 @@ function LoginContent() {
     logo: isPedreiro ? 'MESTRE DA OBRA' : 'FÁBRICA DE BONÉS',
     colorClass: isPedreiro ? styles.pedreiroLogo : styles.bonesLogo
   };
-
-  if (checkingToken) {
-    return (
-      <div className={styles.container}>
-        <div className={styles.loginBox}>
-          <div className={`${styles.logo} ${currentTheme.colorClass}`}>{currentTheme.logo}</div>
-          <p className={styles.loading}>Validando acesso seguro...</p>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className={styles.container}>
