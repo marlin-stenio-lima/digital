@@ -19,7 +19,7 @@ export default function ProjetosCurraisLP() {
       
       <main className={styles.container}>
         {/* ===== A — ATENÇÃO ===== */}
-        <section className={styles.hero}>
+        <section className={styles.heroCurrais}>
           <div className={styles.heroContent}>
             <div className={styles.badge}>PROJETOS PRONTOS E DETALHADOS</div>
             <h1 className={styles.headline}>

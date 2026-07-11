@@ -19,7 +19,7 @@ export default function ProjetosACMLP() {
       
       <main className={styles.container}>
         {/* ===== A — ATENÇÃO ===== */}
-        <section className={styles.hero}>
+        <section className={styles.heroACM}>
           <div className={styles.heroContent}>
             <div className={styles.badge}>MÉTODO PRÁTICO DE FABRICAÇÃO</div>
             <h1 className={styles.headline}>

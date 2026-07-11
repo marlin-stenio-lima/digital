@@ -19,7 +19,7 @@ export default function ProjetosPedreiroLP() {
       
       <main className={styles.container}>
         {/* ===== A — ATENÇÃO ===== */}
-        <section className={styles.hero}>
+        <section className={styles.heroPedreiro}>
           <div className={styles.heroContent}>
             <div className={styles.badge}>GUIA PRÁTICO DE EXECUÇÃO</div>
             <h1 className={styles.headline}>
