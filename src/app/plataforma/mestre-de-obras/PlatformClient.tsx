@@ -36,21 +36,9 @@ export default function PlatformClient({ customerName, hasBonusAccess }: Platfor
   };
 
   const handleLessonClick = (module: Module, lesson: Lesson | undefined) => {
-    if (module.isBonusRedirect) {
-      if (!hasBonusAccess) {
-        // Bloquear acesso e oferecer Upsell
-        setActiveLesson(null);
-        setActiveModule(module);
-        setShowUpsellBlocker(true);
-      } else {
-        // Se de alguma forma tiver acesso mas for redirect externo
-        window.open(PEDREIRO_COURSE_DATA.bonusRedirectUrl, '_blank');
-      }
-    } else if (lesson) {
-      setActiveModule(module);
-      setActiveLesson(lesson);
-      setShowUpsellBlocker(false);
-    }
+    setActiveModule(module);
+    setActiveLesson(lesson || null);
+    setShowUpsellBlocker(false);
   };
 
   const handleBonusModuleClick = () => {
@@ -58,7 +46,7 @@ export default function PlatformClient({ customerName, hasBonusAccess }: Platfor
       setActiveLesson(null);
       setActiveModule({
         id: 4,
-        title: "Bônus: Elétrica & Hidráulica",
+        title: "Elétrica & Hidráulica",
         image: "/images/bonus.jpg",
         description: "Módulo bônus exclusivo com instalações práticas residenciais.",
         isBonusRedirect: true
@@ -103,20 +91,38 @@ export default function PlatformClient({ customerName, hasBonusAccess }: Platfor
             const isBonus = mod.isBonusRedirect;
             const isCurrentModule = activeModule.id === mod.id;
 
+            // Se for bônus, renderiza o botão bloqueado customizado
+            if (isBonus) {
+              return (
+                <div key={mod.id} className={styles.moduleWrapper}>
+                  <div 
+                    className={`${styles.moduleHeader} ${activeModule.id === 4 ? styles.moduleHeaderActive : ''}`}
+                    onClick={handleBonusModuleClick}
+                    style={{ marginTop: '0.5rem', border: '1px dashed #ea580c' }}
+                  >
+                    <div className={styles.moduleMeta}>
+                      <span className={styles.moduleNumber} style={{ color: '#ea580c' }}>CONTEÚDO ADICIONAL</span>
+                      <span className={styles.moduleTitle}>Elétrica & Hidráulica</span>
+                    </div>
+                    {!hasBonusAccess && <span className={styles.lockIcon}>🔒</span>}
+                  </div>
+                </div>
+              );
+            }
+
             return (
               <div key={mod.id} className={styles.moduleWrapper}>
                 <div 
                   className={`${styles.moduleHeader} ${isCurrentModule ? styles.moduleHeaderActive : ''}`}
-                  onClick={() => !isBonus && setActiveModule(mod)}
+                  onClick={() => setActiveModule(mod)}
                 >
                   <div className={styles.moduleMeta}>
                     <span className={styles.moduleNumber}>Módulo {mod.id}</span>
                     <span className={styles.moduleTitle}>{mod.title}</span>
                   </div>
-                  {isBonus && <span className={styles.bonusBadge}>UPSell</span>}
                 </div>
 
-                {isCurrentModule && !isBonus && mod.lessons && (
+                {isCurrentModule && mod.lessons && (
                   <ul className={styles.lessonList}>
                     {mod.lessons.map(les => {
                       const isCurrentLesson = activeLesson?.id === les.id;
@@ -146,19 +152,6 @@ export default function PlatformClient({ customerName, hasBonusAccess }: Platfor
               </div>
             );
           })}
-
-          {/* Botão de Módulo Bônus separado para facilitar acesso */}
-          <div 
-            className={`${styles.moduleHeader} ${activeModule.id === 4 ? styles.moduleHeaderActive : ''}`}
-            onClick={handleBonusModuleClick}
-            style={{ marginTop: '1rem', border: '1px dashed #ea580c' }}
-          >
-            <div className={styles.moduleMeta}>
-              <span className={styles.moduleNumber} style={{ color: '#ea580c' }}>BÔNUS BLOQUEADO</span>
-              <span className={styles.moduleTitle}>Elétrica & Hidráulica</span>
-            </div>
-            {!hasBonusAccess && <span className={styles.lockIcon}>🔒</span>}
-          </div>
         </div>
       </aside>
 
@@ -173,9 +166,9 @@ export default function PlatformClient({ customerName, hasBonusAccess }: Platfor
             /* BLOQUEADOR UPSELL */
             <div className={styles.upsellBlocker}>
               <div className={styles.lockGraphic}>🔒</div>
-              <h2 className={styles.blockTitle}>Módulo Bônus Bloqueado</h2>
+              <h2 className={styles.blockTitle}>Acesso Bloqueado</h2>
               <p className={styles.blockDesc}>
-                O curso de **Instalações de Elétrica & Hidráulica Residencial** é um treinamento premium de upsell.
+                O curso complementar de **Instalações de Elétrica & Hidráulica Residencial** é um treinamento premium de upsell.
               </p>
               
               <div className={styles.upsellBenefits}>
