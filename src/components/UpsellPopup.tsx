@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import React from 'react';
 import styles from './UpsellPopup.module.css';
 
 interface UpsellPopupProps {
@@ -10,102 +10,50 @@ interface UpsellPopupProps {
 }
 
 export default function UpsellPopup({ isOpen, onAccept, onDecline }: UpsellPopupProps) {
-  useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
-
-    return () => {
-      document.body.style.overflow = '';
-    };
-  }, [isOpen]);
-
-  useEffect(() => {
-    if (!isOpen) return;
-
-    function handleKeyDown(e: KeyboardEvent) {
-      if (e.key === 'Escape') {
-        onDecline();
-      }
-    }
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isOpen, onDecline]);
-
-  if (!isOpen) {
-    return null;
-  }
-
-  function handleOverlayClick(e: React.MouseEvent<HTMLDivElement>) {
-    if (e.target === e.currentTarget) {
-      onDecline();
-    }
-  }
+  if (!isOpen) return null;
 
   return (
-    <div className={styles.overlay} onClick={handleOverlayClick} role="dialog" aria-modal="true">
+    <div className={styles.overlay}>
       <div className={styles.modal}>
-        <button
-          className={styles.closeButton}
-          onClick={onDecline}
-          aria-label="Fechar"
-          type="button"
-        >
-          ✕
+        <button className={styles.closeBtn} onClick={onDecline} aria-label="Fechar">
+          &times;
         </button>
-
-        <span className={styles.topBadge}>🎁 Oferta válida apenas nesta página</span>
-
-        <span className={styles.giftIcon}>🎁</span>
-
-        <h2 className={styles.title}>Oferta Especial</h2>
-
-        <p className={styles.originalPrice}>De R$ 29,70</p>
-
-        <p className={styles.priceLabel}>Por apenas</p>
-
-        <p className={styles.salePrice}>R$ 19,90</p>
-
-        <p className={styles.perProject}>apenas R$ 6,63 por projeto!</p>
-
-        <ul className={styles.checklist}>
-          <li className={styles.checklistItem}>
+        
+        <div className={styles.badge}>🎁 OFERTA EXCLUSIVA DE CHECKOUT</div>
+        
+        <h2 className={styles.title}>Combo Mestre da Obra</h2>
+        <p className={styles.subtitle}>Adicione os dois treinamentos complementares com desconto especial!</p>
+        
+        <div className={styles.checklist}>
+          <div className={styles.checkItem}>
             <span className={styles.checkIcon}>✅</span>
-            <span>Carretinha de Carga</span>
-          </li>
-          <li className={styles.checklistItem}>
+            <div>
+              <strong>Guia de Elétrica Residencial Completo</strong>
+              <p>Do conceito atômico às ligações práticas de disjuntores, tomadas e chuveiro elétrico.</p>
+            </div>
+          </div>
+          <div className={styles.checkItem}>
             <span className={styles.checkIcon}>✅</span>
-            <span>Máquinas de Academia</span>
-          </li>
-          <li className={styles.checklistItem}>
-            <span className={styles.checkIcon}>✅</span>
-            <span>Perfuratriz de Poços</span>
-          </li>
-        </ul>
-
-        <div className={styles.savingsBadge}>
-          💰 Pacote: Você economiza R$ 9,80 (33% OFF)
+            <div>
+              <strong>Guia de Hidráulica Residencial Completo</strong>
+              <p>Aprenda a dimensionar caixa d&apos;água, bombas de pressão e ligações de esgoto.</p>
+            </div>
+          </div>
         </div>
 
-        <p className={styles.warningText}>⚠️ Esta oferta não aparecerá novamente</p>
+        <div className={styles.priceContainer}>
+          <span className={styles.oldPrice}>De R$ 79,80</span>
+          <span className={styles.priceLabel}>Por apenas adicionais de:</span>
+          <span className={styles.newPrice}>R$ 19,80</span>
+          <span className={styles.priceSub}>Sendo R$ 9,90 cada curso bônus!</span>
+        </div>
 
-        <button
-          className={styles.acceptButton}
-          onClick={onAccept}
-          type="button"
-        >
-          Sim, quero aproveitar
+        <button className={styles.acceptBtn} onClick={onAccept}>
+          SIM, QUERO ADICIONAR AO MEU PEDIDO
         </button>
-
-        <button
-          className={styles.declineLink}
-          onClick={onDecline}
-          type="button"
-        >
-          Não, obrigado
+        
+        <button className={styles.declineBtn} onClick={onDecline}>
+          Não, obrigado. Quero apenas o produto principal
         </button>
       </div>
     </div>

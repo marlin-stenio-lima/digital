@@ -1,10 +1,10 @@
 'use client';
 
-import { useState, useEffect, useCallback, FormEvent, ChangeEvent, Suspense } from 'react';
+import React, { useState, useEffect, useCallback, ChangeEvent, FormEvent, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
-import Image from 'next/image';
 import styles from './checkout.module.css';
 import PixDisplay from '@/components/PixDisplay';
+import UpsellPopup from '@/components/UpsellPopup';
 
 interface FormData {
   name: string;
@@ -118,6 +118,28 @@ function CheckoutForm() {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
+  // States de Order Bumps e Upsells
+  const [eletricaSelected, setEletricaSelected] = useState(false);
+  const [hidraulicaSelected, setHidraulicaSelected] = useState(false);
+  
+  // Controle de Upsell Popup
+  const [showUpsellPopup, setShowUpsellPopup] = useState(false);
+  const [hasShownUpsell, setHasShownUpsell] = useState(false);
+
+  // Preços estáticos dos bumps/upsells avulsos
+  const upsellAvulsoPrice = 13.90;
+
+  // Calculo de Total do Pedido
+  const isComboActive = eletricaSelected && hidraulicaSelected;
+  let computedTotal = product.salePrice;
+  
+  if (isComboActive) {
+    computedTotal += 19.80; // Combo promocional: R$ 9,90 cada
+  } else {
+    if (eletricaSelected) computedTotal += upsellAvulsoPrice;
+    if (hidraulicaSelected) computedTotal += upsellAvulsoPrice;
+  }
+
   const handleInputChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     let formattedValue = value;
@@ -151,7 +173,7 @@ function CheckoutForm() {
     return errors;
   }
 
-  const generatePix = useCallback(async () => {
+  const generatePix = useCallback(async (finalTotal: number, finalProducts: string[]) => {
     setIsLoading(true);
     setErrorMessage(null);
 
@@ -164,8 +186,8 @@ function CheckoutForm() {
           phone: formData.phone,
           email: formData.email.trim(),
           cpf: formData.cpf,
-          products: [product.id],
-          totalAmount: product.salePrice,
+          products: finalProducts,
+          totalAmount: finalTotal,
           course_id: product.id,
         }),
       });
@@ -184,7 +206,7 @@ function CheckoutForm() {
         qrCodeBase64: result.qrCodeBase64,
         customerName: formData.name.trim(),
         customerPhone: formData.phone,
-        productsBought: [product.id],
+        productsBought: finalProducts,
       });
 
       setShowPixDisplay(true);
@@ -196,13 +218,40 @@ function CheckoutForm() {
     }
   }, [formData, product]);
 
-  function handleSubmit(e: FormEvent) {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     const errors = validateForm();
     setFormErrors(errors);
     if (Object.keys(errors).length > 0) return;
-    generatePix();
-  }
+
+    // Se o cliente estiver levando apenas o principal (eletrica e hidraulica desmarcados)
+    // e ainda não mostramos a oferta popup de combo promocional
+    if (product.id === 'pedreiro' && !eletricaSelected && !hidraulicaSelected && !hasShownUpsell) {
+      setShowUpsellPopup(true);
+      setHasShownUpsell(true);
+    } else {
+      // De outra forma, gera o Pix direto com o total computado
+      const buyList = [product.id];
+      if (eletricaSelected) buyList.push('eletrica');
+      if (hidraulicaSelected) buyList.push('hidraulica');
+      generatePix(computedTotal, buyList);
+    }
+  };
+
+  const handleAcceptUpsell = () => {
+    setShowUpsellPopup(false);
+    setEletricaSelected(true);
+    setHidraulicaSelected(true);
+    
+    // Total: R$ 9,90 principal + R$ 19,80 combo (eletrica e hidraulica por 9,90 cada) = R$ 29,70
+    const buyList = [product.id, 'eletrica', 'hidraulica'];
+    generatePix(product.salePrice + 19.80, buyList);
+  };
+
+  const handleDeclineUpsell = () => {
+    setShowUpsellPopup(false);
+    generatePix(product.salePrice, [product.id]);
+  };
 
   return (
     <div className={styles.checkoutPage}>
@@ -212,12 +261,36 @@ function CheckoutForm() {
           <h1 className={styles.productTitle}>{product.name}</h1>
           <p className={styles.productSubtitle}>{product.description}</p>
           <hr className={styles.divider} />
+          
+          <div className={styles.summaryList}>
+            <div className={styles.summaryRow}>
+              <span>{product.name}</span>
+              <span>R$ {product.salePrice.toFixed(2).replace('.', ',')}</span>
+            </div>
+            
+            {eletricaSelected && (
+              <div className={styles.summaryRow}>
+                <span>💡 Guia de Elétrica Residencial</span>
+                <span>R$ {(isComboActive ? 9.90 : upsellAvulsoPrice).toFixed(2).replace('.', ',')}</span>
+              </div>
+            )}
+
+            {hidraulicaSelected && (
+              <div className={styles.summaryRow}>
+                <span>💧 Guia de Hidráulica Residencial</span>
+                <span>R$ {(isComboActive ? 9.90 : upsellAvulsoPrice).toFixed(2).replace('.', ',')}</span>
+              </div>
+            )}
+          </div>
+
+          <hr className={styles.divider} />
+
           <p className={styles.originalPrice}>
             Valor normal: <span className={styles.originalPriceStrike}>R$ {product.originalPrice.toFixed(2).replace('.', ',')}</span>
           </p>
           <p className={styles.finalPriceRow}>
             <span className={styles.finalPriceLabel}>Você paga:</span>
-            <span className={styles.finalPrice}>R$ {product.salePrice.toFixed(2).replace('.', ',')}</span>
+            <span className={styles.finalPrice}>R$ {computedTotal.toFixed(2).replace('.', ',')}</span>
           </p>
         </div>
 
@@ -275,6 +348,58 @@ function CheckoutForm() {
             {formErrors.cpf && <span className={styles.errorText}>{formErrors.cpf}</span>}
           </div>
 
+          {/* ============ ORDER BUMPS (EXCLUSIVOS DE PEDREIRO) ============ */}
+          {product.id === 'pedreiro' && (
+            <div className={styles.orderBumpsSection}>
+              <h3 className={styles.bumpsTitle}>Adicione ao seu pedido:</h3>
+              
+              {/* BUMP 1: ELÉTRICA */}
+              <label className={`${styles.bumpCard} ${eletricaSelected ? styles.bumpSelected : ''}`}>
+                <input 
+                  type="checkbox" 
+                  checked={eletricaSelected}
+                  onChange={(e) => setEletricaSelected(e.target.checked)}
+                  className={styles.bumpCheckbox}
+                />
+                <div className={styles.bumpInfo}>
+                  <div className={styles.bumpHeader}>
+                    <span className={styles.bumpName}>💡 Guia de Elétrica Residencial</span>
+                    <span className={styles.bumpPrice}>+ R$ {upsellAvulsoPrice.toFixed(2).replace('.', ',')}</span>
+                  </div>
+                  <p className={styles.bumpDesc}>
+                    Aprenda a fazer dimensionamento de disjuntores, cabos e fiação de tomadas, interruptores e chuveiro de forma prática.
+                  </p>
+                </div>
+              </label>
+
+              {/* BUMP 2: HIDRÁULICA */}
+              <label className={`${styles.bumpCard} ${hidraulicaSelected ? styles.bumpSelected : ''}`}>
+                <input 
+                  type="checkbox" 
+                  checked={hidraulicaSelected}
+                  onChange={(e) => setHidraulicaSelected(e.target.checked)}
+                  className={styles.bumpCheckbox}
+                />
+                <div className={styles.bumpInfo}>
+                  <div className={styles.bumpHeader}>
+                    <span className={styles.bumpName}>💧 Guia de Hidráulica Residencial</span>
+                    <span className={styles.bumpPrice}>+ R$ {upsellAvulsoPrice.toFixed(2).replace('.', ',')}</span>
+                  </div>
+                  <p className={styles.bumpDesc}>
+                    Domine a instalação de caixas d&apos;água, pressurizadores de banheiros e redes prediais de esgoto doméstico sem erros.
+                  </p>
+                </div>
+              </label>
+
+              {/* AVISO DO COMBO */}
+              {isComboActive && (
+                <div className={styles.comboNotice}>
+                  🎉 <strong>Combo Ativo!</strong> Você adicionou ambos e ganhou desconto extra. Os cursos bônus saíram por apenas <strong>R$ 9,90 cada!</strong>
+                </div>
+              )}
+            </div>
+          )}
+
           <button type="submit" className={styles.submitButton} disabled={isLoading}>
             {isLoading ? (
               <>
@@ -308,12 +433,18 @@ function CheckoutForm() {
           billingId={pixData.billingId}
           brCode={pixData.brCode}
           qrCodeBase64={pixData.qrCodeBase64}
-          amount={product.salePrice}
+          amount={computedTotal}
           customerName={pixData.customerName}
           customerPhone={pixData.customerPhone}
           productsBought={pixData.productsBought}
         />
       )}
+
+      <UpsellPopup
+        isOpen={showUpsellPopup}
+        onAccept={handleAcceptUpsell}
+        onDecline={handleDeclineUpsell}
+      />
 
       {errorMessage && (
         <div className={styles.errorModalOverlay}>

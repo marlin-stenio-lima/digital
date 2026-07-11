@@ -404,13 +404,15 @@ export async function POST(request: Request) {
         console.log(`[Webhook] Successfully processed acm for ${customerName} (${customerPhone})`);
 
       } else if (cursoId === 'pedreiro') {
-        // Salvar no banco para habilitar o status de redirecionamento no checkout
+        const hasUpsell = productsBought.includes('eletrica') || productsBought.includes('hidraulica');
+        
         try {
           await supabaseAdmin
             .from('bones_alunos')
             .upsert({ 
               telefone: customerPhone, 
               token: crypto.randomUUID(),
+              comprou_ads: hasUpsell,
               data_acesso: new Date().toISOString()
             }, { onConflict: 'telefone' });
         } catch (dbErr) {
@@ -418,15 +420,26 @@ export async function POST(request: Request) {
         }
 
         const downloadLink = process.env.PDF_LINK_PEDREIRO || 'https://link-pendente-pedreiro';
-        const message = `🎉 *Pagamento confirmado!* 🎉\n\n` +
+        const plataformaLink = `${new URL(request.url).origin}/plataforma/login?course=pedreiro`;
+
+        let message = `🎉 *Pagamento confirmado!* 🎉\n\n` +
           `Olá, ${customerName.split(' ')[0]}! Seu pagamento dos *Projetos Estruturais de Pedreiro* foi aprovado com sucesso.\n\n` +
           `📥 *Baixe seu material com guias de ferragens e concreto no link abaixo:*\n` +
-          `${downloadLink}\n\n` +
-          `📌 Lembre-se de baixar e salvar no seu celular para olhar direto no canteiro de obras!\n\n` +
+          `${downloadLink}\n\n`;
+
+        if (hasUpsell) {
+          message += `🖥️ *Acesso Liberado para os Cursos Bônus (Elétrica & Hidráulica):*\n` +
+            `Como você garantiu nossos guias práticos em vídeo de Instalações, liberamos sua área de membros premium!\n\n` +
+            `👉 *Acesse agora:* ${plataformaLink}\n` +
+            `🔑 *Seu Login e Senha:* É o seu próprio WhatsApp: ${customerPhone}\n\n`;
+        }
+
+        message += `📌 Lembre-se de salvar esta mensagem para olhar as informações e projetos sempre que precisar!\n\n` +
           `Bons projetos! 🏗️🧱`;
 
         await sendWhatsAppMessage(customerPhone, message);
-        console.log(`[Webhook] Successfully processed pedreiro for ${customerName} (${customerPhone})`);
+        console.log(`[Webhook] Successfully processed pedreiro for ${customerName} (${customerPhone}). Upsell: ${hasUpsell}`);
+
 
       } else {
         // Logica Antiga do Serralheiro

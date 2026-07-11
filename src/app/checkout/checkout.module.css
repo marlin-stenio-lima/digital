@@ -680,3 +680,108 @@
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
 }
+
+/* Order Bumps Section */
+.orderBumpsSection {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+
+.bumpsTitle {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 0.8rem;
+}
+
+.bumpCard {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.8rem;
+  background-color: #ffffff;
+  border: 1px dashed #d1d5db;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.bumpCard:hover {
+  border-color: #ea580c;
+  background-color: #fffaf7;
+}
+
+.bumpSelected {
+  border-color: #ea580c;
+  background-color: #fff7ed;
+}
+
+.bumpCheckbox {
+  accent-color: #ea580c;
+  width: 18px;
+  height: 18px;
+  margin-top: 0.2rem;
+  cursor: pointer;
+}
+
+.bumpInfo {
+  flex: 1;
+}
+
+.bumpHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.2rem;
+}
+
+.bumpName {
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: #1f2937;
+}
+
+.bumpPrice {
+  font-weight: 800;
+  font-size: 0.9rem;
+  color: #ea580c;
+}
+
+.bumpDesc {
+  font-size: 0.78rem;
+  color: #6b7280;
+  margin: 0;
+  line-height: 1.35;
+}
+
+.comboNotice {
+  background-color: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  border-radius: 6px;
+  padding: 0.75rem 1rem;
+  color: #166534;
+  font-size: 0.82rem;
+  line-height: 1.4;
+  margin-top: 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.summaryList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  text-align: left;
+}
+
+.summaryRow {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.88rem;
+  color: #4b5563;
+}
+
