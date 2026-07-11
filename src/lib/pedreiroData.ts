@@ -13,6 +13,7 @@ export interface Module {
   description: string;
   lessons?: Lesson[];
   isBonus?: boolean;
+  isHydraulics?: boolean; // Novo identificador para separar Hidráulica
 }
 
 export const PEDREIRO_COURSE_DATA = {
@@ -71,9 +72,9 @@ export const PEDREIRO_COURSE_DATA = {
     },
     {
       id: 4,
-      title: "Bônus - Elétrica & Hidráulica",
+      title: "Bônus - Elétrica Residencial",
       image: "/images/bonus.jpg",
-      description: "Módulo bônus exclusivo com aulas práticas completas de instalações e manutenções elétricas e hidráulicas.",
+      description: "Módulo bônus exclusivo com aulas práticas completas de instalações e manutenções elétricas residenciais.",
       isBonus: true,
       lessons: [
         { id: "4-1", title: "Aula 1 - Grandezas elétricas e conceito atômico", videoId: "", videoUrl: "https://conexaoplay.com/wp-content/uploads/2026/03/001-Grandezas-eletricas-e-conceito-atomico.mp4", description: "Conceitos fundamentais da física de eletricidade e átomos." },
@@ -95,27 +96,35 @@ export const PEDREIRO_COURSE_DATA = {
         { id: "4-17", title: "Aula 17 - Instalação de Tomadas NBR 14136", videoId: "", videoUrl: "https://conexaoplay.com/wp-content/uploads/2026/03/004-Instalacao-de-tomadas-conforme-NBR-14136-e-divisao-de-circuito.mp4", description: "Fixação e fiação de tomadas conforme padrão brasileiro." },
         { id: "4-18", title: "Aula 18 - Tomadas de 10A e 20A", videoId: "", videoUrl: "https://conexaoplay.com/wp-content/uploads/2026/03/005-Instalacao-de-tomadas-simples-dupla-e-tripla-de-10-e-20-Amperes.mp4", description: "Diferenças práticas e instalação física de tomadas normais e para eletrodomésticos pesados." },
         { id: "4-19", title: "Aula 19 - Tomada com Interruptor Combinado", videoId: "", videoUrl: "https://conexaoplay.com/wp-content/uploads/2026/03/006-Instalacao-de-tomada-com-interruptor-no-mesmo-ponto.mp4", description: "Como alimentar tomada e lâmpada na mesma caixinha 4x2." },
-        { id: "4-20", title: "Aula 20 - Sensor de Presença", videoId: "", videoUrl: "https://conexaoplay.com/wp-content/uploads/2026/03/007-Instalacao-de-sensor-de-presenca-com-e-sem-interruptor.mp4", description: "Configuração e instalação elétrica de sensores de iluminação." },
-        
-        // Aulas Hidráulicas
-        { id: "4-21", title: "Aula 21 - Instalação Hidráulica Residencial", videoId: "", videoUrl: "https://conexaoplay.com/wp-content/uploads/2026/03/Instalacao-Hidraulica-Principais-Componentes-de-uma-Residencia.mp4", description: "Visão geral das tubulações hidráulicas em construções." },
-        { id: "4-22", title: "Aula 22 - Instalações de Água Fria (NBR 5626)", videoId: "", videoUrl: "https://conexaoplay.com/wp-content/uploads/2026/03/Aula-1-Instalacoes-de-Agua-Fria-Fundamentos-e-Evolucao-das-Redes-Prediais-💧-NBR-5626.mp4", description: "Normas e fundação das redes prediais de água." },
-        { id: "4-23", title: "Aula 23 - Drenagem de Banheiro", videoId: "", videoUrl: "https://conexaoplay.com/wp-content/uploads/2026/03/WATCH-THIS-VIDEO-FIRST-AND-THEN-YOU-CAN-DO-YOUR-BATHROOM-DRAINAGE.mp4", description: "Todo o esquema de caída e tubos de drenagem sanitária." },
-        { id: "4-24", title: "Aula 24 - Válvula de Pressão de Caixa d'Água", videoId: "", videoUrl: "https://conexaoplay.com/wp-content/uploads/2026/03/Aprenda-como-instalar-valvula-na-caixa-dagua-para-aumentar-pressao-de-chuveiro-e-torneiras.mp4", description: "Instalação de válvula reguladora para aumentar a pressão de água nas torneiras." },
-        { id: "4-25", title: "Aula 25 - Como aumentar a pressão da água", videoId: "", videoUrl: "https://conexaoplay.com/wp-content/uploads/2026/03/COMO-AUMENTAR-A-PRESSAO-DA-AGUA.mp4", description: "Macetes de bombeamento e gravidade." },
-        { id: "4-26", title: "Aula 26 - Como Fazer Caixa de Esgoto", videoId: "", videoUrl: "https://conexaoplay.com/wp-content/uploads/2026/03/Como-Fazer-Caixa-de-Esgoto-de-Concreto.mp4", description: "Construção física da caixa de inspeção de esgoto residencial." },
-        { id: "4-27", title: "Aula 27 - Bomba Pressurizadora", videoId: "", videoUrl: "https://conexaoplay.com/wp-content/uploads/2026/03/INSTALACAO-DE-BOMBA-PRESSURIZADORA.mp4", description: "Instalação física de bomba pressurizadora de vazão." },
-        { id: "4-28", title: "Aula 28 - Instalação de Água Fria e Esgoto", videoId: "", videoUrl: "https://conexaoplay.com/wp-content/uploads/2026/03/Como-fazer-a-instalacao-de-agua-fria-e-esgoto-de-banheiro-cozinha-e-area-de-servico-1.mp4", description: "Guias práticos de instalação de canos em pias, sifão e chuveiros." },
-        { id: "4-29", title: "Aula 29 - Tratamento de Esgoto Doméstico", videoId: "", videoUrl: "https://conexaoplay.com/wp-content/uploads/2026/03/TRATAMENTO-DE-ESGOTO.mp4", description: "Sistemas básicos de tratamento e descarte." },
-        { id: "4-30", title: "Aula 30 - Fazer Esgoto Residencia Parte 17", videoId: "", videoUrl: "https://conexaoplay.com/wp-content/uploads/2026/03/FACA-SUA-CASA-ESGOTO-DA-CASA-17.mp4", description: "Montagem passo a passo final de tubulações de esgoto." },
-        { id: "4-31", title: "Aula 31 - Como Achar Vazamento de Água", videoId: "", videoUrl: "https://conexaoplay.com/wp-content/uploads/2026/03/VEJA-COMO-e-FACIL-achar-vazamento-de-agua.mp4", description: "Técnicas fáceis para localizar infiltrações ocultas." },
-        { id: "4-32", title: "Aula 32 - Como Consertar Cano Furado na Parede", videoId: "", videoUrl: "https://conexaoplay.com/wp-content/uploads/2026/03/COMO-CONSERTAR-CANO-FURADO-NA-PAREDE-TUBO-DE-AGUA-FURADO-COMO-CONSERTAR-SIMPLES-E-RAPIDO.mp4", description: "Tapa furos e remendos de canos sem precisar quebrar a parede toda." },
-        { id: "4-33", title: "Aula 33 - Instalação Fácil de Caixa d'Água", videoId: "", videoUrl: "https://conexaoplay.com/wp-content/uploads/2026/03/Caixa-dAgua-INSTALACAO-FACIL-em-Poucos-Passos.mp4", description: "Fixação e entrada de tubulações na caixa d'água." },
-        { id: "4-34", title: "Aula 34 - Desentupimento de Pia com Furadeira", videoId: "", videoUrl: "https://conexaoplay.com/wp-content/uploads/2026/03/Como-desentupir-pia-em-minutos-com-ajuda-da-furadeira.mp4", description: "Uso do desentupidor espiral acoplado à furadeira." },
-        { id: "4-35", title: "Aula 35 - Desentupimento de Vaso Sanitário", videoId: "", videoUrl: "https://conexaoplay.com/wp-content/uploads/2026/03/Como-desentupir-vaso-em-1-minuto.mp4", description: "Macetes de pressão e vácuo." },
-        { id: "4-36", title: "Aula 36 - Desentupimento de Ralo de Banheiro", videoId: "", videoUrl: "https://conexaoplay.com/wp-content/uploads/2026/03/Como-DESENTUPIR-RALO-de-BANHEIRO-sem-precisar-quebrar.mp4", description: "Técnicas eficientes sem quebra." },
-        { id: "4-37", title: "Aula 37 - Limpeza e Higienização de Caixa d'Água", videoId: "", videoUrl: "https://conexaoplay.com/wp-content/uploads/2026/03/Como-limpar-a-CAIXA-DAGUA-10-passos-para-higienizacao-da-caixa-dagua.mp4", description: "10 passos para higienização completa." },
-        { id: "4-38", title: "Aula 38 - Consertar Vazamento pelo Ladrão", videoId: "", videoUrl: "https://conexaoplay.com/wp-content/uploads/2026/03/Como-consertar-caixa-dagua-vazando-pelo-ladrao-agua-vazamento-001.mp4", description: "Regulação de boia e conserto de vazamentos." }
+        { id: "4-20", title: "Aula 20 - Sensor de Presença", videoId: "", videoUrl: "https://conexaoplay.com/wp-content/uploads/2026/03/007-Instalacao-de-sensor-de-presenca-com-e-sem-interruptor.mp4", description: "Configuração e instalação elétrica de sensores de iluminação." }
+      ]
+    },
+    {
+      id: 5,
+      title: "Bônus - Hidráulica Residencial",
+      image: "/images/bonus.jpg",
+      description: "Módulo bônus exclusivo focado em instalações de água fria, caixa d'água, drenagens e tratamentos de esgoto.",
+      isBonus: true,
+      isHydraulics: true,
+      lessons: [
+        { id: "5-1", title: "Aula 1 - Instalação Hidráulica Residencial", videoId: "", videoUrl: "https://conexaoplay.com/wp-content/uploads/2026/03/Instalacao-Hidraulica-Principais-Componentes-de-uma-Residencia.mp4", description: "Visão geral das tubulações hidráulicas em construções." },
+        { id: "5-2", title: "Aula 2 - Instalações de Água Fria (NBR 5626)", videoId: "", videoUrl: "https://conexaoplay.com/wp-content/uploads/2026/03/Aula-1-Instalacoes-de-Agua-Fria-Fundamentos-e-Evolucao-das-Redes-Prediais-💧-NBR-5626.mp4", description: "Normas e fundação das redes prediais de água." },
+        { id: "5-3", title: "Aula 3 - Drenagem de Banheiro", videoId: "", videoUrl: "https://conexaoplay.com/wp-content/uploads/2026/03/WATCH-THIS-VIDEO-FIRST-AND-THEN-YOU-CAN-DO-YOUR-BATHROOM-DRAINAGE.mp4", description: "Todo o esquema de caída e tubos de drenagem sanitária." },
+        { id: "5-4", title: "Aula 4 - Válvula de Pressão de Caixa d'Água", videoId: "", videoUrl: "https://conexaoplay.com/wp-content/uploads/2026/03/Aprenda-como-instalar-valvula-na-caixa-dagua-para-aumentar-pressao-de-chuveiro-e-torneiras.mp4", description: "Instalação de válvula reguladora para aumentar a pressão de água nas torneiras." },
+        { id: "5-5", title: "Aula 5 - Como aumentar a pressão da água", videoId: "", videoUrl: "https://conexaoplay.com/wp-content/uploads/2026/03/COMO-AUMENTAR-A-PRESSAO-DA-AGUA.mp4", description: "Macetes de bombeamento e gravidade." },
+        { id: "5-6", title: "Aula 6 - Como Fazer Caixa de Esgoto", videoId: "", videoUrl: "https://conexaoplay.com/wp-content/uploads/2026/03/Como-Fazer-Caixa-de-Esgoto-de-Concreto.mp4", description: "Construção física da caixa de inspeção de esgoto residencial." },
+        { id: "5-7", title: "Aula 7 - Bomba Pressurizadora", videoId: "", videoUrl: "https://conexaoplay.com/wp-content/uploads/2026/03/INSTALACAO-DE-BOMBA-PRESSURIZADORA.mp4", description: "Instalação física de bomba pressurizadora de vazão." },
+        { id: "5-8", title: "Aula 8 - Instalação de Água Fria e Esgoto", videoId: "", videoUrl: "https://conexaoplay.com/wp-content/uploads/2026/03/Como-fazer-a-instalacao-de-agua-fria-e-esgoto-de-banheiro-cozinha-e-area-de-servico-1.mp4", description: "Guias práticos de instalação de canos em pias, sifão e chuveiros." },
+        { id: "5-9", title: "Aula 9 - Tratamento de Esgoto Doméstico", videoId: "", videoUrl: "https://conexaoplay.com/wp-content/uploads/2026/03/TRATAMENTO-DE-ESGOTO.mp4", description: "Sistemas básicos de tratamento e descarte." },
+        { id: "5-10", title: "Aula 10 - Fazer Esgoto Residencia Parte 17", videoId: "", videoUrl: "https://conexaoplay.com/wp-content/uploads/2026/03/FACA-SUA-CASA-ESGOTO-DA-CASA-17.mp4", description: "Montagem passo a passo final de tubulações de esgoto." },
+        { id: "5-11", title: "Aula 11 - Como Achar Vazamento de Água", videoId: "", videoUrl: "https://conexaoplay.com/wp-content/uploads/2026/03/VEJA-COMO-e-FACIL-achar-vazamento-de-agua.mp4", description: "Técnicas fáceis para localizar infiltrações ocultas." },
+        { id: "5-12", title: "Aula 12 - Como Consertar Cano Furado na Parede", videoId: "", videoUrl: "https://conexaoplay.com/wp-content/uploads/2026/03/COMO-CONSERTAR-CANO-FURADO-NA-PAREDE-TUBO-DE-AGUA-FURADO-COMO-CONSERTAR-SIMPLES-E-RAPIDO.mp4", description: "Tapa furos e remendos de canos sem precisar quebrar a parede toda." },
+        { id: "5-13", title: "Aula 13 - Instalação Fácil de Caixa d'Água", videoId: "", videoUrl: "https://conexaoplay.com/wp-content/uploads/2026/03/Caixa-dAgua-INSTALACAO-FACIL-em-Poucos-Passos.mp4", description: "Fixação e entrada de tubulações na caixa d'água." },
+        { id: "5-14", title: "Aula 14 - Desentupimento de Pia com Furadeira", videoId: "", videoUrl: "https://conexaoplay.com/wp-content/uploads/2026/03/Como-desentupir-pia-em-minutos-com-ajuda-da-furadeira.mp4", description: "Uso do desentupidor espiral acoplado à furadeira." },
+        { id: "5-15", title: "Aula 15 - Desentupimento de Vaso Sanitário", videoId: "", videoUrl: "https://conexaoplay.com/wp-content/uploads/2026/03/Como-desentupir-vaso-em-1-minuto.mp4", description: "Macetes de pressão e vácuo." },
+        { id: "5-16", title: "Aula 16 - Desentupimento de Ralo de Banheiro", videoId: "", videoUrl: "https://conexaoplay.com/wp-content/uploads/2026/03/Como-DESENTUPIR-RALO-de-BANHEIRO-sem-precisar-quebrar.mp4", description: "Técnicas eficientes sem quebra." },
+        { id: "5-17", title: "Aula 17 - Limpeza e Higienização de Caixa d'Água", videoId: "", videoUrl: "https://conexaoplay.com/wp-content/uploads/2026/03/Como-limpar-a-CAIXA-DAGUA-10-passos-para-higienizacao-da-caixa-dagua.mp4", description: "10 passos para higienização completa." },
+        { id: "5-18", title: "Aula 18 - Consertar Vazamento pelo Ladrão", videoId: "", videoUrl: "https://conexaoplay.com/wp-content/uploads/2026/03/Como-consertar-caixa-dagua-vazando-pelo-ladrao-agua-vazamento-001.mp4", description: "Regulação de boia e conserto de vazamentos." }
       ]
     }
   ]

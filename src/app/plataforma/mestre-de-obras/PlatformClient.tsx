@@ -41,31 +41,21 @@ export default function PlatformClient({ customerName, hasBonusAccess }: Platfor
     setShowUpsellBlocker(false);
   };
 
-  const handleBonusModuleClick = () => {
+  const handleBonusModuleClick = (mod: Module) => {
     if (!hasBonusAccess) {
       setActiveLesson(null);
-      setActiveModule({
-        id: 4,
-        title: "Elétrica & Hidráulica",
-        image: "/images/bonus.jpg",
-        description: "Módulo bônus exclusivo com instalações práticas residenciais.",
-        isBonus: true
-      });
+      setActiveModule(mod);
       setShowUpsellBlocker(true);
     } else {
-      // Se tiver acesso, expande o módulo 4 bônus na barra lateral
-      const bonusModule = PEDREIRO_COURSE_DATA.modules.find(m => m.id === 4);
-      if (bonusModule) {
-        setActiveModule(bonusModule);
-        if (bonusModule.lessons && bonusModule.lessons.length > 0) {
-          setActiveLesson(bonusModule.lessons[0]);
-        }
-        setShowUpsellBlocker(false);
+      setActiveModule(mod);
+      if (mod.lessons && mod.lessons.length > 0) {
+        setActiveLesson(mod.lessons[0]);
       }
+      setShowUpsellBlocker(false);
     }
   };
 
-  // Contagem de progresso geral (inclui o bônus se o aluno tiver acesso)
+  // Contagem de progresso geral
   const totalRegularLessons = PEDREIRO_COURSE_DATA.modules
     .filter(m => !m.isBonus || hasBonusAccess)
     .reduce((sum, m) => sum + (m.lessons ? m.lessons.length : 0), 0);
@@ -99,18 +89,18 @@ export default function PlatformClient({ customerName, hasBonusAccess }: Platfor
             const isBonusModule = mod.isBonus;
             const isCurrentModule = activeModule.id === mod.id;
 
-            // Se for o bônus e o usuário NÃO tiver acesso, renderiza o botão bloqueado customizado
+            // Se for módulo bônus e o usuário NÃO tiver acesso, mostra ele bloqueado com cadeado
             if (isBonusModule && !hasBonusAccess) {
               return (
                 <div key={mod.id} className={styles.moduleWrapper}>
                   <div 
-                    className={`${styles.moduleHeader} ${activeModule.id === 4 ? styles.moduleHeaderActive : ''}`}
-                    onClick={handleBonusModuleClick}
-                    style={{ marginTop: '0.5rem', border: '1px dashed #ea580c' }}
+                    className={`${styles.moduleHeader} ${isCurrentModule ? styles.moduleHeaderActive : ''}`}
+                    onClick={() => handleBonusModuleClick(mod)}
+                    style={{ marginTop: '0.3rem', border: '1px dashed #ea580c' }}
                   >
                     <div className={styles.moduleMeta}>
-                      <span className={styles.moduleNumber} style={{ color: '#ea580c' }}>CONTEÚDO ADICIONAL</span>
-                      <span className={styles.moduleTitle}>Elétrica & Hidráulica</span>
+                      <span className={styles.moduleNumber} style={{ color: '#ea580c' }}>BÔNUS BLOQUEADO</span>
+                      <span className={styles.moduleTitle}>{mod.title}</span>
                     </div>
                     <span className={styles.lockIcon}>🔒</span>
                   </div>
@@ -215,6 +205,7 @@ export default function PlatformClient({ customerName, hasBonusAccess }: Platfor
                     controlsList="nodownload"
                     className={styles.iframePlayer}
                     autoPlay
+                    key={activeLesson.id} // Forçar recarregamento do player ao trocar de aula
                   >
                     Seu navegador não suporta a exibição de vídeos.
                   </video>
@@ -226,6 +217,7 @@ export default function PlatformClient({ customerName, hasBonusAccess }: Platfor
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                     allowFullScreen
                     className={styles.iframePlayer}
+                    key={activeLesson.id}
                   />
                 )}
               </div>
