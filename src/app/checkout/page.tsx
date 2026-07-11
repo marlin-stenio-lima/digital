@@ -56,7 +56,7 @@ const PRODUCTS_MAP: Record<string, ProductDetails> = {
     id: 'pedreiro',
     name: 'Projetos de Pedreiro',
     description: 'Guias e detalhamentos estruturais para obras',
-    originalPrice: 97.00,
+    originalPrice: 39.90,
     salePrice: 9.90,
   },
 };

@@ -30,7 +30,7 @@ export default function ProjetosPedreiroLP() {
             </p>
 
             <div className={styles.heroPriceTag}>
-              <span className={styles.heroPriceFrom}>De <del>R$ 97,00</del> por apenas</span>
+              <span className={styles.heroPriceFrom}>De <del>R$ 39,90</del> por apenas</span>
               <span className={styles.heroPriceBig}>R$ 9,90</span>
             </div>
 
@@ -118,12 +118,12 @@ export default function ProjetosPedreiroLP() {
             <h2 className={styles.sectionTitle}>O que você recebe hoje:</h2>
             <div className={styles.priceAnchoring}>
               <ul className={styles.anchorList}>
-                <li><span>✅ Guias de Sapatas, Pilares e Vigas de Sustentação</span> <del>R$ 97,00</del></li>
+                <li><span>✅ Guias de Sapatas, Pilares e Vigas de Sustentação</span> <del>R$ 39,90</del></li>
                 <li><span>✅ Tabela de Dosagem Exata de Concreto (Traços)</span> <del>R$ 47,00</del></li>
                 <li><span>✅ Manual contra infiltração e trincas estruturais</span> <del>R$ 37,00</del></li>
               </ul>
               <div className={styles.totalAnchor}>
-                Total: <del>R$ 181,00</del>
+                Total: <del>R$ 123,90</del>
               </div>
             </div>
           </div>
