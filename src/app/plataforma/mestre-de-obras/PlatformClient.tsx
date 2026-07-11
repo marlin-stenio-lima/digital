@@ -49,17 +49,25 @@ export default function PlatformClient({ customerName, hasBonusAccess }: Platfor
         title: "Elétrica & Hidráulica",
         image: "/images/bonus.jpg",
         description: "Módulo bônus exclusivo com instalações práticas residenciais.",
-        isBonusRedirect: true
+        isBonus: true
       });
       setShowUpsellBlocker(true);
     } else {
-      window.open(PEDREIRO_COURSE_DATA.bonusRedirectUrl, '_blank');
+      // Se tiver acesso, expande o módulo 4 bônus na barra lateral
+      const bonusModule = PEDREIRO_COURSE_DATA.modules.find(m => m.id === 4);
+      if (bonusModule) {
+        setActiveModule(bonusModule);
+        if (bonusModule.lessons && bonusModule.lessons.length > 0) {
+          setActiveLesson(bonusModule.lessons[0]);
+        }
+        setShowUpsellBlocker(false);
+      }
     }
   };
 
-  // Contagem de progresso geral
+  // Contagem de progresso geral (inclui o bônus se o aluno tiver acesso)
   const totalRegularLessons = PEDREIRO_COURSE_DATA.modules
-    .filter(m => !m.isBonusRedirect)
+    .filter(m => !m.isBonus || hasBonusAccess)
     .reduce((sum, m) => sum + (m.lessons ? m.lessons.length : 0), 0);
   const completedCount = completedLessons.length;
   const progressPercent = totalRegularLessons > 0 ? Math.round((completedCount / totalRegularLessons) * 100) : 0;
@@ -88,11 +96,11 @@ export default function PlatformClient({ customerName, hasBonusAccess }: Platfor
         {/* Menu de Módulos */}
         <div className={styles.navigation}>
           {PEDREIRO_COURSE_DATA.modules.map(mod => {
-            const isBonus = mod.isBonusRedirect;
+            const isBonusModule = mod.isBonus;
             const isCurrentModule = activeModule.id === mod.id;
 
-            // Se for bônus, renderiza o botão bloqueado customizado
-            if (isBonus) {
+            // Se for o bônus e o usuário NÃO tiver acesso, renderiza o botão bloqueado customizado
+            if (isBonusModule && !hasBonusAccess) {
               return (
                 <div key={mod.id} className={styles.moduleWrapper}>
                   <div 
@@ -104,7 +112,7 @@ export default function PlatformClient({ customerName, hasBonusAccess }: Platfor
                       <span className={styles.moduleNumber} style={{ color: '#ea580c' }}>CONTEÚDO ADICIONAL</span>
                       <span className={styles.moduleTitle}>Elétrica & Hidráulica</span>
                     </div>
-                    {!hasBonusAccess && <span className={styles.lockIcon}>🔒</span>}
+                    <span className={styles.lockIcon}>🔒</span>
                   </div>
                 </div>
               );
@@ -114,10 +122,10 @@ export default function PlatformClient({ customerName, hasBonusAccess }: Platfor
               <div key={mod.id} className={styles.moduleWrapper}>
                 <div 
                   className={`${styles.moduleHeader} ${isCurrentModule ? styles.moduleHeaderActive : ''}`}
-                  onClick={() => setActiveModule(mod)}
+                  onClick={() => handleLessonClick(mod, mod.lessons ? mod.lessons[0] : undefined)}
                 >
                   <div className={styles.moduleMeta}>
-                    <span className={styles.moduleNumber}>Módulo {mod.id}</span>
+                    <span className={styles.moduleNumber}>{isBonusModule ? 'BÔNUS' : `Módulo ${mod.id}`}</span>
                     <span className={styles.moduleTitle}>{mod.title}</span>
                   </div>
                 </div>
@@ -197,17 +205,29 @@ export default function PlatformClient({ customerName, hasBonusAccess }: Platfor
               <p className={styles.guaranteeText}>⚡ Liberação instantânea no seu WhatsApp após a confirmação do pagamento.</p>
             </div>
           ) : activeLesson ? (
-            /* PLAYER DE VÍDEO */
+            /* PLAYER DE VÍDEO COMPATÍVEL COM YOUTUBE E MP4 DIRETO */
             <div className={styles.playerView}>
               <div className={styles.playerWrapper}>
-                <iframe 
-                  src={`https://www.youtube.com/embed/${activeLesson.videoId}`}
-                  title={activeLesson.title}
-                  frameBorder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  allowFullScreen
-                  className={styles.iframePlayer}
-                />
+                {activeLesson.videoUrl ? (
+                  <video 
+                    src={activeLesson.videoUrl} 
+                    controls 
+                    controlsList="nodownload"
+                    className={styles.iframePlayer}
+                    autoPlay
+                  >
+                    Seu navegador não suporta a exibição de vídeos.
+                  </video>
+                ) : (
+                  <iframe 
+                    src={`https://www.youtube.com/embed/${activeLesson.videoId}`}
+                    title={activeLesson.title}
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                    className={styles.iframePlayer}
+                  />
+                )}
               </div>
 
               <div className={styles.metaInfo}>

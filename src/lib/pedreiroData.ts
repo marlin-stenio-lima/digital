@@ -3,6 +3,7 @@ export interface Lesson {
   title: string;
   videoId: string;
   description: string;
+  videoUrl?: string; // Para hospedar links mp4 diretos
 }
 
 export interface Module {
@@ -11,12 +12,12 @@ export interface Module {
   image: string;
   description: string;
   lessons?: Lesson[];
-  isBonusRedirect?: boolean;
+  isBonus?: boolean;
 }
 
 export const PEDREIRO_COURSE_DATA = {
   courseName: "Curso Mestre de Obras & Pedreiro Profissional",
-  bonusRedirectUrl: "https://aprendaemcasaagora.com/", // Link de Upsell de elétrica/hidráulica
+  bonusRedirectUrl: "https://aprendaemcasaagora.com/", // Link de Venda do Upsell se não tiver comprado
   modules: [
     {
       id: 1,
@@ -70,10 +71,52 @@ export const PEDREIRO_COURSE_DATA = {
     },
     {
       id: 4,
-      title: "Bônus: Elétrica & Hidráulica",
+      title: "Bônus - Elétrica & Hidráulica",
       image: "/images/bonus.jpg",
-      description: "Clique abaixo para acessar o nosso curso bônus e dominar as instalações de eletricidade e encanamentos residenciais.",
-      isBonusRedirect: true
+      description: "Módulo bônus exclusivo com aulas práticas completas de instalações e manutenções elétricas e hidráulicas.",
+      isBonus: true,
+      lessons: [
+        { id: "4-1", title: "Aula 1 - Grandezas elétricas e conceito atômico", videoId: "", videoUrl: "https://conexaoplay.com/wp-content/uploads/2026/03/001-Grandezas-eletricas-e-conceito-atomico.mp4", description: "Conceitos fundamentais da física de eletricidade e átomos." },
+        { id: "4-2", title: "Aula 2 - Corrente Contínua vs Alternada", videoId: "", videoUrl: "https://conexaoplay.com/wp-content/uploads/2026/03/002-Diferenca-de-corrente-continua-e-alternada.mp4", description: "Entenda a diferença entre a corrente de baterias e a que vem da rede elétrica." },
+        { id: "4-3", title: "Aula 3 - Cálculos Básicos de Elétrica", videoId: "", videoUrl: "https://conexaoplay.com/wp-content/uploads/2026/03/003-Calculos-basicos-da-eletrica-triangulo-da-tensao-e-da-potencia.mp4", description: "Aprenda a calcular tensão, corrente e potência elétrica residencial." },
+        { id: "4-4", title: "Aula 4 - Tipos de Condutores Elétricos", videoId: "", videoUrl: "https://conexaoplay.com/wp-content/uploads/2026/03/001-Condutores-eletricos-tipos-barramento-cabo-e-fio-e-Padrao-de.mp4", description: "Tipos de condutores como barramentos, cabos e fios." },
+        { id: "4-5", title: "Aula 5 - Emendas Elétricas Fio a Fio", videoId: "", videoUrl: "https://conexaoplay.com/wp-content/uploads/2026/03/002-Emendas-eletricas-fio-a-fio-e-isolantes-eletricos.mp4", description: "Como fazer emendas de condutores de forma segura usando isolantes." },
+        { id: "4-6", title: "Aula 6 - Emendas com Conectores", videoId: "", videoUrl: "https://conexaoplay.com/wp-content/uploads/2026/03/003-Emendas-com-conectores-eletricos.mp4", description: "Técnica de emendas utilizando conectores modernos de encaixe rápido." },
+        { id: "4-7", title: "Aula 7 - Dimensionamento de Cabos", videoId: "", videoUrl: "https://conexaoplay.com/wp-content/uploads/2026/03/004-Dimensionamento-de-cabos-conforme-NBR-5410.mp4", description: "Como calcular a espessura de cabos recomendada de acordo com as normas da NBR 5410." },
+        { id: "4-8", title: "Aula 8 - Segurança e EPIs (NR-10)", videoId: "", videoUrl: "https://conexaoplay.com/wp-content/uploads/2026/03/001-Seguranca-em-servicos-eletricos-e-EPIs-NR-10.mp4", description: "Instruções de segurança indispensáveis para serviços elétricos." },
+        { id: "4-9", title: "Aula 9 - Tipos de Disjuntores e Dimensionamento", videoId: "", videoUrl: "https://conexaoplay.com/wp-content/uploads/2026/03/002-Disjuntores-Tipos-aplicacao-funcao-funcionamento-e-dimensionamento.mp4", description: "Entenda o funcionamento de disjuntores e como escolher o correto para seu circuito." },
+        { id: "4-10", title: "Aula 10 - Instalação de DPS", videoId: "", videoUrl: "https://conexaoplay.com/wp-content/uploads/2026/03/003-DPS-Tipos-aplicacao-funcao-funcionamento-e-dimensionamento-1.mp4", description: "Como instalar Dispositivos de Proteção contra Surtos elétricos." },
+        { id: "4-11", title: "Aula 11 - Instalação de IDR", videoId: "", videoUrl: "https://conexaoplay.com/wp-content/uploads/2026/03/004-IDR-Tipos-aplicacao-funcao-funcionamento-e-dimensionamento.mp4", description: "Instalação do dispositivo de proteção contra choque elétrico IDR." },
+        { id: "4-12", title: "Aula 12 - Ferramentas Básicas do Eletricista", videoId: "", videoUrl: "https://conexaoplay.com/wp-content/uploads/2026/03/001-Ferramentas-basicas-de-um-eletricista-e-a-funcao-de-cada-uma.mp4", description: "Quais ferramentas ter na sua maleta e para que serve cada uma." },
+        { id: "4-13", title: "Aula 13 - Como usar Multímetro", videoId: "", videoUrl: "https://conexaoplay.com/wp-content/uploads/2026/03/002-Como-usar-multimetroalicate-amperimetro.mp4", description: "Uso do multímetro e alicate amperímetro para testes de tensão e corrente." },
+        { id: "4-14", title: "Aula 14 - Instalação de Interruptor Simples", videoId: "", videoUrl: "https://conexaoplay.com/wp-content/uploads/2026/03/001-Instalacao-de-interruptor-simples.mp4", description: "Esquema prático de ligação de interruptor simples." },
+        { id: "4-15", title: "Aula 15 - Interruptores Duplos e Triplos", videoId: "", videoUrl: "https://conexaoplay.com/wp-content/uploads/2026/03/002-Instalacao-de-interruptor-duplo-e-triplo.mp4", description: "Como ligar chaves conjugadas." },
+        { id: "4-16", title: "Aula 16 - Paralelo (Three Way) e Intermediário", videoId: "", videoUrl: "https://conexaoplay.com/wp-content/uploads/2026/03/003-Instalacao-de-interruptor-paralelo-three-way-e-intermediario.mp4", description: "Técnica de ligação paralela de lâmpadas." },
+        { id: "4-17", title: "Aula 17 - Instalação de Tomadas NBR 14136", videoId: "", videoUrl: "https://conexaoplay.com/wp-content/uploads/2026/03/004-Instalacao-de-tomadas-conforme-NBR-14136-e-divisao-de-circuito.mp4", description: "Fixação e fiação de tomadas conforme padrão brasileiro." },
+        { id: "4-18", title: "Aula 18 - Tomadas de 10A e 20A", videoId: "", videoUrl: "https://conexaoplay.com/wp-content/uploads/2026/03/005-Instalacao-de-tomadas-simples-dupla-e-tripla-de-10-e-20-Amperes.mp4", description: "Diferenças práticas e instalação física de tomadas normais e para eletrodomésticos pesados." },
+        { id: "4-19", title: "Aula 19 - Tomada com Interruptor Combinado", videoId: "", videoUrl: "https://conexaoplay.com/wp-content/uploads/2026/03/006-Instalacao-de-tomada-com-interruptor-no-mesmo-ponto.mp4", description: "Como alimentar tomada e lâmpada na mesma caixinha 4x2." },
+        { id: "4-20", title: "Aula 20 - Sensor de Presença", videoId: "", videoUrl: "https://conexaoplay.com/wp-content/uploads/2026/03/007-Instalacao-de-sensor-de-presenca-com-e-sem-interruptor.mp4", description: "Configuração e instalação elétrica de sensores de iluminação." },
+        
+        // Aulas Hidráulicas
+        { id: "4-21", title: "Aula 21 - Instalação Hidráulica Residencial", videoId: "", videoUrl: "https://conexaoplay.com/wp-content/uploads/2026/03/Instalacao-Hidraulica-Principais-Componentes-de-uma-Residencia.mp4", description: "Visão geral das tubulações hidráulicas em construções." },
+        { id: "4-22", title: "Aula 22 - Instalações de Água Fria (NBR 5626)", videoId: "", videoUrl: "https://conexaoplay.com/wp-content/uploads/2026/03/Aula-1-Instalacoes-de-Agua-Fria-Fundamentos-e-Evolucao-das-Redes-Prediais-💧-NBR-5626.mp4", description: "Normas e fundação das redes prediais de água." },
+        { id: "4-23", title: "Aula 23 - Drenagem de Banheiro", videoId: "", videoUrl: "https://conexaoplay.com/wp-content/uploads/2026/03/WATCH-THIS-VIDEO-FIRST-AND-THEN-YOU-CAN-DO-YOUR-BATHROOM-DRAINAGE.mp4", description: "Todo o esquema de caída e tubos de drenagem sanitária." },
+        { id: "4-24", title: "Aula 24 - Válvula de Pressão de Caixa d'Água", videoId: "", videoUrl: "https://conexaoplay.com/wp-content/uploads/2026/03/Aprenda-como-instalar-valvula-na-caixa-dagua-para-aumentar-pressao-de-chuveiro-e-torneiras.mp4", description: "Instalação de válvula reguladora para aumentar a pressão de água nas torneiras." },
+        { id: "4-25", title: "Aula 25 - Como aumentar a pressão da água", videoId: "", videoUrl: "https://conexaoplay.com/wp-content/uploads/2026/03/COMO-AUMENTAR-A-PRESSAO-DA-AGUA.mp4", description: "Macetes de bombeamento e gravidade." },
+        { id: "4-26", title: "Aula 26 - Como Fazer Caixa de Esgoto", videoId: "", videoUrl: "https://conexaoplay.com/wp-content/uploads/2026/03/Como-Fazer-Caixa-de-Esgoto-de-Concreto.mp4", description: "Construção física da caixa de inspeção de esgoto residencial." },
+        { id: "4-27", title: "Aula 27 - Bomba Pressurizadora", videoId: "", videoUrl: "https://conexaoplay.com/wp-content/uploads/2026/03/INSTALACAO-DE-BOMBA-PRESSURIZADORA.mp4", description: "Instalação física de bomba pressurizadora de vazão." },
+        { id: "4-28", title: "Aula 28 - Instalação de Água Fria e Esgoto", videoId: "", videoUrl: "https://conexaoplay.com/wp-content/uploads/2026/03/Como-fazer-a-instalacao-de-agua-fria-e-esgoto-de-banheiro-cozinha-e-area-de-servico-1.mp4", description: "Guias práticos de instalação de canos em pias, sifão e chuveiros." },
+        { id: "4-29", title: "Aula 29 - Tratamento de Esgoto Doméstico", videoId: "", videoUrl: "https://conexaoplay.com/wp-content/uploads/2026/03/TRATAMENTO-DE-ESGOTO.mp4", description: "Sistemas básicos de tratamento e descarte." },
+        { id: "4-30", title: "Aula 30 - Fazer Esgoto Residencia Parte 17", videoId: "", videoUrl: "https://conexaoplay.com/wp-content/uploads/2026/03/FACA-SUA-CASA-ESGOTO-DA-CASA-17.mp4", description: "Montagem passo a passo final de tubulações de esgoto." },
+        { id: "4-31", title: "Aula 31 - Como Achar Vazamento de Água", videoId: "", videoUrl: "https://conexaoplay.com/wp-content/uploads/2026/03/VEJA-COMO-e-FACIL-achar-vazamento-de-agua.mp4", description: "Técnicas fáceis para localizar infiltrações ocultas." },
+        { id: "4-32", title: "Aula 32 - Como Consertar Cano Furado na Parede", videoId: "", videoUrl: "https://conexaoplay.com/wp-content/uploads/2026/03/COMO-CONSERTAR-CANO-FURADO-NA-PAREDE-TUBO-DE-AGUA-FURADO-COMO-CONSERTAR-SIMPLES-E-RAPIDO.mp4", description: "Tapa furos e remendos de canos sem precisar quebrar a parede toda." },
+        { id: "4-33", title: "Aula 33 - Instalação Fácil de Caixa d'Água", videoId: "", videoUrl: "https://conexaoplay.com/wp-content/uploads/2026/03/Caixa-dAgua-INSTALACAO-FACIL-em-Poucos-Passos.mp4", description: "Fixação e entrada de tubulações na caixa d'água." },
+        { id: "4-34", title: "Aula 34 - Desentupimento de Pia com Furadeira", videoId: "", videoUrl: "https://conexaoplay.com/wp-content/uploads/2026/03/Como-desentupir-pia-em-minutos-com-ajuda-da-furadeira.mp4", description: "Uso do desentupidor espiral acoplado à furadeira." },
+        { id: "4-35", title: "Aula 35 - Desentupimento de Vaso Sanitário", videoId: "", videoUrl: "https://conexaoplay.com/wp-content/uploads/2026/03/Como-desentupir-vaso-em-1-minuto.mp4", description: "Macetes de pressão e vácuo." },
+        { id: "4-36", title: "Aula 36 - Desentupimento de Ralo de Banheiro", videoId: "", videoUrl: "https://conexaoplay.com/wp-content/uploads/2026/03/Como-DESENTUPIR-RALO-de-BANHEIRO-sem-precisar-quebrar.mp4", description: "Técnicas eficientes sem quebra." },
+        { id: "4-37", title: "Aula 37 - Limpeza e Higienização de Caixa d'Água", videoId: "", videoUrl: "https://conexaoplay.com/wp-content/uploads/2026/03/Como-limpar-a-CAIXA-DAGUA-10-passos-para-higienizacao-da-caixa-dagua.mp4", description: "10 passos para higienização completa." },
+        { id: "4-38", title: "Aula 38 - Consertar Vazamento pelo Ladrão", videoId: "", videoUrl: "https://conexaoplay.com/wp-content/uploads/2026/03/Como-consertar-caixa-dagua-vazando-pelo-ladrao-agua-vazamento-001.mp4", description: "Regulação de boia e conserto de vazamentos." }
+      ]
     }
   ]
 };
