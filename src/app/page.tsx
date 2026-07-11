@@ -28,7 +28,7 @@ export default function FabricaDeBonesLP() {
 
             <Link href="/fabrica-de-bones/checkout" className={styles.ctaButtonPulse}>
               QUERO CRIAR MINHA MARCA AGORA
-              <span className={styles.ctaSub}>Por apenas R$ 19,90</span>
+              <span className={styles.ctaSub}>Por apenas R$ 13,90</span>
             </Link>
             
             <div className={styles.trustIndicators}>
@@ -143,8 +143,8 @@ export default function FabricaDeBonesLP() {
 
             <div className={styles.priceTag}>
               Hoje para você: Apenas<br/>
-              <span className={styles.priceHighlight}>R$ 19,90</span>
-              <span className={styles.installments}>(ou 12x de R$ 2,16)</span>
+              <span className={styles.priceHighlight}>R$ 13,90</span>
+              <span className={styles.installments}>(ou 12x de R$ 1,52)</span>
             </div>
             
             <Link href="/fabrica-de-bones/checkout" className={styles.ctaButtonPulse}>
@@ -156,7 +156,7 @@ export default function FabricaDeBonesLP() {
         {/* STICKY MOBILE CTA */}
         <div className={styles.stickyMobileCta}>
           <Link href="/fabrica-de-bones/checkout" className={styles.stickyButton}>
-            COMEÇAR POR R$ 19,90
+            COMEÇAR POR R$ 13,90
           </Link>
         </div>
       </main>
