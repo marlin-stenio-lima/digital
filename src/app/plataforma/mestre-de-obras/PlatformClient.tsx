@@ -59,9 +59,6 @@ export default function PlatformClient({ customerName, hasBonusAccess, hasPorcel
     else if (isCubas) hasAccess = hasCubasAccess;
     else if (isBonusModule) hasAccess = hasBonusAccess;
 
-    // Expandir/recolher
-    toggleModuleExpand(mod.id);
-
     if (isBonusModule && !hasAccess) {
       setActiveLesson(null);
       setActiveModule(mod);
@@ -72,6 +69,9 @@ export default function PlatformClient({ customerName, hasBonusAccess, hasPorcel
       
       setBlockerType(type);
       setShowUpsellBlocker(true);
+    } else {
+      // Só expandir/recolher se ele tiver acesso
+      toggleModuleExpand(mod.id);
     }
   };
 
