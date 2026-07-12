@@ -163,15 +163,23 @@ function CheckoutForm() {
   let computedTotal = product.salePrice;
 
   if (product.id === 'pedreiro') {
-    // Pedreiro agora possui 4 opcionais de R$ 13,90 avulso. Se ele fechar o popup, saem todos a R$ 9,90.
-    if (eletricaSelected) computedTotal += upsellAvulsoPrice;
-    if (hidraulicaSelected) computedTotal += upsellAvulsoPrice;
-    if (porcelanatoSelected) computedTotal += upsellAvulsoPrice;
-    if (cubasSelected) computedTotal += upsellAvulsoPrice;
+    const isComboActive = eletricaSelected && hidraulicaSelected && porcelanatoSelected && cubasSelected;
+    if (isComboActive) {
+      computedTotal += 39.60; // Combo de 4 upsells promocionais: R$ 9,90 cada (Total: R$ 49,50)
+    } else {
+      if (eletricaSelected) computedTotal += upsellAvulsoPrice;
+      if (hidraulicaSelected) computedTotal += upsellAvulsoPrice;
+      if (porcelanatoSelected) computedTotal += upsellAvulsoPrice;
+      if (cubasSelected) computedTotal += upsellAvulsoPrice;
+    }
   } else if (product.id === 'currais') {
-    // Para currais, cada upsell custa R$ 13,90 avulso
-    if (arrendamentoSelected) computedTotal += curraisAvulsoPrice;
-    if (planilhaSelected) computedTotal += curraisAvulsoPrice;
+    const isComboActive = arrendamentoSelected && planilhaSelected;
+    if (isComboActive) {
+      computedTotal += 19.80; // Combo promocional: R$ 9,90 cada (Total: R$ 29,70)
+    } else {
+      if (arrendamentoSelected) computedTotal += curraisAvulsoPrice;
+      if (planilhaSelected) computedTotal += curraisAvulsoPrice;
+    }
   }
 
   const handleInputChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
