@@ -140,6 +140,19 @@ function CheckoutForm() {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
+  // Dispara o Pixel do Facebook de Iniciação de Compra
+  useEffect(() => {
+    if (typeof window !== 'undefined' && (window as any).fbq) {
+      (window as any).fbq('track', 'InitiateCheckout', {
+        content_name: product.name,
+        content_ids: [product.id],
+        content_type: 'product',
+        value: product.salePrice,
+        currency: 'BRL'
+      });
+    }
+  }, [product]);
+
   // States de Order Bumps e Upsells (PEDREIRO)
   const [eletricaSelected, setEletricaSelected] = useState(false);
   const [hidraulicaSelected, setHidraulicaSelected] = useState(false);
@@ -250,6 +263,17 @@ function CheckoutForm() {
         customerPhone: formData.phone,
         productsBought: finalProducts,
       });
+
+      // Dispara o Pixel de Compra (Purchase) quando o Pix é gerado
+      if (typeof window !== 'undefined' && (window as any).fbq) {
+        (window as any).fbq('track', 'Purchase', {
+          content_name: product.name,
+          content_ids: finalProducts,
+          content_type: 'product',
+          value: finalTotal,
+          currency: 'BRL'
+        });
+      }
 
       setShowPixDisplay(true);
     } catch (error) {

@@ -3,6 +3,9 @@ import { redirect } from 'next/navigation';
 import { supabaseAdmin } from '@/lib/supabase';
 import PlatformClient from './PlatformClient';
 
+// Desativa o cache do Vercel — sempre consulta o banco em tempo real
+export const dynamic = 'force-dynamic';
+
 export default async function PlataformaPedreiro() {
   const cookieStore = await cookies();
   const session = cookieStore.get('bones_session');
