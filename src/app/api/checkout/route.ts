@@ -200,7 +200,13 @@ export async function POST(request: Request) {
 
     const adminPhone = '5586995485600';
     const formattedAmount = Number(totalAmount).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-    const courseName = course_id === 'bones' ? 'Fábrica de Bonés' : 'Serralheiro';
+    
+    let courseName = 'Serralheiro';
+    if (course_id === 'bones') courseName = 'Fábrica de Bonés';
+    else if (course_id === 'pedreiro') courseName = 'Mestre de Obra';
+    else if (course_id === 'currais') courseName = 'Currais';
+    else if (course_id === 'acm') courseName = 'ACM';
+
     const adminMessage = `⚠️ *Pix Gerado (${courseName})*\n\nNome: ${name}\nValor: ${formattedAmount}\nNúmero: ${cleanPhone}`;
     
     try {

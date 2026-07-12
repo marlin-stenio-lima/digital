@@ -473,7 +473,13 @@ export async function POST(request: Request) {
       const adminPhone = '5586995485600';
       const amountValue = body.data?.pixQrCode?.amount ? body.data.pixQrCode.amount / 100 : 0;
       const formattedAmount = amountValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-      const courseName = cursoId === 'bones' ? 'Fábrica de Bonés' : 'Serralheiro';
+      
+      let courseName = 'Serralheiro';
+      if (cursoId === 'bones') courseName = 'Fábrica de Bonés';
+      else if (cursoId === 'pedreiro') courseName = 'Mestre de Obra';
+      else if (cursoId === 'currais') courseName = 'Currais';
+      else if (cursoId === 'acm') courseName = 'ACM';
+
       const adminMessage = `✅ *Pix Pago (${courseName})!*\n\nNome: ${customerName}\nValor: ${formattedAmount}\nNúmero: ${customerPhone}`;
       await sendWhatsAppMessage(adminPhone, adminMessage);
     } catch (adminWhatsappError) {
