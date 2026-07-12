@@ -19,41 +19,45 @@ export default function UpsellPopup({ isOpen, onAccept, onDecline }: UpsellPopup
           &times;
         </button>
         
-        <div className={styles.badge}>🎁 OFERTA EXCLUSIVA DE CHECKOUT</div>
+        <div className={styles.badge}>⚠️ OPORTUNIDADE ÚNICA E IMEDIATA</div>
         
-        <h2 className={styles.title}>Combo Mestre da Obra</h2>
-        <p className={styles.subtitle}>Adicione os dois treinamentos complementares com desconto especial!</p>
+        <h2 className={styles.title}>Leve Mais por Menos!</h2>
+        <p className={styles.subtitle}>Esta oferta só aparece uma vez. Aproveite para garantir o conhecimento completo de obras.</p>
         
         <div className={styles.checklist}>
           <div className={styles.checkItem}>
-            <span className={styles.checkIcon}>✅</span>
+            <span className={styles.checkIcon}>⚡</span>
             <div>
-              <strong>Guia de Elétrica Residencial Completo</strong>
-              <p>Do conceito atômico às ligações práticas de disjuntores, tomadas e chuveiro elétrico.</p>
+              <strong>Instalações de Elétrica Residencial</strong>
+              <p>Evite curtos-circuitos e aprenda a ligar fiação e disjuntores com segurança.</p>
             </div>
           </div>
           <div className={styles.checkItem}>
-            <span className={styles.checkIcon}>✅</span>
+            <span className={styles.checkIcon}>💧</span>
             <div>
-              <strong>Guia de Hidráulica Residencial Completo</strong>
-              <p>Aprenda a dimensionar caixa d&apos;água, bombas de pressão e ligações de esgoto.</p>
+              <strong>Instalações de Hidráulica Residencial</strong>
+              <p>Evite infiltrações e domine o encanamento de caixa d&apos;água e esgoto de banheiro.</p>
             </div>
           </div>
         </div>
 
         <div className={styles.priceContainer}>
-          <span className={styles.oldPrice}>De R$ 79,80</span>
-          <span className={styles.priceLabel}>Por apenas adicionais de:</span>
-          <span className={styles.newPrice}>R$ 19,80</span>
-          <span className={styles.priceSub}>Sendo R$ 9,90 cada curso bônus!</span>
+          <span className={styles.priceLabel}>Valor normal de cada bônus: ~~R$ 39,90~~</span>
+          <span className={styles.urgencyText}>Adicione os dois bônus ao seu pedido por apenas R$ 19,80 adicionais:</span>
+          
+          <div style={{ marginTop: '1rem', display: 'flex', flexDirection: 'column', gap: '0.2rem' }}>
+            <span className={styles.totalLabel}>VALOR TOTAL DO COMBO (Curso Principal + Bônus):</span>
+            <span className={styles.newPrice}>R$ 29,70</span>
+            <span className={styles.priceSub}>Parabéns! Você economizou R$ 69,90 nesta compra.</span>
+          </div>
         </div>
 
         <button className={styles.acceptBtn} onClick={onAccept}>
-          SIM, QUERO ADICIONAR AO MEU PEDIDO
+          ⚡ ADICIONAR COMBO AO MEU PEDIDO — R$ 29,70
         </button>
         
         <button className={styles.declineBtn} onClick={onDecline}>
-          Não, obrigado. Quero apenas o produto principal
+          Não quero o desconto. Seguir apenas com o Principal por R$ 9,90
         </button>
       </div>
     </div>
