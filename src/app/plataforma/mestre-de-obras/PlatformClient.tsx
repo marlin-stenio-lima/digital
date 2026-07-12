@@ -19,6 +19,8 @@ export default function PlatformClient({ customerName, hasBonusAccess, hasPorcel
   const firstModule = PEDREIRO_COURSE_DATA.modules[0];
   const firstLesson = firstModule.lessons ? firstModule.lessons[0] : null;
 
+  // Controlar quais IDs de módulos estão expandidos no menu
+  const [expandedModules, setExpandedModules] = useState<number[]>([1]);
   const [activeModule, setActiveModule] = useState<Module>(firstModule);
   const [activeLesson, setActiveLesson] = useState<Lesson | null>(firstLesson);
   const [completedLessons, setCompletedLessons] = useState<string[]>([]);
@@ -38,21 +40,29 @@ export default function PlatformClient({ customerName, hasBonusAccess, hasPorcel
     );
   };
 
-  const handleLessonClick = (module: Module, lesson: Lesson | undefined) => {
-    setActiveModule(module);
-    setActiveLesson(lesson || null);
-    setShowUpsellBlocker(false);
+  // Alternar a abertura/fechamento do módulo
+  const toggleModuleExpand = (moduleId: number) => {
+    setExpandedModules(prev => 
+      prev.includes(moduleId)
+        ? prev.filter(id => id !== moduleId)
+        : [...prev, moduleId]
+    );
   };
 
-  const handleBonusModuleClick = (mod: Module) => {
+  const handleModuleHeaderClick = (mod: Module) => {
+    const isBonusModule = mod.isBonus;
     const isPorcelanato = mod.id === 6;
     const isCubas = mod.id === 7;
     
-    let hasAccess = hasBonusAccess;
+    let hasAccess = true;
     if (isPorcelanato) hasAccess = hasPorcelanatoAccess;
     else if (isCubas) hasAccess = hasCubasAccess;
+    else if (isBonusModule) hasAccess = hasBonusAccess;
 
-    if (!hasAccess) {
+    // Expandir/recolher
+    toggleModuleExpand(mod.id);
+
+    if (isBonusModule && !hasAccess) {
       setActiveLesson(null);
       setActiveModule(mod);
       
@@ -62,13 +72,13 @@ export default function PlatformClient({ customerName, hasBonusAccess, hasPorcel
       
       setBlockerType(type);
       setShowUpsellBlocker(true);
-    } else {
-      setActiveModule(mod);
-      if (mod.lessons && mod.lessons.length > 0) {
-        setActiveLesson(mod.lessons[0]);
-      }
-      setShowUpsellBlocker(false);
     }
+  };
+
+  const handleLessonClick = (module: Module, lesson: Lesson) => {
+    setActiveModule(module);
+    setActiveLesson(lesson);
+    setShowUpsellBlocker(false);
   };
 
   // Contagem de progresso geral
@@ -109,6 +119,7 @@ export default function PlatformClient({ customerName, hasBonusAccess, hasPorcel
           {PEDREIRO_COURSE_DATA.modules.map(mod => {
             const isBonusModule = mod.isBonus;
             const isCurrentModule = activeModule.id === mod.id;
+            const isExpanded = expandedModules.includes(mod.id);
             
             // Checar acesso do módulo específico
             const isPorcelanato = mod.id === 6;
@@ -125,7 +136,7 @@ export default function PlatformClient({ customerName, hasBonusAccess, hasPorcel
                 <div key={mod.id} className={styles.moduleWrapper}>
                   <div 
                     className={`${styles.moduleHeader} ${isCurrentModule ? styles.moduleHeaderActive : ''}`}
-                    onClick={() => handleBonusModuleClick(mod)}
+                    onClick={() => handleModuleHeaderClick(mod)}
                     style={{ marginTop: '0.3rem', border: '1px dashed #ea580c' }}
                   >
                     <div className={styles.moduleMeta}>
@@ -141,21 +152,28 @@ export default function PlatformClient({ customerName, hasBonusAccess, hasPorcel
               <div key={mod.id} className={styles.moduleWrapper}>
                 <div 
                   className={`${styles.moduleHeader} ${isCurrentModule ? styles.moduleHeaderActive : ''}`}
-                  onClick={() => {
-                    if (isBonusModule) {
-                      handleBonusModuleClick(mod);
-                    } else {
-                      handleLessonClick(mod, mod.lessons ? mod.lessons[0] : undefined);
-                    }
-                  }}
+                  onClick={() => handleModuleHeaderClick(mod)}
+                  style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}
                 >
-                  <div className={styles.moduleMeta}>
+                  <div className={styles.moduleMeta} style={{ flex: 1 }}>
                     <span className={styles.moduleNumber}>{isBonusModule ? 'TREINAMENTO EXTRA' : `Módulo ${mod.id}`}</span>
                     <span className={styles.moduleTitle}>{mod.title}</span>
                   </div>
+                  
+                  {/* Ícone de seta para abrir/fechar */}
+                  <span style={{ 
+                    fontSize: '0.8rem', 
+                    color: '#f97316', 
+                    marginLeft: '10px',
+                    transform: isExpanded ? 'rotate(90deg)' : 'rotate(0deg)',
+                    transition: 'transform 0.2s ease-in-out',
+                    display: 'inline-block'
+                  }}>
+                    ▶
+                  </span>
                 </div>
 
-                {isCurrentModule && mod.lessons && (
+                {isExpanded && mod.lessons && (
                   <ul className={styles.lessonList}>
                     {mod.lessons.map(les => {
                       const isCurrentLesson = activeLesson?.id === les.id;
@@ -310,7 +328,7 @@ export default function PlatformClient({ customerName, hasBonusAccess, hasPorcel
                       fontSize: '1.05rem',
                       fontWeight: 800,
                       textDecoration: 'none',
-                      boxShadow: '0 10px 20px rgba(234, 88, 12, 0.3)',
+                      boxShadow: '0 10px 20px rgba(234, 12, 12, 0.3)',
                       transition: 'transform 0.2s'
                     }}
                     onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-2px)'}
