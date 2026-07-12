@@ -428,13 +428,12 @@ export async function POST(request: Request) {
           `🔑 *Seu Login e Senha:* É o seu próprio WhatsApp: ${customerPhone}\n\n`;
 
         if (hasUpsell) {
-          message += `⚡ *BÔNUS INCLUSOS LIBERADOS:* Como você adicionou o Combo, as videoaulas práticas de *Elétrica & Hidráulica Residencial* também já estão 100% abertas dentro do seu painel!\n\n`;
+          message += `⚡ *TREINAMENTOS INCLUSOS LIBERADOS:* Como você adicionou o Combo, as videoaulas práticas de *Elétrica & Hidráulica Residencial* também já estão 100% abertas dentro do seu painel!\n\n`;
         } else {
-          message += `💡 *Aviso sobre Elétrica & Hidráulica:* Notei que você não adicionou os bônus de Instalações Elétricas e Hidráulicas. Caso queira liberar essas aulas depois, poderá adquiri-las diretamente pelo painel da sua área de membros.\n\n`;
+          message += `💡 *Aviso sobre Elétrica & Hidráulica:* Notei que você não adicionou os treinamentos de Instalações Elétricas e Hidráulicas. Caso queira liberar essas aulas depois, poderá adquiri-las diretamente pelo painel da sua área de membros.\n\n`;
         }
 
-        message += `📌 Salve esta mensagem para acessar a plataforma sempre que quiser assistir!\n\n` +
-          `Bons estudos! 🏗️🧱`;
+        message += `📌 Salve esta mensagem para acessar a plataforma sempre que quiser assistir!`;
 
         await sendWhatsAppMessage(customerPhone, message);
         console.log(`[Webhook] Successfully processed pedreiro for ${customerName} (${customerPhone}). Upsell: ${hasUpsell}`);
