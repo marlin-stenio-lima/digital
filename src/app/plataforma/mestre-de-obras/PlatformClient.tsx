@@ -260,10 +260,13 @@ export default function PlatformClient({ customerName, hasBonusAccess, hasPorcel
                 <span className={styles.price}>Apenas R$ 19,90</span>
               </div>
 
+              <div style={{ display: 'none' }}>
+                {/* Deixando guardado o link antigo se necessário */}
+                {PEDREIRO_COURSE_DATA.bonusRedirectUrl}
+              </div>
+
               <a 
-                href={PEDREIRO_COURSE_DATA.bonusRedirectUrl} 
-                target="_blank" 
-                rel="noopener noreferrer" 
+                href={`/checkout?p=${blockerType}`} 
                 className={styles.upsellBtn}
               >
                 ADQUIRIR ACESSO IMEDIATO

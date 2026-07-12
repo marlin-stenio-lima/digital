@@ -60,6 +60,27 @@ const PRODUCTS_MAP: Record<string, ProductDetails> = {
     originalPrice: 39.90,
     salePrice: 9.90,
   },
+  eletrica_hidraulica: {
+    id: 'eletrica_hidraulica',
+    name: 'Upgrade - Treinamento de Elétrica & Hidráulica',
+    description: 'Aulas complementares práticas de instalações residenciais',
+    originalPrice: 97.00,
+    salePrice: 19.90,
+  },
+  porcelanato: {
+    id: 'porcelanato',
+    name: 'Upgrade - Projetos de Porcelanato',
+    description: 'Apostilas completas com detalhamento técnico de bancadas e nichos',
+    originalPrice: 47.00,
+    salePrice: 19.90,
+  },
+  cubas: {
+    id: 'cubas',
+    name: 'Upgrade - Fabricação de Cubas de Concreto',
+    description: 'Guias práticos de moldagem e efeitos rústicos de alto padrão',
+    originalPrice: 29.90,
+    salePrice: 19.90,
+  },
 };
 
 function formatPhone(value: string): string {

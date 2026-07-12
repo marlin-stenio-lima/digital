@@ -288,7 +288,7 @@ export async function POST(request: Request) {
       console.error('[Webhook] Falha ao fazer parse dos produtos:', e);
     }
 
-    const cursoId = body.data?.pixQrCode?.metadata?.curso || 'serralheiro';
+    let cursoId = body.data?.pixQrCode?.metadata?.curso || 'serralheiro';
 
     // 1. Envia para o cliente
     try {
@@ -422,58 +422,84 @@ export async function POST(request: Request) {
         await sendWhatsAppMessage(customerPhone, message);
         console.log(`[Webhook] Successfully processed acm for ${customerName} (${customerPhone})`);
 
-      } else if (cursoId === 'pedreiro') {
-        // Agora mapeamos os 4 opcionais de upsells
-        const hasEletricaHidraulica = productsBought.includes('eletrica') || productsBought.includes('hidraulica');
-        const hasPorcelanato = productsBought.includes('porcelanato');
-        const hasCubas = productsBought.includes('cubas');
+      } else if (cursoId === 'pedreiro' || cursoId === 'eletrica_hidraulica' || cursoId === 'porcelanato' || cursoId === 'cubas') {
+        // Se a pessoa comprou um upgrade isolado, ele é processado sob o contexto do aluno de pedreiro.
+        // Buscamos se o aluno já existe para complementar as permissões em vez de sobrescrever.
+        let hasEletricaHidraulica = cursoId === 'eletrica_hidraulica' || productsBought.includes('eletrica') || productsBought.includes('hidraulica');
+        let hasPorcelanato = cursoId === 'porcelanato' || productsBought.includes('porcelanato');
+        let hasCubas = cursoId === 'cubas' || productsBought.includes('cubas');
 
         try {
+          const { data: existingUser } = await supabaseAdmin
+            .from('bones_alunos')
+            .select('comprou_ads, comprou_porcelanato, comprou_cubas')
+            .eq('telefone', customerPhone)
+            .single();
+
+          if (existingUser) {
+            hasEletricaHidraulica = hasEletricaHidraulica || !!existingUser.comprou_ads;
+            hasPorcelanato = hasPorcelanato || !!existingUser.comprou_porcelanato;
+            hasCubas = hasCubas || !!existingUser.comprou_cubas;
+          }
+
           await supabaseAdmin
             .from('bones_alunos')
             .upsert({ 
               telefone: customerPhone, 
               token: crypto.randomUUID(),
-              comprou_ads: hasEletricaHidraulica, // Elétrica/Hidráulica
-              comprou_porcelanato: hasPorcelanato, // Projetos de Porcelanato
-              comprou_cubas: hasCubas, // Projetos de Cubas
+              comprou_ads: hasEletricaHidraulica, 
+              comprou_porcelanato: hasPorcelanato, 
+              comprou_cubas: hasCubas, 
               data_acesso: new Date().toISOString()
             }, { onConflict: 'telefone' });
         } catch (dbErr) {
-          console.error('[Webhook] Error saving pedreiro status to DB:', dbErr);
+          console.error('[Webhook] Error saving pedreiro upgrades status to DB:', dbErr);
         }
 
         const plataformaLink = `${new URL(request.url).origin}/plataforma/login?course=pedreiro`;
 
-        let message = `🎉 *Pagamento confirmado!* 🎉\n\n` +
-          `Olá, ${customerName.split(' ')[0]}! Seu acesso ao *Curso Mestre da Obra & Pedreiro Profissional* foi liberado com sucesso.\n\n` +
-          `📺 *Seu curso é 100% em videoaulas completas!* Não precisa baixar nada, assista direto pela nossa plataforma exclusiva de membros.\n\n` +
-          `👉 *Acesse a plataforma por aqui:* ${plataformaLink}\n` +
-          `🔑 *Seu Login e Senha:* É o seu próprio WhatsApp: ${customerPhone}\n\n`;
+        let message = '';
+        if (cursoId === 'pedreiro') {
+          message = `🎉 *Pagamento confirmado!* 🎉\n\n` +
+            `Olá, ${customerName.split(' ')[0]}! Seu acesso ao *Curso Mestre da Obra & Pedreiro Profissional* foi liberado com sucesso.\n\n` +
+            `📺 *Seu curso é 100% em videoaulas completas!* Não precisa baixar nada, assista direto pela nossa plataforma exclusiva de membros.\n\n` +
+            `👉 *Acesse a plataforma por aqui:* ${plataformaLink}\n` +
+            `🔑 *Seu Login e Senha:* É o seu próprio WhatsApp: ${customerPhone}\n\n`;
 
-        // Informações condicionais das compras de Upsells
-        const tagsAdicionadas = [];
-        if (hasEletricaHidraulica) tagsAdicionadas.push('*Elétrica & Hidráulica Residencial*');
-        if (hasPorcelanato) tagsAdicionadas.push('*Projetos de Porcelanato*');
-        if (hasCubas) tagsAdicionadas.push('*Manual de Fabricação de Cubas*');
+          const tagsAdicionadas = [];
+          if (hasEletricaHidraulica) tagsAdicionadas.push('*Elétrica & Hidráulica Residencial*');
+          if (hasPorcelanato) tagsAdicionadas.push('*Projetos de Porcelanato*');
+          if (hasCubas) tagsAdicionadas.push('*Manual de Fabricação de Cubas*');
 
-        if (tagsAdicionadas.length > 0) {
-          message += `⚡ *TREINAMENTOS INCLUSOS LIBERADOS:* Como você adicionou no seu pedido, o acesso aos módulos de ${tagsAdicionadas.join(', ')} já está 100% liberado dentro da sua área de membros!\n\n`;
-        }
+          if (tagsAdicionadas.length > 0) {
+            message += `⚡ *TREINAMENTOS INCLUSOS LIBERADOS:* Como você adicionou no seu pedido, o acesso aos módulos de ${tagsAdicionadas.join(', ')} já está 100% liberado dentro da sua área de membros!\n\n`;
+          }
 
-        const itensNaoComprados = [];
-        if (!hasEletricaHidraulica) itensNaoComprados.push('Elétrica & Hidráulica');
-        if (!hasPorcelanato) itensNaoComprados.push('Projetos de Porcelanato');
-        if (!hasCubas) itensNaoComprados.push('Fabricação de Cubas');
+          const itensNaoComprados = [];
+          if (!hasEletricaHidraulica) itensNaoComprados.push('Elétrica & Hidráulica');
+          if (!hasPorcelanato) itensNaoComprados.push('Projetos de Porcelanato');
+          if (!hasCubas) itensNaoComprados.push('Fabricação de Cubas');
 
-        if (itensNaoComprados.length > 0) {
-          message += `💡 *Treinamentos Extras:* Notei que você não adicionou os pacotes de ${itensNaoComprados.join(' e ')}. Caso mude de ideia e queira liberar essas aulas posteriormente, você poderá adquiri-los diretamente pelo painel da sua área de membros ou nos respondendo aqui.\n\n`;
+          if (itensNaoComprados.length > 0) {
+            message += `💡 *Treinamentos Extras:* Notei que você não adicionou os pacotes de ${itensNaoComprados.join(' e ')}. Caso mude de ideia e queira liberar essas aulas posteriormente, você poderá adquiri-los diretamente pelo painel da sua área de membros ou nos respondendo aqui.\n\n`;
+          }
+        } else {
+          // Se for compra de um Upgrade individual direto na área de membros
+          let upgradeTitle = 'Treinamento de Elétrica & Hidráulica';
+          if (cursoId === 'porcelanato') upgradeTitle = 'Projetos de Porcelanato';
+          else if (cursoId === 'cubas') upgradeTitle = 'Fabricação de Cubas';
+
+          message = `🎉 *Upgrade Confirmado!* 🎉\n\n` +
+            `Olá, ${customerName.split(' ')[0]}! Seu pagamento para o upgrade do modulo *${upgradeTitle}* foi aprovado com sucesso.\n\n` +
+            `🔓 *O conteúdo já está desbloqueado automaticamente no seu painel!*\n\n` +
+            `👉 *Acesse a plataforma e bons estudos:* ${plataformaLink}\n\n` +
+            `Qualquer dúvida ou problema, basta nos chamar por aqui! 🏗️🛠️`;
         }
 
         message += `📌 Salve esta mensagem para acessar a plataforma sempre que quiser assistir!`;
 
         await sendWhatsAppMessage(customerPhone, message);
-        console.log(`[Webhook] Successfully processed pedreiro for ${customerName} (${customerPhone}). Eletrica/Hidraulica: ${hasEletricaHidraulica}, Porcelanato: ${hasPorcelanato}, Cubas: ${hasCubas}`);
+        console.log(`[Webhook] Successfully processed pedreiro upgrade for ${customerName} (${customerPhone}). Eletrica/Hidraulica: ${hasEletricaHidraulica}, Porcelanato: ${hasPorcelanato}, Cubas: ${hasCubas}`);
 
       } else {
         // Logica Antiga do Serralheiro
@@ -513,6 +539,9 @@ export async function POST(request: Request) {
       else if (cursoId === 'pedreiro') courseName = 'Mestre de Obra';
       else if (cursoId === 'currais') courseName = 'Currais';
       else if (cursoId === 'acm') courseName = 'ACM';
+      else if (cursoId === 'eletrica_hidraulica') courseName = 'Mestre de Obra (Upgrade Eletrica/Hidraulica)';
+      else if (cursoId === 'porcelanato') courseName = 'Mestre de Obra (Upgrade Porcelanato)';
+      else if (cursoId === 'cubas') courseName = 'Mestre de Obra (Upgrade Cubas)';
 
       const adminMessage = `✅ *Pix Pago (${courseName})!*\n\nNome: ${customerName}\nValor: ${formattedAmount}\nNúmero: ${customerPhone}`;
       await sendWhatsAppMessage(adminPhone, adminMessage);
