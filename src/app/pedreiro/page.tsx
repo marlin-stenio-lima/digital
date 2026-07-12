@@ -17,20 +17,20 @@ export default function ProjetosPedreiroLP() {
       </Head>
       <FacebookPixel />
       
-      <main className={styles.container} style={{ backgroundColor: '#070a13', color: '#f1f5f9' }}>
+      <main className={styles.container} style={{ backgroundColor: '#0b0f19', color: '#f1f5f9' }}>
         
-        {/* ===== HERO SECTION (Fundo Escuro Premium com Laranja e Branco) ===== */}
+        {/* ===== HERO SECTION (Contraste Máximo: Fundo Azul Escuro de Confiança + Botão Laranja de Alta Energia) ===== */}
         <section className={styles.heroPedreiro} style={{ 
-          background: 'radial-gradient(circle at center, #0f172a 0%, #070a13 100%)', 
+          background: 'radial-gradient(circle at top, #0f172a 0%, #0b0f19 100%)', 
           borderBottom: '1px solid #1e293b', 
           padding: '7rem 1.5rem' 
         }}>
           <div className={styles.heroContent}>
             <div className={styles.badge} style={{ 
-              backgroundColor: '#ea580c', 
+              backgroundColor: '#f97316', 
               borderColor: '#f97316', 
               color: '#fff', 
-              boxShadow: '0 0 15px rgba(234, 88, 12, 0.4)' 
+              boxShadow: '0 0 20px rgba(249, 115, 22, 0.4)' 
             }}>
               🔥 ACESSO VITALÍCIO & PAGAMENTO ÚNICO
             </div>
@@ -45,12 +45,12 @@ export default function ProjetosPedreiroLP() {
 
             <div className={styles.heroPriceTag}>
               <span className={styles.heroPriceFrom} style={{ color: '#64748b' }}>De <del style={{ color: '#ef4444' }}>R$ 39,90</del> por apenas</span>
-              <span className={styles.heroPriceBig} style={{ color: '#f97316', textShadow: '0 0 20px rgba(249, 115, 22, 0.3)' }}>R$ 9,90</span>
+              <span className={styles.heroPriceBig} style={{ color: '#f97316', textShadow: '0 0 25px rgba(249, 115, 22, 0.3)' }}>R$ 9,90</span>
             </div>
 
             <Link href={`/checkout?p=${pId}`} className={styles.ctaButtonPulse} style={{ 
               background: 'linear-gradient(135deg, #f97316 0%, #ea580c 100%)',
-              boxShadow: '0 8px 25px rgba(234, 88, 12, 0.4)'
+              boxShadow: '0 8px 30px rgba(249, 115, 22, 0.5)'
             }}>
               QUERO ME TORNAR UM MESTRE DA OBRA AGORA
             </Link>
@@ -63,8 +63,8 @@ export default function ProjetosPedreiroLP() {
           </div>
         </section>
 
-        {/* ===== SEÇÃO: DOR vs SOLUÇÃO (Benefícios de Alto Impacto) ===== */}
-        <section style={{ padding: '5rem 1.5rem', background: '#090f1d' }}>
+        {/* ===== SEÇÃO: DOR vs SOLUÇÃO (Conversão de Alto Impacto) ===== */}
+        <section style={{ padding: '5rem 1.5rem', background: '#0d1322' }}>
           <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
             
             <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
@@ -82,8 +82,8 @@ export default function ProjetosPedreiroLP() {
               
               {/* Lado da Dor (O Problema) */}
               <div style={{ 
-                background: 'rgba(239, 68, 68, 0.03)', 
-                border: '1.5px solid rgba(239, 68, 68, 0.2)', 
+                background: 'rgba(239, 68, 68, 0.02)', 
+                border: '1.5px solid rgba(239, 68, 68, 0.15)', 
                 borderRadius: '16px', 
                 padding: '2.5rem 2rem' 
               }}>
@@ -117,8 +117,8 @@ export default function ProjetosPedreiroLP() {
 
               {/* Lado da Solução (O que você ganha com o Curso) */}
               <div style={{ 
-                background: 'rgba(16, 185, 129, 0.03)', 
-                border: '1.5px solid rgba(16, 185, 129, 0.25)', 
+                background: 'rgba(16, 185, 129, 0.02)', 
+                border: '1.5px solid rgba(16, 185, 129, 0.2)', 
                 borderRadius: '16px', 
                 padding: '2.5rem 2rem',
                 boxShadow: '0 10px 30px -10px rgba(16, 185, 129, 0.1)'
@@ -156,8 +156,8 @@ export default function ProjetosPedreiroLP() {
           </div>
         </section>
 
-        {/* ===== SEÇÃO: CONTEÚDO DO CURSO (Grid 2x2 Premium Orange) ===== */}
-        <section style={{ backgroundColor: '#070a13', padding: '5rem 1.5rem', color: '#fff', borderTop: '1px solid #1e293b' }}>
+        {/* ===== SEÇÃO: CONTEÚDO DO CURSO (Grid de Transformação e Módulos) ===== */}
+        <section style={{ backgroundColor: '#0b0f19', padding: '5rem 1.5rem', color: '#fff', borderTop: '1px solid #1e293b' }}>
           <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
             
             <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
@@ -189,7 +189,7 @@ export default function ProjetosPedreiroLP() {
                     <span style={{ fontSize: '0.72rem', color: '#f97316', fontWeight: 700, textTransform: 'uppercase' }}>Módulo 1</span>
                   </div>
                 </div>
-                <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '0.8rem', color: '#94a3b8', fontSize: '0.92rem' }}>
+                <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '0.8rem', color: '#cbd5e1', fontSize: '0.92rem' }}>
                   <li style={{ display: 'flex', gap: '0.5rem' }}><span style={{ color: '#f97316' }}>✓</span> Aprenda do zero: paredes, tijolos, argamassa e ferramentas</li>
                   <li style={{ display: 'flex', gap: '0.5rem' }}><span style={{ color: '#f97316' }}>✓</span> Nível, prumo, alinhamento e esquadro na prática</li>
                   <li style={{ display: 'flex', gap: '0.5rem' }}><span style={{ color: '#f97316' }}>✓</span> Vergas, contravergas, cintas e reforços estruturais</li>
@@ -212,7 +212,7 @@ export default function ProjetosPedreiroLP() {
                     <span style={{ fontSize: '0.72rem', color: '#f97316', fontWeight: 700, textTransform: 'uppercase' }}>Módulo 2</span>
                   </div>
                 </div>
-                <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '0.8rem', color: '#94a3b8', fontSize: '0.92rem' }}>
+                <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '0.8rem', color: '#cbd5e1', fontSize: '0.92rem' }}>
                   <li style={{ display: 'flex', gap: '0.5rem' }}><span style={{ color: '#f97316' }}>✓</span> Chapisco, emboço e reboco passo a passo ilustrado</li>
                   <li style={{ display: 'flex', gap: '0.5rem' }}><span style={{ color: '#f97316' }}>✓</span> Como fazer massa com a dosagem e liga correta</li>
                   <li style={{ display: 'flex', gap: '0.5rem' }}><span style={{ color: '#f97316' }}>✓</span> Técnicas avançadas para parede lisa e sem trincas</li>
@@ -235,7 +235,7 @@ export default function ProjetosPedreiroLP() {
                     <span style={{ fontSize: '0.72rem', color: '#f97316', fontWeight: 700, textTransform: 'uppercase' }}>Módulo 3</span>
                   </div>
                 </div>
-                <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '0.8rem', color: '#94a3b8', fontSize: '0.92rem' }}>
+                <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '0.8rem', color: '#cbd5e1', fontSize: '0.92rem' }}>
                   <li style={{ display: 'flex', gap: '0.5rem' }}><span style={{ color: '#f97316' }}>✓</span> Preparação, nivelamento e traço perfeito do contrapiso</li>
                   <li style={{ display: 'flex', gap: '0.5rem' }}><span style={{ color: '#f97316' }}>✓</span> Assentamento de pisos e cerâmicas do jeito certo</li>
                   <li style={{ display: 'flex', gap: '0.5rem' }}><span style={{ color: '#f97316' }}>✓</span> Cortes perfeitos, arremates de ralos e aplicação de rejunte</li>
@@ -245,11 +245,11 @@ export default function ProjetosPedreiroLP() {
 
               {/* Card 4: Bônus VIP */}
               <div style={{ 
-                background: 'linear-gradient(135deg, #111827 0%, #0d1322 100%)', 
-                border: '1.5px dashed #f97316', 
+                background: 'linear-gradient(135deg, #0d1322 0%, #0b0f19 100%)', 
+                border: '1.5px solid #1e293b', 
                 borderRadius: '16px', 
                 padding: '2.2rem 2rem',
-                boxShadow: '0 15px 35px -10px rgba(249, 115, 22, 0.15)'
+                boxShadow: '0 10px 30px -10px rgba(0,0,0,0.5)'
               }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.8rem', marginBottom: '1.2rem' }}>
                   <span style={{ fontSize: '2rem' }}>🎁</span>
@@ -271,7 +271,7 @@ export default function ProjetosPedreiroLP() {
         </section>
 
         {/* ===== PROVA SOCIAL ===== */}
-        <section className={styles.socialProof} style={{ background: '#090f1d' }}>
+        <section className={styles.socialProof} style={{ background: '#0d1322' }}>
           <h2 className={styles.sectionTitle} style={{ color: '#fff' }}>Quem já faz parte do Mestre da Obra:</h2>
           <div className={styles.testimonialsGrid}>
             <div className={styles.testimonialCard} style={{ background: '#0d1322', border: '1px solid #1e293b' }}>
@@ -305,10 +305,10 @@ export default function ProjetosPedreiroLP() {
         </section>
 
         {/* ===== AÇÃO FINAL ===== */}
-        <section className={styles.finalCta} style={{ background: '#070a13' }}>
+        <section className={styles.finalCta} style={{ background: '#0b0f19' }}>
           <div className={styles.finalBox} style={{ 
             borderTopColor: '#ea580c', 
-            background: 'linear-gradient(180deg, #0d1322 0%, #070a13 100%)', 
+            background: 'linear-gradient(180deg, #0d1322 0%, #0b0f19 100%)', 
             border: '1px solid #1e293b' 
           }}>
             <div className={styles.urgentBadge} style={{ backgroundColor: '#ea580c' }}>⏳ OFERTA PROMOCIONAL VITALÍCIA</div>
