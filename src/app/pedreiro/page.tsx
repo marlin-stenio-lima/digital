@@ -17,47 +17,86 @@ export default function ProjetosPedreiroLP() {
       </Head>
       <FacebookPixel />
       
-      <main className={styles.container} style={{ backgroundColor: '#f8fafc', color: '#1e293b' }}>
+      <main className={styles.container} style={{ backgroundColor: '#ffffff', color: '#1e293b' }}>
         
-        {/* ===== HERO SECTION (Fundo Claro Tecnológico e Limpo) ===== */}
-        <section className={styles.heroPedreiro} style={{ 
-          background: 'radial-gradient(circle at top, #f1f5f9 0%, #f8fafc 100%)', 
+        {/* ===== HERO SECTION (Fundo Totalmente Branco/Claro com Alta Legibilidade) ===== */}
+        <section style={{ 
+          background: 'radial-gradient(circle at top, #f8fafc 0%, #ffffff 100%)', 
           borderBottom: '1px solid #e2e8f0', 
           padding: '6rem 1.5rem',
-          color: '#1e293b'
+          textAlign: 'center',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center'
         }}>
-          <div className={styles.heroContent} style={{ position: 'relative', zIndex: 2 }}>
-            <div className={styles.badge} style={{ 
-              backgroundColor: '#ea580c', 
-              borderColor: '#f97316', 
-              color: '#fff', 
-              boxShadow: '0 4px 12px rgba(234, 88, 12, 0.2)' 
+          <div style={{ maxWidth: '800px', width: '100%' }}>
+            <div style={{ 
+              display: 'inline-block',
+              backgroundColor: '#fff7ed', 
+              border: '1px solid #ffedd5', 
+              color: '#ea580c', 
+              padding: '0.5rem 1.2rem',
+              borderRadius: '9999px',
+              fontSize: '0.85rem',
+              fontWeight: 800,
+              letterSpacing: '0.08em',
+              marginBottom: '1.5rem',
+              textTransform: 'uppercase'
             }}>
               🔥 ACESSO VITALÍCIO & PAGAMENTO ÚNICO
             </div>
             
-            <h1 className={styles.headline} style={{ color: '#0f172a', fontWeight: 900 }}>
-              Aprenda a construir e reformar do absoluto zero e <span className={styles.highlight} style={{ color: '#ea580c' }}>economize milhares de reais</span> em mão de obra!
+            <h1 style={{ 
+              fontSize: '2.8rem', 
+              fontWeight: 900, 
+              color: '#0f172a', 
+              lineHeight: 1.15,
+              marginBottom: '1.5rem' 
+            }}>
+              Aprenda a construir e reformar do absoluto zero e <span style={{ color: '#ea580c' }}>economize milhares de reais</span> em mão de obra!
             </h1>
             
-            <p className={styles.subheadline} style={{ color: '#475569' }}>
+            <p style={{ 
+              fontSize: '1.2rem', 
+              color: '#475569', 
+              marginBottom: '2.5rem', 
+              lineHeight: 1.5 
+            }}>
               O método passo a passo em vídeo mais completo do Brasil. Domine Alvenaria, Massa, Reboco, Piso, Contrapiso, além de bônus exclusivos de Elétrica e Hidráulica. 
             </p>
 
-            <div className={styles.heroPriceTag} style={{ marginBottom: '2rem' }}>
-              <span className={styles.heroPriceFrom} style={{ color: '#64748b' }}>De <del style={{ color: '#ef4444' }}>R$ 39,90</del> por apenas</span>
-              <span className={styles.heroPriceBig} style={{ color: '#ea580c', fontWeight: 900 }}>R$ 9,90</span>
+            <div style={{ marginBottom: '2.2rem' }}>
+              <span style={{ display: 'block', fontSize: '1.1rem', color: '#64748b', marginBottom: '0.3rem' }}>
+                De <del style={{ color: '#ef4444' }}>R$ 39,90</del> por apenas
+              </span>
+              <span style={{ display: 'block', fontSize: '4.2rem', fontWeight: 950, color: '#ea580c', lineHeight: 1 }}>
+                R$ 9,90
+              </span>
             </div>
 
             <Link href={`/checkout?p=${pId}`} className={styles.ctaButtonPulse} style={{ 
               background: 'linear-gradient(135deg, #f97316 0%, #ea580c 100%)',
-              boxShadow: '0 6px 20px rgba(234, 88, 12, 0.3)',
-              color: '#ffffff'
+              boxShadow: '0 8px 30px rgba(234, 88, 12, 0.4)',
+              color: '#ffffff',
+              display: 'inline-flex',
+              padding: '1.3rem 2.5rem',
+              fontSize: '1.1rem',
+              fontWeight: 800,
+              borderRadius: '9999px',
+              textDecoration: 'none'
             }}>
               QUERO ME TORNAR UM MESTRE DA OBRA AGORA
             </Link>
             
-            <div className={styles.trustIndicators} style={{ color: '#64748b', marginTop: '1.5rem' }}>
+            <div style={{ 
+              display: 'flex', 
+              justifyContent: 'center', 
+              gap: '1.5rem', 
+              color: '#64748b', 
+              marginTop: '1.8rem',
+              fontSize: '0.9rem',
+              flexWrap: 'wrap'
+            }}>
               <span>🔒 Pagamento Seguro</span>
               <span>⚡ Acesso Instantâneo</span>
               <span>📱 Entrega pelo WhatsApp</span>
@@ -65,7 +104,7 @@ export default function ProjetosPedreiroLP() {
           </div>
         </section>
 
-        {/* ===== SEÇÃO: DOR vs SOLUÇÃO (Clara, moderna e focada em conversão) ===== */}
+        {/* ===== SEÇÃO: DOR vs SOLUÇÃO ===== */}
         <section style={{ padding: '5rem 1.5rem', background: '#ffffff', borderBottom: '1px solid #e2e8f0' }}>
           <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
             
@@ -171,9 +210,8 @@ export default function ProjetosPedreiroLP() {
             
             <div style={{ 
               display: 'grid', 
-              gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', 
-              gap: '2rem', 
-              marginBottom: '3rem' 
+              gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', 
+              gap: '2rem'
             }}>
               
               {/* Card 1: Alvenaria */}
@@ -245,29 +283,6 @@ export default function ProjetosPedreiroLP() {
                 </ul>
               </div>
 
-              {/* Card 4: Bônus VIP */}
-              <div style={{ 
-                background: '#ffffff', 
-                border: '1px solid #e2e8f0', 
-                borderRadius: '16px', 
-                padding: '2.2rem 2rem',
-                boxShadow: '0 4px 20px rgba(0,0,0,0.03)'
-              }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.8rem', marginBottom: '1.2rem' }}>
-                  <span style={{ fontSize: '2rem' }}>🎁</span>
-                  <div>
-                    <h3 style={{ color: '#0f172a', fontSize: '1.25rem', fontWeight: 800, margin: 0 }}>Bônus Exclusivos</h3>
-                    <span style={{ fontSize: '0.72rem', color: '#10b981', fontWeight: 700, textTransform: 'uppercase' }}>Liberado Imediatamente</span>
-                  </div>
-                </div>
-                <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '0.8rem', color: '#475569', fontSize: '0.92rem' }}>
-                  <li style={{ display: 'flex', gap: '0.5rem' }}><span style={{ color: '#10b981' }}>⭐</span> <strong>Elétrica & Hidráulica Residencial</strong> (38 videoaulas nativas)</li>
-                  <li style={{ display: 'flex', gap: '0.5rem' }}><span style={{ color: '#10b981' }}>⭐</span> <strong>Acesso Vitalício:</strong> Assista de onde e quando quiser</li>
-                  <li style={{ display: 'flex', gap: '0.5rem' }}><span style={{ color: '#10b981' }}>⭐</span> <strong>Grupo VIP de suporte</strong> direto no WhatsApp</li>
-                  <li style={{ display: 'flex', gap: '0.5rem' }}><span style={{ color: '#10b981' }}>⭐</span> <strong>Calculadora de Orçamento</strong> automática inclusa</li>
-                </ul>
-              </div>
-
             </div>
           </div>
         </section>
@@ -329,7 +344,13 @@ export default function ProjetosPedreiroLP() {
             <Link href={`/checkout?p=${pId}`} className={styles.ctaButtonPulse} style={{ 
               background: 'linear-gradient(135deg, #f97316 0%, #ea580c 100%)',
               boxShadow: '0 8px 25px rgba(234, 88, 12, 0.3)',
-              color: '#ffffff'
+              color: '#ffffff',
+              display: 'inline-flex',
+              padding: '1.3rem 2.5rem',
+              fontSize: '1.1rem',
+              fontWeight: 800,
+              borderRadius: '9999px',
+              textDecoration: 'none'
             }}>
               QUERO ACESSAR O TREINAMENTO AGORA
             </Link>
