@@ -457,9 +457,44 @@
     height: auto;
   }
   .contentContainer {
-    padding: 1.5rem;
+    padding: 1rem;
   }
   .lessonMainTitle {
     font-size: 1.6rem;
+  }
+  
+  /* Ajuste responsivo para evitar cortes no Blocker */
+  .upsellBlocker {
+    padding: 2rem 1.2rem !important;
+    margin: 1rem auto !important;
+  }
+  .lockGraphic {
+    font-size: 3rem !important;
+    margin-bottom: 1rem !important;
+  }
+  .blockTitle {
+    font-size: 1.6rem !important;
+  }
+  .blockDesc {
+    font-size: 0.95rem !important;
+    margin-bottom: 1.2rem !important;
+  }
+  .upsellBenefits {
+    padding: 1.2rem 1rem !important;
+    margin-bottom: 1.2rem !important;
+  }
+  .upsellBenefits li {
+    font-size: 0.85rem !important;
+    margin-bottom: 0.6rem !important;
+  }
+  .price {
+    font-size: 2rem !important;
+  }
+  .priceContainer {
+    margin-bottom: 1.2rem !important;
+  }
+  .upsellBtn {
+    padding: 1rem 1.5rem !important;
+    font-size: 1rem !important;
   }
 }
