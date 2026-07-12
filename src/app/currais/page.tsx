@@ -21,13 +21,16 @@ export default function ProjetosCurraisLP() {
         
         {/* ===== HERO SECTION ===== */}
         <section style={{ 
-          background: 'radial-gradient(circle at top, #f1f5f9 0%, #f8fafc 100%)', 
+          backgroundImage: 'linear-gradient(rgba(248, 250, 252, 0.93), rgba(255, 255, 255, 0.98)), url("/curral_background_light.png")', 
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
           borderBottom: '1px solid #e2e8f0', 
-          padding: '6rem 1.5rem',
+          padding: '6.5rem 1.5rem',
           textAlign: 'center',
           display: 'flex',
           flexDirection: 'column',
-          alignItems: 'center'
+          alignItems: 'center',
+          position: 'relative'
         }}>
           <div style={{ maxWidth: '850px', width: '100%' }}>
             <div style={{ 

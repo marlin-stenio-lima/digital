@@ -134,7 +134,7 @@ function CheckoutForm() {
 
   // Preço estático de upsell avulso
   const upsellAvulsoPrice = 13.90; // Para pedreiro (ou 9.90 combo)
-  const curraisAvulsoPrice = 9.90; // Para currais conforme regras
+  const curraisAvulsoPrice = 13.90; // Para currais conforme novas regras de R$ 13,90 avulso
 
   // Calculo de Total do Pedido
   let computedTotal = product.salePrice;
