@@ -354,7 +354,7 @@ export async function POST(request: Request) {
         }
 
       } else if (cursoId === 'currais') {
-        // Salvar no banco para habilitar o status de redirecionamento no checkout
+        // Salvar no banco para registro
         try {
           await supabaseAdmin
             .from('bones_alunos')
@@ -367,16 +367,46 @@ export async function POST(request: Request) {
           console.error('[Webhook] Error saving currais status to DB:', dbErr);
         }
 
-        const downloadLink = process.env.PDF_LINK_CURRAIS || 'https://link-pendente-currais';
-        const message = `🎉 *Pagamento confirmado!* 🎉\n\n` +
-          `Olá, ${customerName.split(' ')[0]}! Seu pagamento dos *Projetos de Currais* foi aprovado.\n\n` +
-          `📥 *Clique no link abaixo para fazer o download dos projetos e manual:*\n` +
-          `${downloadLink}\n\n` +
-          `📌 Salve esta mensagem para não perder o link do seu material!\n\n` +
-          `Bons projetos! 🔨🐂`;
+        const link75Projetos = 'https://digital-beryl-five.vercel.app/Entregavel%2075%20projetos%20de%20currais_compressed%202.pdf';
+        const link150Projetos = 'https://drive.google.com/drive/folders/1etvQfBKgRxYHehlXXEXIUom7HHfTkKrC?usp=sharing';
+        const linkContrato = 'https://digital-beryl-five.vercel.app/CONTRATO%20DE%20ARRENDAMENTO%20RURAL.pdf';
+        const linkPlanilha = 'https://docs.google.com/spreadsheets/d/1D7rM7g2iAuL9GegEGRNYubQeruFreEwU/edit?usp=sharing';
+
+        const comprouArrendamento = productsBought.includes('arrendamento');
+        const comprouPlanilha = productsBought.includes('planilha');
+
+        let message = `🎉 *Pagamento confirmado!* 🎉\n\n` +
+          `Olá, ${customerName.split(' ')[0]}! Seu acesso ao pacote de *Projetos de Currais & Manejo Inteligente* foi liberado com sucesso.\n\n` +
+          `📥 *Aqui estão os seus links de acesso:*\n\n` +
+          `🐂 *75 Projetos de Currais (PDF Principal):*\n` +
+          `${link75Projetos}\n\n` +
+          `📈 *150 Projetos Adicionais de Currais (Drive):*\n` +
+          `${link150Projetos}\n\n`;
+
+        if (comprouArrendamento) {
+          message += `📜 *Contrato de Arrendamento Rural (Treinamento/Modelo):*\n` +
+            `${linkContrato}\n\n`;
+        }
+
+        if (comprouPlanilha) {
+          message += `📊 *Planilha de Orçamento Agro (Excel/Sheets):*\n` +
+            `${linkPlanilha}\n\n`;
+        }
+
+        // Avisos dinâmicos se ele NÃO levou os upsells
+        if (!comprouArrendamento || !comprouPlanilha) {
+          message += `💡 *Oportunidade:* `;
+          const itensFaltantes = [];
+          if (!comprouArrendamento) itensFaltantes.push('Contrato de Arrendamento');
+          if (!comprouPlanilha) itensFaltantes.push('Planilha de Orçamento Agro');
+          
+          message += `Caso queira adquirir o ${itensFaltantes.join(' e o ')} posteriormente por apenas R$ 9,90 cada, basta nos responder aqui no WhatsApp.\n\n`;
+        }
+
+        message += `📌 Salve esta mensagem para não perder os seus links de estudo e trabalho!`;
 
         await sendWhatsAppMessage(customerPhone, message);
-        console.log(`[Webhook] Successfully processed currais for ${customerName} (${customerPhone})`);
+        console.log(`[Webhook] Successfully processed currais for ${customerName} (${customerPhone}). Arrendamento: ${comprouArrendamento}, Planilha: ${comprouPlanilha}`);
 
       } else if (cursoId === 'acm') {
         // Salvar no banco para habilitar o status de redirecionamento no checkout

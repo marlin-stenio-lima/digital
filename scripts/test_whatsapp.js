@@ -1,25 +1,45 @@
 const cleanPhone = '5586995485600';
 const customerName = 'Marlin Estênio';
-const plataformaLink = 'https://digital-beryl-five.vercel.app/plataforma/login?course=pedreiro';
 
-// Testando cenário SEM UPSELL
-const testComUpsell = false;
+const link75Projetos = 'https://digital-beryl-five.vercel.app/Entregavel%2075%20projetos%20de%20currais_compressed%202.pdf';
+const link150Projetos = 'https://drive.google.com/drive/folders/1etvQfBKgRxYHehlXXEXIUom7HHfTkKrC?usp=sharing';
+const linkContrato = 'https://digital-beryl-five.vercel.app/CONTRATO%20DE%20ARRENDAMENTO%20RURAL.pdf';
+const linkPlanilha = 'https://docs.google.com/spreadsheets/d/1D7rM7g2iAuL9GegEGRNYubQeruFreEwU/edit?usp=sharing';
+
+// Testando cenário COM TODOS OS EXTRAS/UPSELLS
+const comprouArrendamento = true;
+const comprouPlanilha = true;
 
 let message = `🎉 *Pagamento confirmado!* 🎉\n\n` +
-  `Olá, ${customerName.split(' ')[0]}! Seu acesso ao *Curso Mestre da Obra & Pedreiro Profissional* foi liberado com sucesso.\n\n` +
-  `📺 *Seu curso é 100% em videoaulas completas!* Não precisa baixar nada, assista direto pela nossa plataforma exclusiva de membros.\n\n` +
-  `👉 *Acesse a plataforma por aqui:* ${plataformaLink}\n` +
-  `🔑 *Seu Login e Senha:* É o seu próprio WhatsApp: ${cleanPhone}\n\n`;
+  `Olá, ${customerName.split(' ')[0]}! Seu acesso ao pacote de *Projetos de Currais & Manejo Inteligente* foi liberado com sucesso.\n\n` +
+  `📥 *Aqui estão os seus links de acesso:*\n\n` +
+  `🐂 *75 Projetos de Currais (PDF Principal):*\n` +
+  `${link75Projetos}\n\n` +
+  `📈 *150 Projetos Adicionais de Currais (Drive):*\n` +
+  `${link150Projetos}\n\n`;
 
-if (testComUpsell) {
-  message += `⚡ *TREINAMENTOS INCLUSOS LIBERADOS:* Como você adicionou o Combo, as videoaulas práticas de *Elétrica & Hidráulica Residencial* também já estão 100% abertas dentro do seu painel!\n\n`;
-} else {
-  message += `💡 *Aviso sobre Elétrica & Hidráulica:* Notei que você não adicionou os treinamentos de Instalações Elétricas e Hidráulicas. Caso queira liberar essas aulas depois, poderá adquiri-las diretamente pelo painel da sua área de membros.\n\n`;
+if (comprouArrendamento) {
+  message += `📜 *Contrato de Arrendamento Rural (Modelo de Contrato):*\n` +
+    `${linkContrato}\n\n`;
 }
 
-message += `📌 Salve esta mensagem para acessar a plataforma sempre que quiser assistir!`;
+if (comprouPlanilha) {
+  message += `📊 *Planilha de Orçamento Agro (Excel/Sheets):*\n` +
+    `${linkPlanilha}\n\n`;
+}
 
-console.log('Enviando nova notificação de teste sem bônus e sem assinatura para:', cleanPhone);
+if (!comprouArrendamento || !comprouPlanilha) {
+  message += `💡 *Oportunidade:* `;
+  const itensFaltantes = [];
+  if (!comprouArrendamento) itensFaltantes.push('Contrato de Arrendamento');
+  if (!comprouPlanilha) itensFaltantes.push('Planilha de Orçamento Agro');
+  
+  message += `Caso queira adquirir o ${itensFaltantes.join(' e o ')} posteriormente por apenas R$ 9,90 cada, basta nos responder aqui no WhatsApp.\n\n`;
+}
+
+message += `📌 Salve esta mensagem para não perder os seus links de estudo e trabalho!`;
+
+console.log('Enviando notificação de teste de Currais com Upsells para:', cleanPhone);
 
 const evolutionApiUrl = 'https://evo-evolution-api.ouiyj2.easypanel.host';
 const evolutionInstance = 'STENIO 1';

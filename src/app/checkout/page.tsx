@@ -5,6 +5,7 @@ import { useSearchParams } from 'next/navigation';
 import styles from './checkout.module.css';
 import PixDisplay from '@/components/PixDisplay';
 import UpsellPopup from '@/components/UpsellPopup';
+import CurraisUpsellPopup from '@/components/CurraisUpsellPopup';
 
 interface FormData {
   name: string;
@@ -40,8 +41,8 @@ interface ProductDetails {
 const PRODUCTS_MAP: Record<string, ProductDetails> = {
   currais: {
     id: 'currais',
-    name: 'Projetos de Currais',
-    description: 'Projetos de currais modernos estruturados',
+    name: 'Pacote 75 Projetos de Currais',
+    description: 'Desenhos técnicos estruturados e prontos para construir',
     originalPrice: 97.00,
     salePrice: 9.90,
   },
@@ -118,26 +119,38 @@ function CheckoutForm() {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  // States de Order Bumps e Upsells
+  // States de Order Bumps e Upsells (PEDREIRO)
   const [eletricaSelected, setEletricaSelected] = useState(false);
   const [hidraulicaSelected, setHidraulicaSelected] = useState(false);
+
+  // States de Order Bumps e Upsells (CURRAIS)
+  const [arrendamentoSelected, setArrendamentoSelected] = useState(false);
+  const [planilhaSelected, setPlanilhaSelected] = useState(false);
   
   // Controle de Upsell Popup
   const [showUpsellPopup, setShowUpsellPopup] = useState(false);
+  const [showCurraisUpsellPopup, setShowCurraisUpsellPopup] = useState(false);
   const [hasShownUpsell, setHasShownUpsell] = useState(false);
 
-  // Preços estáticos dos bumps/upsells avulsos
-  const upsellAvulsoPrice = 13.90;
+  // Preço estático de upsell avulso
+  const upsellAvulsoPrice = 13.90; // Para pedreiro (ou 9.90 combo)
+  const curraisAvulsoPrice = 9.90; // Para currais conforme regras
 
   // Calculo de Total do Pedido
-  const isComboActive = eletricaSelected && hidraulicaSelected;
   let computedTotal = product.salePrice;
-  
-  if (isComboActive) {
-    computedTotal += 19.80; // Combo promocional: R$ 9,90 cada
-  } else {
-    if (eletricaSelected) computedTotal += upsellAvulsoPrice;
-    if (hidraulicaSelected) computedTotal += upsellAvulsoPrice;
+
+  if (product.id === 'pedreiro') {
+    const isComboActive = eletricaSelected && hidraulicaSelected;
+    if (isComboActive) {
+      computedTotal += 19.80; // Combo: R$ 9,90 cada
+    } else {
+      if (eletricaSelected) computedTotal += upsellAvulsoPrice;
+      if (hidraulicaSelected) computedTotal += upsellAvulsoPrice;
+    }
+  } else if (product.id === 'currais') {
+    // Para currais, cada upsell custa 9.90
+    if (arrendamentoSelected) computedTotal += curraisAvulsoPrice;
+    if (planilhaSelected) computedTotal += curraisAvulsoPrice;
   }
 
   const handleInputChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
@@ -224,16 +237,21 @@ function CheckoutForm() {
     setFormErrors(errors);
     if (Object.keys(errors).length > 0) return;
 
-    // Se o cliente estiver levando apenas o principal (eletrica e hidraulica desmarcados)
-    // e ainda não mostramos a oferta popup de combo promocional
     if (product.id === 'pedreiro' && !eletricaSelected && !hidraulicaSelected && !hasShownUpsell) {
       setShowUpsellPopup(true);
       setHasShownUpsell(true);
+    } else if (product.id === 'currais' && !arrendamentoSelected && !planilhaSelected && !hasShownUpsell) {
+      setShowCurraisUpsellPopup(true);
+      setHasShownUpsell(true);
     } else {
-      // De outra forma, gera o Pix direto com o total computado
       const buyList = [product.id];
-      if (eletricaSelected) buyList.push('eletrica');
-      if (hidraulicaSelected) buyList.push('hidraulica');
+      if (product.id === 'pedreiro') {
+        if (eletricaSelected) buyList.push('eletrica');
+        if (hidraulicaSelected) buyList.push('hidraulica');
+      } else if (product.id === 'currais') {
+        if (arrendamentoSelected) buyList.push('arrendamento');
+        if (planilhaSelected) buyList.push('planilha');
+      }
       generatePix(computedTotal, buyList);
     }
   };
@@ -242,14 +260,25 @@ function CheckoutForm() {
     setShowUpsellPopup(false);
     setEletricaSelected(true);
     setHidraulicaSelected(true);
-    
-    // Total: R$ 9,90 principal + R$ 19,80 combo (eletrica e hidraulica por 9,90 cada) = R$ 29,70
     const buyList = [product.id, 'eletrica', 'hidraulica'];
     generatePix(product.salePrice + 19.80, buyList);
   };
 
   const handleDeclineUpsell = () => {
     setShowUpsellPopup(false);
+    generatePix(product.salePrice, [product.id]);
+  };
+
+  const handleAcceptCurraisUpsell = () => {
+    setShowCurraisUpsellPopup(false);
+    setArrendamentoSelected(true);
+    setPlanilhaSelected(true);
+    const buyList = [product.id, 'arrendamento', 'planilha'];
+    generatePix(product.salePrice + 19.80, buyList);
+  };
+
+  const handleDeclineCurraisUpsell = () => {
+    setShowCurraisUpsellPopup(false);
     generatePix(product.salePrice, [product.id]);
   };
 
@@ -268,17 +297,31 @@ function CheckoutForm() {
               <span>R$ {product.salePrice.toFixed(2).replace('.', ',')}</span>
             </div>
             
-            {eletricaSelected && (
+            {product.id === 'pedreiro' && eletricaSelected && (
               <div className={styles.summaryRow}>
                 <span>💡 Guia de Elétrica Residencial</span>
-                <span>R$ {(isComboActive ? 9.90 : upsellAvulsoPrice).toFixed(2).replace('.', ',')}</span>
+                <span>R$ {(eletricaSelected && hidraulicaSelected ? 9.90 : upsellAvulsoPrice).toFixed(2).replace('.', ',')}</span>
               </div>
             )}
 
-            {hidraulicaSelected && (
+            {product.id === 'pedreiro' && hidraulicaSelected && (
               <div className={styles.summaryRow}>
                 <span>💧 Guia de Hidráulica Residencial</span>
-                <span>R$ {(isComboActive ? 9.90 : upsellAvulsoPrice).toFixed(2).replace('.', ',')}</span>
+                <span>R$ {(eletricaSelected && hidraulicaSelected ? 9.90 : upsellAvulsoPrice).toFixed(2).replace('.', ',')}</span>
+              </div>
+            )}
+
+            {product.id === 'currais' && arrendamentoSelected && (
+              <div className={styles.summaryRow}>
+                <span>📜 Contrato de Arrendamento Rural</span>
+                <span>R$ {curraisAvulsoPrice.toFixed(2).replace('.', ',')}</span>
+              </div>
+            )}
+
+            {product.id === 'currais' && planilhaSelected && (
+              <div className={styles.summaryRow}>
+                <span>📊 Planilha de Orçamento Agro</span>
+                <span>R$ {curraisAvulsoPrice.toFixed(2).replace('.', ',')}</span>
               </div>
             )}
           </div>
@@ -392,11 +435,56 @@ function CheckoutForm() {
               </label>
 
               {/* AVISO DO COMBO */}
-              {isComboActive && (
+              {eletricaSelected && hidraulicaSelected && (
                 <div className={styles.comboNotice}>
                   🎉 <strong>Combo Ativo!</strong> Você adicionou ambos e ganhou desconto extra. Os cursos bônus saíram por apenas <strong>R$ 9,90 cada!</strong>
                 </div>
               )}
+            </div>
+          )}
+
+          {/* ============ ORDER BUMPS (EXCLUSIVOS DE CURRAIS) ============ */}
+          {product.id === 'currais' && (
+            <div className={styles.orderBumpsSection}>
+              <h3 className={styles.bumpsTitle}>Adicione ao seu pedido:</h3>
+              
+              {/* BUMP 1: CONTRATO DE ARRENDAMENTO */}
+              <label className={`${styles.bumpCard} ${arrendamentoSelected ? styles.bumpSelected : ''}`}>
+                <input 
+                  type="checkbox" 
+                  checked={arrendamentoSelected}
+                  onChange={(e) => setArrendamentoSelected(e.target.checked)}
+                  className={styles.bumpCheckbox}
+                />
+                <div className={styles.bumpInfo}>
+                  <div className={styles.bumpHeader}>
+                    <span className={styles.bumpName}>📜 Contrato de Arrendamento Rural</span>
+                    <span className={styles.bumpPrice}>+ R$ {curraisAvulsoPrice.toFixed(2).replace('.', ',')}</span>
+                  </div>
+                  <p className={styles.bumpDesc}>
+                    Modelo profissional de contrato em formato pronto pronto para uso legal e proteção jurídica de arrendador e arrendatário.
+                  </p>
+                </div>
+              </label>
+
+              {/* BUMP 2: PLANILHA DE ORÇAMENTO */}
+              <label className={`${styles.bumpCard} ${planilhaSelected ? styles.bumpSelected : ''}`}>
+                <input 
+                  type="checkbox" 
+                  checked={planilhaSelected}
+                  onChange={(e) => setPlanilhaSelected(e.target.checked)}
+                  className={styles.bumpCheckbox}
+                />
+                <div className={styles.bumpInfo}>
+                  <div className={styles.bumpHeader}>
+                    <span className={styles.bumpName}>📊 Planilha de Orçamento Agro</span>
+                    <span className={styles.bumpPrice}>+ R$ {curraisAvulsoPrice.toFixed(2).replace('.', ',')}</span>
+                  </div>
+                  <p className={styles.bumpDesc}>
+                    Planilha completa para planejar custos de obra, mão de obra e insumos de construções rurais sem perder o controle do caixa.
+                  </p>
+                </div>
+              </label>
             </div>
           )}
 
@@ -440,11 +528,21 @@ function CheckoutForm() {
         />
       )}
 
-      <UpsellPopup
-        isOpen={showUpsellPopup}
-        onAccept={handleAcceptUpsell}
-        onDecline={handleDeclineUpsell}
-      />
+      {product.id === 'pedreiro' && (
+        <UpsellPopup
+          isOpen={showUpsellPopup}
+          onAccept={handleAcceptUpsell}
+          onDecline={handleDeclineUpsell}
+        />
+      )}
+
+      {product.id === 'currais' && (
+        <CurraisUpsellPopup
+          isOpen={showCurraisUpsellPopup}
+          onAccept={handleAcceptCurraisUpsell}
+          onDecline={handleDeclineCurraisUpsell}
+        />
+      )}
 
       {errorMessage && (
         <div className={styles.errorModalOverlay}>
