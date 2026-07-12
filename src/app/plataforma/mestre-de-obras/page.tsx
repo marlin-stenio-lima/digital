@@ -25,11 +25,15 @@ export default async function PlataformaPedreiro() {
 
   // Determinar se o usuário possui acesso ao bônus (Elétrica e Hidráulica / comprou_ads)
   const hasBonusAccess = !!user.comprou_ads;
+  const hasPorcelanatoAccess = !!user.comprou_porcelanato;
+  const hasCubasAccess = !!user.comprou_cubas;
 
   return (
     <PlatformClient 
       customerName={user.telefone} 
       hasBonusAccess={hasBonusAccess} 
+      hasPorcelanatoAccess={hasPorcelanatoAccess}
+      hasCubasAccess={hasCubasAccess}
     />
   );
 }

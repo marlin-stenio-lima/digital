@@ -55,8 +55,8 @@ const PRODUCTS_MAP: Record<string, ProductDetails> = {
   },
   pedreiro: {
     id: 'pedreiro',
-    name: 'Projetos de Pedreiro',
-    description: 'Guias e detalhamentos estruturais para obras',
+    name: 'Curso Mestre da Obra & Pedreiro Profissional',
+    description: 'Mapeamentos práticos estruturados em videoaulas completas',
     originalPrice: 39.90,
     salePrice: 9.90,
   },
@@ -122,6 +122,8 @@ function CheckoutForm() {
   // States de Order Bumps e Upsells (PEDREIRO)
   const [eletricaSelected, setEletricaSelected] = useState(false);
   const [hidraulicaSelected, setHidraulicaSelected] = useState(false);
+  const [porcelanatoSelected, setPorcelanatoSelected] = useState(false);
+  const [cubasSelected, setCubasSelected] = useState(false);
 
   // States de Order Bumps e Upsells (CURRAIS)
   const [arrendamentoSelected, setArrendamentoSelected] = useState(false);
@@ -140,15 +142,13 @@ function CheckoutForm() {
   let computedTotal = product.salePrice;
 
   if (product.id === 'pedreiro') {
-    const isComboActive = eletricaSelected && hidraulicaSelected;
-    if (isComboActive) {
-      computedTotal += 19.80; // Combo: R$ 9,90 cada
-    } else {
-      if (eletricaSelected) computedTotal += upsellAvulsoPrice;
-      if (hidraulicaSelected) computedTotal += upsellAvulsoPrice;
-    }
+    // Pedreiro agora possui 4 opcionais de R$ 13,90 avulso. Se ele fechar o popup, saem todos a R$ 9,90.
+    if (eletricaSelected) computedTotal += upsellAvulsoPrice;
+    if (hidraulicaSelected) computedTotal += upsellAvulsoPrice;
+    if (porcelanatoSelected) computedTotal += upsellAvulsoPrice;
+    if (cubasSelected) computedTotal += upsellAvulsoPrice;
   } else if (product.id === 'currais') {
-    // Para currais, cada upsell custa 9.90
+    // Para currais, cada upsell custa R$ 13,90 avulso
     if (arrendamentoSelected) computedTotal += curraisAvulsoPrice;
     if (planilhaSelected) computedTotal += curraisAvulsoPrice;
   }
@@ -237,7 +237,7 @@ function CheckoutForm() {
     setFormErrors(errors);
     if (Object.keys(errors).length > 0) return;
 
-    if (product.id === 'pedreiro' && !eletricaSelected && !hidraulicaSelected && !hasShownUpsell) {
+    if (product.id === 'pedreiro' && !eletricaSelected && !hidraulicaSelected && !porcelanatoSelected && !cubasSelected && !hasShownUpsell) {
       setShowUpsellPopup(true);
       setHasShownUpsell(true);
     } else if (product.id === 'currais' && !arrendamentoSelected && !planilhaSelected && !hasShownUpsell) {
@@ -248,6 +248,8 @@ function CheckoutForm() {
       if (product.id === 'pedreiro') {
         if (eletricaSelected) buyList.push('eletrica');
         if (hidraulicaSelected) buyList.push('hidraulica');
+        if (porcelanatoSelected) buyList.push('porcelanato');
+        if (cubasSelected) buyList.push('cubas');
       } else if (product.id === 'currais') {
         if (arrendamentoSelected) buyList.push('arrendamento');
         if (planilhaSelected) buyList.push('planilha');
@@ -260,8 +262,12 @@ function CheckoutForm() {
     setShowUpsellPopup(false);
     setEletricaSelected(true);
     setHidraulicaSelected(true);
-    const buyList = [product.id, 'eletrica', 'hidraulica'];
-    generatePix(product.salePrice + 19.80, buyList);
+    setPorcelanatoSelected(true);
+    setCubasSelected(true);
+    
+    // Todos os 4 upsells por R$ 9,90 cada = R$ 39,60 adicionais (Total: R$ 49,50)
+    const buyList = [product.id, 'eletrica', 'hidraulica', 'porcelanato', 'cubas'];
+    generatePix(product.salePrice + 39.60, buyList);
   };
 
   const handleDeclineUpsell = () => {
@@ -273,6 +279,8 @@ function CheckoutForm() {
     setShowCurraisUpsellPopup(false);
     setArrendamentoSelected(true);
     setPlanilhaSelected(true);
+    
+    // 2 upsells por R$ 9,90 cada = R$ 19,80 adicionais (Total: R$ 29,70)
     const buyList = [product.id, 'arrendamento', 'planilha'];
     generatePix(product.salePrice + 19.80, buyList);
   };
@@ -300,14 +308,28 @@ function CheckoutForm() {
             {product.id === 'pedreiro' && eletricaSelected && (
               <div className={styles.summaryRow}>
                 <span>💡 Guia de Elétrica Residencial</span>
-                <span>R$ {(eletricaSelected && hidraulicaSelected ? 9.90 : upsellAvulsoPrice).toFixed(2).replace('.', ',')}</span>
+                <span>R$ {upsellAvulsoPrice.toFixed(2).replace('.', ',')}</span>
               </div>
             )}
 
             {product.id === 'pedreiro' && hidraulicaSelected && (
               <div className={styles.summaryRow}>
                 <span>💧 Guia de Hidráulica Residencial</span>
-                <span>R$ {(eletricaSelected && hidraulicaSelected ? 9.90 : upsellAvulsoPrice).toFixed(2).replace('.', ',')}</span>
+                <span>R$ {upsellAvulsoPrice.toFixed(2).replace('.', ',')}</span>
+              </div>
+            )}
+
+            {product.id === 'pedreiro' && porcelanatoSelected && (
+              <div className={styles.summaryRow}>
+                <span>📐 Projetos de Porcelanato</span>
+                <span>R$ {upsellAvulsoPrice.toFixed(2).replace('.', ',')}</span>
+              </div>
+            )}
+
+            {product.id === 'pedreiro' && cubasSelected && (
+              <div className={styles.summaryRow}>
+                <span>🏺 Fabricação de Cubas de Concreto</span>
+                <span>R$ {upsellAvulsoPrice.toFixed(2).replace('.', ',')}</span>
               </div>
             )}
 
@@ -434,12 +456,43 @@ function CheckoutForm() {
                 </div>
               </label>
 
-              {/* AVISO DO COMBO */}
-              {eletricaSelected && hidraulicaSelected && (
-                <div className={styles.comboNotice}>
-                  🎉 <strong>Combo Ativo!</strong> Você adicionou ambos e ganhou desconto extra. Os cursos bônus saíram por apenas <strong>R$ 9,90 cada!</strong>
+              {/* BUMP 3: PORCELANATO */}
+              <label className={`${styles.bumpCard} ${porcelanatoSelected ? styles.bumpSelected : ''}`}>
+                <input 
+                  type="checkbox" 
+                  checked={porcelanatoSelected}
+                  onChange={(e) => setPorcelanatoSelected(e.target.checked)}
+                  className={styles.bumpCheckbox}
+                />
+                <div className={styles.bumpInfo}>
+                  <div className={styles.bumpHeader}>
+                    <span className={styles.bumpName}>📐 Projetos de Porcelanato</span>
+                    <span className={styles.bumpPrice}>+ R$ {upsellAvulsoPrice.toFixed(2).replace('.', ',')}</span>
+                  </div>
+                  <p className={styles.bumpDesc}>
+                    Coleção com 8 manuais práticos e medidas de ilhas, bancadas, nichos embutidos e áreas gourmet em porcelanato.
+                  </p>
                 </div>
-              )}
+              </label>
+
+              {/* BUMP 4: CUBAS */}
+              <label className={`${styles.bumpCard} ${cubasSelected ? styles.bumpSelected : ''}`}>
+                <input 
+                  type="checkbox" 
+                  checked={cubasSelected}
+                  onChange={(e) => setCubasSelected(e.target.checked)}
+                  className={styles.bumpCheckbox}
+                />
+                <div className={styles.bumpInfo}>
+                  <div className={styles.bumpHeader}>
+                    <span className={styles.bumpName}>🏺 Fabricação de Cubas de Concreto</span>
+                    <span className={styles.bumpPrice}>+ R$ {upsellAvulsoPrice.toFixed(2).replace('.', ',')}</span>
+                  </div>
+                  <p className={styles.bumpDesc}>
+                    Guia passo a passo de dosagem, moldes e acabamentos com efeito granito, mármore e rústicos para cubas de alto padrão.
+                  </p>
+                </div>
+              </label>
             </div>
           )}
 

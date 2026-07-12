@@ -126,6 +126,37 @@ export const PEDREIRO_COURSE_DATA = {
         { id: "5-17", title: "Aula 17 - Limpeza e Higienização de Caixa d'Água", videoId: "", videoUrl: "https://conexaoplay.com/wp-content/uploads/2026/03/Como-limpar-a-CAIXA-DAGUA-10-passos-para-higienizacao-da-caixa-dagua.mp4", description: "10 passos para higienização completa." },
         { id: "5-18", title: "Aula 18 - Consertar Vazamento pelo Ladrão", videoId: "", videoUrl: "https://conexaoplay.com/wp-content/uploads/2026/03/Como-consertar-caixa-dagua-vazando-pelo-ladrao-agua-vazamento-001.mp4", description: "Regulação de boia e conserto de vazamentos." }
       ]
+    },
+    {
+      id: 6,
+      title: "Treinamento - Projetos de Porcelanato",
+      image: "/images/porcelanato.jpg",
+      description: "Modelos estruturados de bancadas, ilhas, áreas gourmet e nichos em porcelanato para download.",
+      isBonus: true,
+      lessons: [
+        { id: "6-1", title: "Ilhas e Bancadas de Porcelanato", videoId: "pdf", videoUrl: "/porcelanato/ILHAS E BANCADAS DE PORCELANATO.pdf", description: "Clique no botão abaixo para baixar o PDF completo de Ilhas e Bancadas em Porcelanato." },
+        { id: "6-2", title: "Áreas Gourmet em Porcelanato", videoId: "pdf", videoUrl: "/porcelanato/AREAS GOURMET.pdf", description: "Clique no botão abaixo para baixar o PDF completo de Áreas Gourmet em Porcelanato." },
+        { id: "6-3", title: "Painéis e Detalhes Decorativos", videoId: "pdf", videoUrl: "/porcelanato/PAINÉIS E DETALHES DECORATIVOS.pdf", description: "Clique no botão abaixo para baixar o PDF completo de Painéis e Detalhes Decorativos." },
+        { id: "6-4", title: "Nichos Embutidos em Porcelanato", videoId: "pdf", videoUrl: "/porcelanato/NICHOS EMBUTIDOS EM PORCELANATO.pdf", description: "Clique no botão abaixo para baixar o PDF completo de Nichos Embutidos em Porcelanato." },
+        { id: "6-5", title: "Banheiros Modernos em Porcelanato - Parte 1", videoId: "pdf", videoUrl: "/porcelanato/BANHEIROS MODERNOS EM PORCELANATO PARTE 1.pdf", description: "Clique no botão abaixo para baixar a Parte 1 do PDF de Banheiros Modernos." },
+        { id: "6-6", title: "Banheiros Modernos em Porcelanato - Parte 2", videoId: "pdf", videoUrl: "/porcelanato/BANHEIROS MODERNOS EM PORCELANATO PARTE 2.pdf", description: "Clique no botão abaixo para baixar a Parte 2 do PDF de Banheiros Modernos." },
+        { id: "6-7", title: "Cozinhas Modernas em Porcelanato - Parte 1", videoId: "pdf", videoUrl: "/porcelanato/COZINHAS MODERNAS EM PORCELANATO PARTE 1.pdf", description: "Clique no botão abaixo para baixar a Parte 1 do PDF de Cozinhas Modernas." },
+        { id: "6-8", title: "Cozinhas Modernas em Porcelanato - Parte 2", videoId: "pdf", videoUrl: "/porcelanato/COZINHAS MODERNAS EM PORCELANATO PARTE 2.pdf", description: "Clique no botão abaixo para baixar a Parte 2 do PDF de Cozinhas Modernas." }
+      ]
+    },
+    {
+      id: 7,
+      title: "Treinamento - Fabricação de Cubas",
+      image: "/images/cubas.jpg",
+      description: "Guias práticos para criar e moldar cubas de concreto de alto padrão e efeitos rústicos decorativos.",
+      isBonus: true,
+      lessons: [
+        { id: "7-1", title: "Cubas de Concreto de Alto Padrão", videoId: "pdf", videoUrl: "/cubas/Cubas de Concreto de Alto Padrao.pdf", description: "Clique no botão abaixo para baixar o guia completo de Fabricação de Cubas de Concreto de Alto Padrão." },
+        { id: "7-2", title: "Cubas de Concreto HPC de Alto Desempenho", videoId: "pdf", videoUrl: "/cubas/Cubas de Concreto HPC de Alto Desempenho.pdf", description: "Clique no botão abaixo para baixar o PDF de Cubas de Concreto HPC de Alto Desempenho." },
+        { id: "7-3", title: "Efeito Mármore em Cubas de Concreto", videoId: "pdf", videoUrl: "/cubas/Efeito de Marmore em Cubas de Concreto.pdf", description: "Clique no botão abaixo para baixar o PDF do guia prático de Efeito Mármore em Cubas." },
+        { id: "7-4", title: "Efeito Paris em Cubas de Concreto", videoId: "pdf", videoUrl: "/cubas/Efeito Paris em Cubas de Concreto.pdf", description: "Clique no botão abaixo para baixar o PDF do guia de Efeito Paris em Cubas de Concreto." },
+        { id: "7-5", title: "Efeito Granito - Acabamento Rústico de Alta Demanda", videoId: "pdf", videoUrl: "/cubas/Efeito Granito o Acabamento Rustico de Alta Demanda.pdf", description: "Clique no botão abaixo para baixar o PDF de Efeito Granito e acabamentos rústicos." }
+      ]
     }
   ]
 };

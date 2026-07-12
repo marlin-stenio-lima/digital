@@ -8,9 +8,11 @@ import styles from './page.module.css';
 interface PlatformClientProps {
   customerName: string;
   hasBonusAccess: boolean;
+  hasPorcelanatoAccess: boolean;
+  hasCubasAccess: boolean;
 }
 
-export default function PlatformClient({ customerName, hasBonusAccess }: PlatformClientProps) {
+export default function PlatformClient({ customerName, hasBonusAccess, hasPorcelanatoAccess, hasCubasAccess }: PlatformClientProps) {
   const router = useRouter();
   
   // Buscar primeira aula disponível
@@ -21,6 +23,7 @@ export default function PlatformClient({ customerName, hasBonusAccess }: Platfor
   const [activeLesson, setActiveLesson] = useState<Lesson | null>(firstLesson);
   const [completedLessons, setCompletedLessons] = useState<string[]>([]);
   const [showUpsellBlocker, setShowUpsellBlocker] = useState(false);
+  const [blockerType, setBlockerType] = useState<'eletrica_hidraulica' | 'porcelanato' | 'cubas'>('eletrica_hidraulica');
 
   const handleLogout = () => {
     document.cookie = 'bones_session=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
@@ -42,9 +45,22 @@ export default function PlatformClient({ customerName, hasBonusAccess }: Platfor
   };
 
   const handleBonusModuleClick = (mod: Module) => {
-    if (!hasBonusAccess) {
+    const isPorcelanato = mod.id === 6;
+    const isCubas = mod.id === 7;
+    
+    let hasAccess = hasBonusAccess;
+    if (isPorcelanato) hasAccess = hasPorcelanatoAccess;
+    else if (isCubas) hasAccess = hasCubasAccess;
+
+    if (!hasAccess) {
       setActiveLesson(null);
       setActiveModule(mod);
+      
+      let type: 'eletrica_hidraulica' | 'porcelanato' | 'cubas' = 'eletrica_hidraulica';
+      if (isPorcelanato) type = 'porcelanato';
+      else if (isCubas) type = 'cubas';
+      
+      setBlockerType(type);
       setShowUpsellBlocker(true);
     } else {
       setActiveModule(mod);
@@ -57,7 +73,12 @@ export default function PlatformClient({ customerName, hasBonusAccess }: Platfor
 
   // Contagem de progresso geral
   const totalRegularLessons = PEDREIRO_COURSE_DATA.modules
-    .filter(m => !m.isBonus || hasBonusAccess)
+    .filter(m => {
+      if (m.id === 6) return hasPorcelanatoAccess;
+      if (m.id === 7) return hasCubasAccess;
+      if (m.isBonus) return hasBonusAccess;
+      return true;
+    })
     .reduce((sum, m) => sum + (m.lessons ? m.lessons.length : 0), 0);
   const completedCount = completedLessons.length;
   const progressPercent = totalRegularLessons > 0 ? Math.round((completedCount / totalRegularLessons) * 100) : 0;
@@ -88,9 +109,18 @@ export default function PlatformClient({ customerName, hasBonusAccess }: Platfor
           {PEDREIRO_COURSE_DATA.modules.map(mod => {
             const isBonusModule = mod.isBonus;
             const isCurrentModule = activeModule.id === mod.id;
+            
+            // Checar acesso do módulo específico
+            const isPorcelanato = mod.id === 6;
+            const isCubas = mod.id === 7;
+            
+            let hasAccess = true;
+            if (isPorcelanato) hasAccess = hasPorcelanatoAccess;
+            else if (isCubas) hasAccess = hasCubasAccess;
+            else if (isBonusModule) hasAccess = hasBonusAccess;
 
             // Se for módulo bônus e o usuário NÃO tiver acesso, mostra ele bloqueado com cadeado
-            if (isBonusModule && !hasBonusAccess) {
+            if (isBonusModule && !hasAccess) {
               return (
                 <div key={mod.id} className={styles.moduleWrapper}>
                   <div 
@@ -99,10 +129,9 @@ export default function PlatformClient({ customerName, hasBonusAccess }: Platfor
                     style={{ marginTop: '0.3rem', border: '1px dashed #ea580c' }}
                   >
                     <div className={styles.moduleMeta}>
-                      <span className={styles.moduleNumber} style={{ color: '#ea580c' }}>BÔNUS BLOQUEADO</span>
+                      <span className={styles.moduleNumber} style={{ color: '#ea580c' }}>BLOQUEADO 🔒</span>
                       <span className={styles.moduleTitle}>{mod.title}</span>
                     </div>
-                    <span className={styles.lockIcon}>🔒</span>
                   </div>
                 </div>
               );
@@ -112,10 +141,16 @@ export default function PlatformClient({ customerName, hasBonusAccess }: Platfor
               <div key={mod.id} className={styles.moduleWrapper}>
                 <div 
                   className={`${styles.moduleHeader} ${isCurrentModule ? styles.moduleHeaderActive : ''}`}
-                  onClick={() => handleLessonClick(mod, mod.lessons ? mod.lessons[0] : undefined)}
+                  onClick={() => {
+                    if (isBonusModule) {
+                      handleBonusModuleClick(mod);
+                    } else {
+                      handleLessonClick(mod, mod.lessons ? mod.lessons[0] : undefined);
+                    }
+                  }}
                 >
                   <div className={styles.moduleMeta}>
-                    <span className={styles.moduleNumber}>{isBonusModule ? 'BÔNUS' : `Módulo ${mod.id}`}</span>
+                    <span className={styles.moduleNumber}>{isBonusModule ? 'TREINAMENTO EXTRA' : `Módulo ${mod.id}`}</span>
                     <span className={styles.moduleTitle}>{mod.title}</span>
                   </div>
                 </div>
@@ -165,19 +200,60 @@ export default function PlatformClient({ customerName, hasBonusAccess }: Platfor
             <div className={styles.upsellBlocker}>
               <div className={styles.lockGraphic}>🔒</div>
               <h2 className={styles.blockTitle}>Acesso Bloqueado</h2>
-              <p className={styles.blockDesc}>
-                O curso complementar de **Instalações de Elétrica & Hidráulica Residencial** é um treinamento premium de upsell.
-              </p>
               
-              <div className={styles.upsellBenefits}>
-                <h3>O que você vai aprender:</h3>
-                <ul>
-                  <li>⚡ Dimensionamento de disjuntores e fiação da casa</li>
-                  <li>⚡ Instalação de tomadas, interruptores e chuveiro elétrico</li>
-                  <li>💧 Encanamento de água fria, esgoto e caixa d&apos;água</li>
-                  <li>💧 Como evitar vazamentos e problemas de pressão na tubulação</li>
-                </ul>
-              </div>
+              {blockerType === 'eletrica_hidraulica' && (
+                <>
+                  <p className={styles.blockDesc}>
+                    O curso complementar de **Instalações de Elétrica & Hidráulica Residencial** é um treinamento premium de upsell.
+                  </p>
+                  
+                  <div className={styles.upsellBenefits}>
+                    <h3>O que você vai aprender:</h3>
+                    <ul>
+                      <li>⚡ Dimensionamento de disjuntores e fiação da casa</li>
+                      <li>⚡ Instalação de tomadas, interruptores e chuveiro elétrico</li>
+                      <li>💧 Encanamento de água fria, esgoto e caixa d&apos;água</li>
+                      <li>💧 Como evitar vazamentos e problemas de pressão na tubulação</li>
+                    </ul>
+                  </div>
+                </>
+              )}
+
+              {blockerType === 'porcelanato' && (
+                <>
+                  <p className={styles.blockDesc}>
+                    O pacote completo de **Projetos de Porcelanato** é um treinamento extra de upsell.
+                  </p>
+                  
+                  <div className={styles.upsellBenefits}>
+                    <h3>O que você vai receber:</h3>
+                    <ul>
+                      <li>📐 Detalhamento e medidas de Ilhas e Bancadas Gourmet</li>
+                      <li>📐 Projetos prontos para Nichos Embutidos de banheiro</li>
+                      <li>📐 Painéis e detalhes decorativos modernos de sala e cozinha</li>
+                      <li>📐 Projetos de cozinhas e banheiros modernos em porcelanato</li>
+                    </ul>
+                  </div>
+                </>
+              )}
+
+              {blockerType === 'cubas' && (
+                <>
+                  <p className={styles.blockDesc}>
+                    O manual profissional de **Fabricação de Cubas de Concreto** é um treinamento extra de upsell.
+                  </p>
+                  
+                  <div className={styles.upsellBenefits}>
+                    <h3>O que você vai receber:</h3>
+                    <ul>
+                      <li>🏺 Passo a passo de dosagem e moldagem de Cubas de Alto Padrão</li>
+                      <li>🏺 Formulação de concreto HPC (High Performance Concrete)</li>
+                      <li>🏺 Guias visuais de acabamento rústico Efeito Mármore</li>
+                      <li>🏺 Técnicas avançadas de acabamento Efeito Granito e Efeito Paris</li>
+                    </ul>
+                  </div>
+                </>
+              )}
 
               <div className={styles.priceContainer}>
                 <span className={styles.priceLabel}>Valor Promocional Exclusivo:</span>
@@ -195,32 +271,78 @@ export default function PlatformClient({ customerName, hasBonusAccess }: Platfor
               <p className={styles.guaranteeText}>⚡ Liberação instantânea no seu WhatsApp após a confirmação do pagamento.</p>
             </div>
           ) : activeLesson ? (
-            /* PLAYER DE VÍDEO COMPATÍVEL COM YOUTUBE E MP4 DIRETO */
             <div className={styles.playerView}>
-              <div className={styles.playerWrapper}>
-                {activeLesson.videoUrl ? (
-                  <video 
-                    src={activeLesson.videoUrl} 
-                    controls 
-                    controlsList="nodownload"
-                    className={styles.iframePlayer}
-                    autoPlay
-                    key={activeLesson.id} // Forçar recarregamento do player ao trocar de aula
+              
+              {/* SE FOR PDF: RENDERIZA PAINEL DE DOWNLOAD ELEGANTE COM CAPA E BOTÃO */}
+              {activeLesson.videoId === 'pdf' ? (
+                <div style={{
+                  background: '#0d1222',
+                  border: '2px solid #1e293b',
+                  borderRadius: '16px',
+                  padding: '3rem 2rem',
+                  textAlign: 'center',
+                  boxShadow: '0 20px 45px rgba(0,0,0,0.5)',
+                  marginBottom: '2rem'
+                }}>
+                  <div style={{ fontSize: '4.5rem', marginBottom: '1.5rem' }}>📄</div>
+                  <h2 style={{ fontSize: '1.8rem', fontWeight: 900, color: '#fff', marginBottom: '0.8rem' }}>
+                    {activeLesson.title}
+                  </h2>
+                  <p style={{ color: '#94a3b8', fontSize: '1rem', maxWidth: '500px', margin: '0 auto 2rem', lineHeight: 1.5 }}>
+                    {activeLesson.description}
+                  </p>
+                  <a 
+                    href={activeLesson.videoUrl} 
+                    download
+                    target="_blank"
+                    rel="noreferrer"
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '0.8rem',
+                      background: 'linear-gradient(135deg, #f97316 0%, #ea580c 100%)',
+                      color: '#fff',
+                      padding: '1.1rem 2.5rem',
+                      borderRadius: '8px',
+                      fontSize: '1.05rem',
+                      fontWeight: 800,
+                      textDecoration: 'none',
+                      boxShadow: '0 10px 20px rgba(234, 88, 12, 0.3)',
+                      transition: 'transform 0.2s'
+                    }}
+                    onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-2px)'}
+                    onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}
                   >
-                    Seu navegador não suporta a exibição de vídeos.
-                  </video>
-                ) : (
-                  <iframe 
-                    src={`https://www.youtube.com/embed/${activeLesson.videoId}`}
-                    title={activeLesson.title}
-                    frameBorder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    allowFullScreen
-                    className={styles.iframePlayer}
-                    key={activeLesson.id}
-                  />
-                )}
-              </div>
+                    📥 BAIXAR PROJETO EM PDF
+                  </a>
+                </div>
+              ) : (
+                /* SE FOR VÍDEO MP4 OU YOUTUBE */
+                <div className={styles.playerWrapper}>
+                  {activeLesson.videoUrl ? (
+                    <video 
+                      src={activeLesson.videoUrl} 
+                      controls 
+                      controlsList="nodownload"
+                      className={styles.iframePlayer}
+                      autoPlay
+                      key={activeLesson.id}
+                    >
+                      Seu navegador não suporta a exibição de vídeos.
+                    </video>
+                  ) : (
+                    <iframe 
+                      src={`https://www.youtube.com/embed/${activeLesson.videoId}`}
+                      title={activeLesson.title}
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      allowFullScreen
+                      className={styles.iframePlayer}
+                      key={activeLesson.id}
+                    />
+                  )}
+                </div>
+              )}
 
               <div className={styles.metaInfo}>
                 <h1 className={styles.lessonMainTitle}>{activeLesson.title}</h1>
@@ -228,18 +350,20 @@ export default function PlatformClient({ customerName, hasBonusAccess }: Platfor
                   onClick={() => toggleLessonComplete(activeLesson.id)}
                   className={`${styles.btnMarkComplete} ${completedLessons.includes(activeLesson.id) ? styles.btnCompleteDone : ''}`}
                 >
-                  {completedLessons.includes(activeLesson.id) ? '✓ Aula Concluída' : 'Marcar como Concluída'}
+                  {completedLessons.includes(activeLesson.id) ? '✓ Concluído' : 'Marcar como Concluído'}
                 </button>
               </div>
 
-              <div className={styles.descriptionCard}>
-                <h3>Descrição da Aula</h3>
-                <p>{activeLesson.description}</p>
-              </div>
+              {activeLesson.videoId !== 'pdf' && (
+                <div className={styles.descriptionCard}>
+                  <h3>Descrição da Aula</h3>
+                  <p>{activeLesson.description}</p>
+                </div>
+              )}
             </div>
           ) : (
             <div className={styles.emptyView}>
-              <h2>Selecione uma aula no menu lateral para começar a assistir!</h2>
+              <h2>Selecione um módulo ou projeto no menu lateral para iniciar!</h2>
             </div>
           )}
         </div>

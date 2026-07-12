@@ -48,155 +48,144 @@ function extractCustomerName(body: AbacatePayWebhookEvent): string {
   return customerMeta.name || rootMeta.nome || 'Cliente';
 }
 
+function extractCustomerEmail(body: AbacatePayWebhookEvent): string {
+  const pix = body.data?.pixQrCode;
+  if (!pix) return '';
+  const customerMeta = pix.customer?.metadata || {};
+  const rootMeta = pix.metadata || {};
+  return customerMeta.email || rootMeta.email || '';
+}
+
 function isPaymentConfirmed(body: AbacatePayWebhookEvent): boolean {
-  const event = body.event || '';
-  const status = body.data?.pixQrCode?.status || '';
-
-  const confirmedEvents = ['billing.paid', 'BILLING.PAID', 'payment.confirmed'];
-  const confirmedStatuses = ['PAID', 'paid', 'COMPLETED'];
-
-  if (confirmedEvents.includes(event)) return true;
-  if (confirmedStatuses.includes(status)) return true;
-
-  return false;
+  return body.event === 'billing.paid' || body.data?.pixQrCode?.status === 'PAID';
 }
 
-function formatPhoneForWhatsApp(phone: string): string {
-  let cleaned = phone.replace(/\D/g, '');
+async function sendWhatsAppMessage(toPhone: string, text: string, senderOverride?: string) {
+  const evolutionUrl = process.env.EVOLUTION_API_URL || 'https://evolution.marlonstenio.online';
+  const instance = process.env.EVOLUTION_INSTANCE || 'Marlon';
+  const apikey = process.env.EVOLUTION_API_KEY || '55a5b5143a50ca7b4946399120ff9d0c';
 
-  if (!cleaned.startsWith('55')) {
-    cleaned = '55' + cleaned;
+  let cleanedPhone = toPhone.replace(/\D/g, '');
+  if (!cleanedPhone.startsWith('55') && cleanedPhone.length >= 10) {
+    cleanedPhone = '55' + cleanedPhone;
   }
 
-  return cleaned;
-}
+  const endpoint = `${evolutionUrl}/message/sendText/${instance}`;
+  
+  try {
+    const response = await fetch(endpoint, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': apikey
+      },
+      body: JSON.stringify({
+        number: cleanedPhone,
+        text: text,
+        delay: 1200,
+        linkPreview: true
+      })
+    });
 
-function buildMessage(customerName: string, productsBought: string[]): string {
-  const firstName = customerName.split(' ')[0];
-
-  const linkPrincipal = process.env.PDF_LINK || 'https://link-pendente';
-  const linkCarretinha = process.env.PDF_LINK_CARRETINHA || '';
-  const linkAcademia = process.env.PDF_LINK_ACADEMIA || '';
-  const linkPerfuratriz = process.env.PDF_LINK_PERFURATRIZ || '';
-
-  let linksText = `📥 *600 Projetos de Móveis Industriais:*\n${linkPrincipal}\n\n`;
-
-  if (productsBought.includes('carretinha') && linkCarretinha) {
-    linksText += `📥 *Projetos de Carretinha:*\n${linkCarretinha}\n\n`;
+    const data = await response.json();
+    if (!response.ok) {
+      console.error('[Evolution API Error] Payload:', data);
+    }
+  } catch (error) {
+    console.error('[Evolution Exception] failed to send text message:', error);
   }
-  if (productsBought.includes('academia') && linkAcademia) {
-    linksText += `📥 *Projetos de Academia:*\n${linkAcademia}\n\n`;
-  }
-  if (productsBought.includes('perfuratriz') && linkPerfuratriz) {
-    linksText += `📥 *Projeto da Perfuratriz:*\n${linkPerfuratriz}\n\n`;
-  }
-
-  return (
-    `🎉 *Pagamento confirmado!* 🎉\n\n` +
-    `Olá, ${firstName}! Seu pagamento foi recebido com sucesso.\n\n` +
-    `📦 *Seu material está pronto:*\n\n` +
-    `${linksText}` +
-    `📌 *Dicas importantes:*\n` +
-    `• Salve esta mensagem para acessar quando quiser\n` +
-    `• Recomendamos baixar no computador para melhor visualização\n` +
-    `• Os projetos estão em PDF, prontos para impressão\n\n` +
-    `Qualquer dúvida, é só responder esta mensagem! 💬\n\n` +
-    `Bons projetos! 🔧🔩`
-  );
-}
-
-async function sendWhatsAppMessage(phone: string, message: string, instanceName?: string): Promise<void> {
-  const evolutionApiUrl = process.env.EVOLUTION_API_URL;
-  const evolutionInstance = instanceName || process.env.EVOLUTION_INSTANCE;
-  const evolutionApiKey = process.env.EVOLUTION_API_KEY;
-
-  if (!evolutionApiUrl || !evolutionInstance || !evolutionApiKey) {
-    console.warn(
-      '[Webhook] Evolution API environment variables not configured. Skipping WhatsApp message.',
-      { evolutionApiUrl: !!evolutionApiUrl, evolutionInstance: !!evolutionInstance, evolutionApiKey: !!evolutionApiKey }
-    );
-    return;
-  }
-
-  const url = `${evolutionApiUrl}/message/sendText/${evolutionInstance}`;
-  const formattedPhone = formatPhoneForWhatsApp(phone);
-
-  console.log(`[Webhook] Sending WhatsApp message to: ${formattedPhone}`);
-
-  const response = await fetch(url, {
-    method: 'POST',
-    headers: {
-      apikey: evolutionApiKey,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      number: formattedPhone,
-      text: message,
-    }),
-  });
-
-  if (!response.ok) {
-    const errorBody = await response.text();
-    console.error(`[Webhook] Failed to send WhatsApp message. Status: ${response.status}, Body: ${errorBody}`);
-    throw new Error(`Evolution API returned status ${response.status}`);
-  }
-
-  console.log('[Webhook] WhatsApp message sent successfully.');
 }
 
 async function sendFacebookCapiPurchase(phone: string, email: string, amount: number) {
-  const pixelId = process.env.NEXT_PUBLIC_PIXEL_ID;
-  const token = process.env.META_PIXEL_TOKEN;
+  const pixelId = process.env.NEXT_PUBLIC_FB_PIXEL_ID || '1493630651343714';
+  const accessToken = process.env.FB_CAPI_TOKEN;
 
-  if (!pixelId || !token) {
-    console.log('[Webhook] Missing Facebook Pixel ID or Token. Skipping CAPI.');
+  if (!accessToken) {
+    console.warn('[CAPI] Token not configured. Skipping CAPI purchase event.');
     return;
   }
 
-  try {
-    const hashData = (data: string) => crypto.createHash('sha256').update(data.trim().toLowerCase()).digest('hex');
+  const hash = (val: string) => {
+    if (!val) return '';
+    return crypto.createHash('sha256').update(val.trim().toLowerCase()).digest('hex');
+  };
 
-    const ph = phone ? hashData(phone.replace(/\D/g, '')) : undefined;
-    const em = email ? hashData(email) : undefined;
+  const cleanPhone = phone.replace(/\D/g, '');
+  const hashedPhone = hash(cleanPhone.startsWith('55') ? cleanPhone : '55' + cleanPhone);
+  const hashedEmail = hash(email);
 
-    const payload = {
-      data: [
-        {
-          event_name: 'Purchase',
-          event_time: Math.floor(Date.now() / 1000),
-          action_source: 'website',
-          user_data: {
-            ph: ph ? [ph] : undefined,
-            em: em ? [em] : undefined,
-          },
-          custom_data: {
-            currency: 'BRL',
-            value: amount
-          }
+  const eventData = {
+    data: [
+      {
+        event_name: 'Purchase',
+        event_time: Math.floor(Date.now() / 1000),
+        action_source: 'website',
+        user_data: {
+          ph: [hashedPhone],
+          em: hashedEmail ? [hashedEmail] : []
+        },
+        custom_data: {
+          currency: 'BRL',
+          value: amount
         }
-      ]
-    };
+      }
+    ]
+  };
 
-    const response = await fetch(`https://graph.facebook.com/v19.0/${pixelId}/events?access_token=${token}`, {
+  try {
+    const response = await fetch(`https://graph.facebook.com/v17.0/${pixelId}/events?access_token=${accessToken}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
+      body: JSON.stringify(eventData)
     });
-
-    if (!response.ok) {
-      console.error('[Webhook] Facebook CAPI Error:', await response.text());
-    } else {
-      console.log('[Webhook] Facebook CAPI Purchase event sent successfully.');
-    }
+    const resJson = await response.json();
+    console.log('[CAPI] Purchase event sent successfully:', resJson);
   } catch (err) {
-    console.error('[Webhook] Facebook CAPI Exception:', err);
+    console.error('[CAPI] Failed to dispatch purchase event:', err);
   }
+}
+
+function buildMessage(customerName: string, productsBought: string[]): string {
+  const downloadLink = process.env.PDF_LINK || 'https://drive.google.com/file/d/1B7Bw2qA6N_U4cO23iB5tYh7ZzG5P6jX3/view?usp=sharing';
+  const hasCarretinha = productsBought.includes('carretinha');
+  const hasAcademia = productsBought.includes('academia');
+  const hasPortao = productsBought.includes('portao');
+  const hasPerfuratriz = productsBought.includes('perfuratriz');
+
+  let text = `🎉 *Pagamento confirmado!* 🎉\n\n` +
+    `Olá, ${customerName.split(' ')[0]}! Seu pagamento do *Arsenal do Serralheiro Mestre* foi aprovado com sucesso.\n\n` +
+    `📥 *Baixe seu material principal no link abaixo:*\n` +
+    `${downloadLink}\n\n`;
+
+  if (hasCarretinha || hasAcademia || hasPortao || hasPerfuratriz) {
+    text += `⚡ *BÔNUS INCLUSOS LIBERADOS:*\n`;
+    if (hasCarretinha) {
+      text += `🚗 *Carretinha de Carga:* ${process.env.PDF_LINK_CARRETINHA || 'https://drive.google.com/file/d/1-carretinha-mock'}\n`;
+    }
+    if (hasAcademia) {
+      text += `💪 *Máquinas de Academia:* ${process.env.PDF_LINK_ACADEMIA || 'https://drive.google.com/file/d/1-academia-mock'}\n`;
+    }
+    if (hasPortao) {
+      text += `🚪 *Projeto de Portões:* ${process.env.PDF_LINK_PORTAO || 'https://drive.google.com/file/d/1-portao-mock'}\n`;
+    }
+    if (hasPerfuratriz) {
+      text += `🕳️ *Perfuratriz de Poços:* ${process.env.PDF_LINK_PERFURATRIZ || 'https://drive.google.com/file/d/1-perfuratriz-mock'}\n`;
+    }
+    text += `\n`;
+  } else {
+    text += `💡 *Oportunidade:* Vi que você não adicionou os projetos opcionais com desconto especial. Se quiser adquirir o projeto da *Carretinha*, *Academia*, *Portões* ou *Perfuratriz* depois por apenas R$ 9,90 cada, me responda aqui!\n\n`;
+  }
+
+  text += `📌 Salve esta mensagem para olhar as informações e projetos sempre que precisar!\n\n` +
+    `Bons projetos! ⚙️🛠️`;
+
+  return text;
 }
 
 async function sendDeliveryEmail(email: string, customerName: string, productsBought: string[]) {
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) {
-    console.warn('[Webhook] RESEND_API_KEY not found. Skipping email.');
+    console.warn('[Webhook] Resend API Key is missing. Email skipping.');
     return;
   }
 
@@ -434,15 +423,20 @@ export async function POST(request: Request) {
         console.log(`[Webhook] Successfully processed acm for ${customerName} (${customerPhone})`);
 
       } else if (cursoId === 'pedreiro') {
-        const hasUpsell = productsBought.includes('eletrica') || productsBought.includes('hidraulica');
-        
+        // Agora mapeamos os 4 opcionais de upsells
+        const hasEletricaHidraulica = productsBought.includes('eletrica') || productsBought.includes('hidraulica');
+        const hasPorcelanato = productsBought.includes('porcelanato');
+        const hasCubas = productsBought.includes('cubas');
+
         try {
           await supabaseAdmin
             .from('bones_alunos')
             .upsert({ 
               telefone: customerPhone, 
               token: crypto.randomUUID(),
-              comprou_ads: hasUpsell,
+              comprou_ads: hasEletricaHidraulica, // Elétrica/Hidráulica
+              comprou_porcelanato: hasPorcelanato, // Projetos de Porcelanato
+              comprou_cubas: hasCubas, // Projetos de Cubas
               data_acesso: new Date().toISOString()
             }, { onConflict: 'telefone' });
         } catch (dbErr) {
@@ -457,17 +451,29 @@ export async function POST(request: Request) {
           `👉 *Acesse a plataforma por aqui:* ${plataformaLink}\n` +
           `🔑 *Seu Login e Senha:* É o seu próprio WhatsApp: ${customerPhone}\n\n`;
 
-        if (hasUpsell) {
-          message += `⚡ *TREINAMENTOS INCLUSOS LIBERADOS:* Como você adicionou o Combo, as videoaulas práticas de *Elétrica & Hidráulica Residencial* também já estão 100% abertas dentro do seu painel!\n\n`;
-        } else {
-          message += `💡 *Aviso sobre Elétrica & Hidráulica:* Notei que você não adicionou os treinamentos de Instalações Elétricas e Hidráulicas. Caso queira liberar essas aulas depois, poderá adquiri-las diretamente pelo painel da sua área de membros.\n\n`;
+        // Informações condicionais das compras de Upsells
+        const tagsAdicionadas = [];
+        if (hasEletricaHidraulica) tagsAdicionadas.push('*Elétrica & Hidráulica Residencial*');
+        if (hasPorcelanato) tagsAdicionadas.push('*Projetos de Porcelanato*');
+        if (hasCubas) tagsAdicionadas.push('*Manual de Fabricação de Cubas*');
+
+        if (tagsAdicionadas.length > 0) {
+          message += `⚡ *TREINAMENTOS INCLUSOS LIBERADOS:* Como você adicionou no seu pedido, o acesso aos módulos de ${tagsAdicionadas.join(', ')} já está 100% liberado dentro da sua área de membros!\n\n`;
+        }
+
+        const itensNaoComprados = [];
+        if (!hasEletricaHidraulica) itensNaoComprados.push('Elétrica & Hidráulica');
+        if (!hasPorcelanato) itensNaoComprados.push('Projetos de Porcelanato');
+        if (!hasCubas) itensNaoComprados.push('Fabricação de Cubas');
+
+        if (itensNaoComprados.length > 0) {
+          message += `💡 *Treinamentos Extras:* Notei que você não adicionou os pacotes de ${itensNaoComprados.join(' e ')}. Caso mude de ideia e queira liberar essas aulas posteriormente, você poderá adquiri-los diretamente pelo painel da sua área de membros ou nos respondendo aqui.\n\n`;
         }
 
         message += `📌 Salve esta mensagem para acessar a plataforma sempre que quiser assistir!`;
 
         await sendWhatsAppMessage(customerPhone, message);
-        console.log(`[Webhook] Successfully processed pedreiro for ${customerName} (${customerPhone}). Upsell: ${hasUpsell}`);
-
+        console.log(`[Webhook] Successfully processed pedreiro for ${customerName} (${customerPhone}). Eletrica/Hidraulica: ${hasEletricaHidraulica}, Porcelanato: ${hasPorcelanato}, Cubas: ${hasCubas}`);
 
       } else {
         // Logica Antiga do Serralheiro
