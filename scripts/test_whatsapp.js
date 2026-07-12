@@ -1,20 +1,26 @@
 const cleanPhone = '5586995485600';
 const customerName = 'Marlin Estênio';
-const downloadLink = 'https://drive.google.com/file/d/1-pedreiro-mock-download-link';
 const plataformaLink = 'https://digital-beryl-five.vercel.app/plataforma/login?course=pedreiro';
 
-const message = '🎉 *Pagamento confirmado!* 🎉\n\n' +
-  'Olá, ' + customerName.split(' ')[0] + '! Seu pagamento dos *Projetos Estruturais de Pedreiro* foi aprovado com sucesso.\n\n' +
-  '📥 *Baixe seu material com guias de ferragens e concreto no link abaixo:*\n' +
-  downloadLink + '\n\n' +
-  '🖥️ *Acesso Liberado para os Cursos Bônus (Elétrica & Hidráulica):*\n' +
-  'Como você garantiu nossos guias práticos em vídeo de Instalações, liberamos sua área de membros premium!\n\n' +
-  '👉 *Acesse agora:* ' + plataformaLink + '\n' +
-  '🔑 *Seu Login e Senha:* É o seu próprio WhatsApp: ' + cleanPhone + '\n\n' +
-  '📌 Lembre-se de salvar esta mensagem para olhar as informações e projetos sempre que precisar!\n\n' +
-  'Bons projetos! 🏗️🧱';
+// Testando cenário COM UPSELL
+const testComUpsell = true;
 
-console.log('Enviando notificação de teste para:', cleanPhone);
+let message = `🎉 *Pagamento confirmado!* 🎉\n\n` +
+  `Olá, ${customerName.split(' ')[0]}! Seu acesso ao *Curso Mestre da Obra & Pedreiro Profissional* foi liberado com sucesso.\n\n` +
+  `📺 *Seu curso é 100% em videoaulas completas!* Não precisa baixar nada, assista direto pela nossa plataforma exclusiva de membros.\n\n` +
+  `👉 *Acesse a plataforma por aqui:* ${plataformaLink}\n` +
+  `🔑 *Seu Login e Senha:* É o seu próprio WhatsApp: ${cleanPhone}\n\n`;
+
+if (testComUpsell) {
+  message += `⚡ *BÔNUS INCLUSOS LIBERADOS:* Como você adicionou o Combo, as videoaulas práticas de *Elétrica & Hidráulica Residencial* também já estão 100% abertas dentro do seu painel!\n\n`;
+} else {
+  message += `💡 *Aviso sobre Elétrica & Hidráulica:* Notei que você não adicionou os bônus de Instalações Elétricas e Hidráulicas. Caso queira liberar essas aulas depois, poderá adquiri-las diretamente pelo painel da sua área de membros.\n\n`;
+}
+
+message += `📌 Salve esta mensagem para acessar a plataforma sempre que quiser assistir!\n\n` +
+  `Bons estudos! 🏗️🧱`;
+
+console.log('Enviando nova notificação de teste para:', cleanPhone);
 
 const evolutionApiUrl = 'https://evo-evolution-api.ouiyj2.easypanel.host';
 const evolutionInstance = 'STENIO 1';

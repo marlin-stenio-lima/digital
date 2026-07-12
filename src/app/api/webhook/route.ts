@@ -419,23 +419,22 @@ export async function POST(request: Request) {
           console.error('[Webhook] Error saving pedreiro status to DB:', dbErr);
         }
 
-        const downloadLink = process.env.PDF_LINK_PEDREIRO || 'https://link-pendente-pedreiro';
         const plataformaLink = `${new URL(request.url).origin}/plataforma/login?course=pedreiro`;
 
         let message = `🎉 *Pagamento confirmado!* 🎉\n\n` +
-          `Olá, ${customerName.split(' ')[0]}! Seu pagamento dos *Projetos Estruturais de Pedreiro* foi aprovado com sucesso.\n\n` +
-          `📥 *Baixe seu material com guias de ferragens e concreto no link abaixo:*\n` +
-          `${downloadLink}\n\n`;
+          `Olá, ${customerName.split(' ')[0]}! Seu acesso ao *Curso Mestre da Obra & Pedreiro Profissional* foi liberado com sucesso.\n\n` +
+          `📺 *Seu curso é 100% em videoaulas completas!* Não precisa baixar nada, assista direto pela nossa plataforma exclusiva de membros.\n\n` +
+          `👉 *Acesse a plataforma por aqui:* ${plataformaLink}\n` +
+          `🔑 *Seu Login e Senha:* É o seu próprio WhatsApp: ${customerPhone}\n\n`;
 
         if (hasUpsell) {
-          message += `🖥️ *Acesso Liberado para os Cursos Bônus (Elétrica & Hidráulica):*\n` +
-            `Como você garantiu nossos guias práticos em vídeo de Instalações, liberamos sua área de membros premium!\n\n` +
-            `👉 *Acesse agora:* ${plataformaLink}\n` +
-            `🔑 *Seu Login e Senha:* É o seu próprio WhatsApp: ${customerPhone}\n\n`;
+          message += `⚡ *BÔNUS INCLUSOS LIBERADOS:* Como você adicionou o Combo, as videoaulas práticas de *Elétrica & Hidráulica Residencial* também já estão 100% abertas dentro do seu painel!\n\n`;
+        } else {
+          message += `💡 *Aviso sobre Elétrica & Hidráulica:* Notei que você não adicionou os bônus de Instalações Elétricas e Hidráulicas. Caso queira liberar essas aulas depois, poderá adquiri-las diretamente pelo painel da sua área de membros.\n\n`;
         }
 
-        message += `📌 Lembre-se de salvar esta mensagem para olhar as informações e projetos sempre que precisar!\n\n` +
-          `Bons projetos! 🏗️🧱`;
+        message += `📌 Salve esta mensagem para acessar a plataforma sempre que quiser assistir!\n\n` +
+          `Bons estudos! 🏗️🧱`;
 
         await sendWhatsAppMessage(customerPhone, message);
         console.log(`[Webhook] Successfully processed pedreiro for ${customerName} (${customerPhone}). Upsell: ${hasUpsell}`);
