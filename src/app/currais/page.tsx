@@ -1,22 +1,18 @@
 import React from 'react';
-import Head from 'next/head';
 import Link from 'next/link';
 import styles from '../fabrica-de-bones/page.module.css';
-import FacebookPixel from '@/components/FacebookPixel';
+
+export const metadata = {
+  title: 'Projetos de Currais & Manejo Inteligente | AgroProjetos',
+  description: 'Aprenda a construir currais modernos, seguros e altamente eficientes. Guia prático com 75 projetos detalhados prontos para executar.',
+};
 
 export default function ProjetosCurraisLP() {
   const pId = "currais";
   const pName = "Projetos de Currais & Manejo Inteligente";
-  const pDesc = "Aprenda a construir currais modernos, seguros e altamente eficientes. Guia prático com 75 projetos detalhados prontos para executar.";
   
   return (
     <>
-      <Head>
-        <title>{pName} | AgroProjetos</title>
-        <meta name="description" content={pDesc} />
-      </Head>
-      <FacebookPixel />
-      
       <main className={styles.container} style={{ backgroundColor: '#f8fafc', color: '#1e293b' }}>
         
         {/* ===== HERO SECTION ===== */}
@@ -50,19 +46,19 @@ export default function ProjetosCurraisLP() {
             </div>
             
             <h1 style={{ 
-              fontSize: '2.8rem', 
+              fontSize: '2.3rem', /* Cabeçalho mais compacto e harmônico no PC */
               fontWeight: 900, 
               color: '#0f172a', 
-              lineHeight: 1.15,
-              marginBottom: '1.5rem' 
+              lineHeight: 1.2,
+              marginBottom: '1.2rem' 
             }}>
               Construa Currais Modernos e Seguros e <span style={{ color: '#ea580c' }}>Evite Desperdícios de Madeira e Concreto</span>!
             </h1>
             
             <p style={{ 
-              fontSize: '1.2rem', 
+              fontSize: '1.05rem', 
               color: '#475569', 
-              marginBottom: '2.5rem', 
+              marginBottom: '2rem', 
               lineHeight: 1.5 
             }}>
               Economize milhares de reais em materiais sabendo a medida e a quantidade exata de mourões, tábuas e ferragens necessárias para a sua obra de manejo.

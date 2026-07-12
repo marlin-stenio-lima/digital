@@ -33,7 +33,7 @@
 }
 
 .productTitle {
-  font-size: 22px;
+  font-size: 18px; /* Título menor para computador */
   font-weight: 700;
   color: #1a1a1a;
   margin: 0 0 4px;
@@ -41,7 +41,7 @@
 }
 
 .productSubtitle {
-  font-size: 14px;
+  font-size: 13px;
   color: #666;
   margin: 0 0 20px;
   font-weight: 400;
@@ -59,19 +59,19 @@
   align-items: center;
   gap: 8px;
   padding: 6px 0;
-  font-size: 14px;
+  font-size: 13px;
   color: #333;
 }
 
 .bonusCheck {
   flex-shrink: 0;
-  font-size: 16px;
+  font-size: 15px;
 }
 
 .bonusStrikePrice {
   text-decoration: line-through;
   color: #999;
-  font-size: 13px;
+  font-size: 12px;
   margin-left: 4px;
 }
 
@@ -83,7 +83,7 @@
 }
 
 .originalPrice {
-  font-size: 15px;
+  font-size: 14px;
   color: #888;
   margin: 0 0 8px;
 }
@@ -102,13 +102,13 @@
 }
 
 .finalPriceLabel {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 600;
   color: #333;
 }
 
 .finalPrice {
-  font-size: 32px;
+  font-size: 26px; /* Preço do checkout mais compacto e profissional */
   font-weight: 800;
   color: #2ecc40;
   line-height: 1;

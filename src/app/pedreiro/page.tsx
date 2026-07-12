@@ -1,22 +1,17 @@
 import React from 'react';
-import Head from 'next/head';
 import Link from 'next/link';
 import styles from '../fabrica-de-bones/page.module.css';
-import FacebookPixel from '@/components/FacebookPixel';
+
+export const metadata = {
+  title: 'Curso Mestre da Obra & Pedreiro Profissional | Escola da Construção',
+  description: 'Aprenda alvenaria, reboco, piso, contrapiso e tenha acesso a cursos bônus de elétrica e hidráulica do absoluto zero.',
+};
 
 export default function ProjetosPedreiroLP() {
   const pId = "pedreiro";
-  const pName = "Curso Mestre da Obra & Pedreiro Profissional";
-  const pDesc = "Aprenda alvenaria, reboco, piso, contrapiso e tenha acesso a cursos bônus de elétrica e hidráulica do absoluto zero.";
   
   return (
     <>
-      <Head>
-        <title>{pName} | Escola da Construção</title>
-        <meta name="description" content={pDesc} />
-      </Head>
-      <FacebookPixel />
-      
       <main className={styles.container} style={{ backgroundColor: '#ffffff', color: '#1e293b' }}>
         
         {/* ===== HERO SECTION (Fundo Totalmente Branco/Claro com Alta Legibilidade) ===== */}
