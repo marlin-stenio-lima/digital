@@ -16,11 +16,11 @@ export default function CursoEletricaLP() {
         
         {/* ===== HERO SECTION (Light Premium Theme with Electrical Blueprint Watermark Background) ===== */}
         <section style={{ 
-          backgroundImage: 'linear-gradient(rgba(255, 255, 255, 0.94), rgba(255, 255, 255, 0.98)), url("/curral_background_light.png")', 
+          backgroundImage: 'linear-gradient(rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.95)), url("/acm_background_1783791906895.png")', 
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           borderBottom: '1px solid #e2e8f0', 
-          padding: '6.5rem 1.5rem 5.5rem',
+          padding: '6.5rem 1.5rem 5rem',
           textAlign: 'center',
           display: 'flex',
           flexDirection: 'column',
@@ -32,11 +32,11 @@ export default function CursoEletricaLP() {
           <div style={{
             position: 'absolute',
             top: 0, left: 0, right: 0, bottom: 0,
-            background: 'radial-gradient(circle at 50% 20%, rgba(245, 158, 11, 0.05) 0%, transparent 60%)',
+            background: 'radial-gradient(circle at 50% 20%, rgba(217, 119, 6, 0.06) 0%, transparent 60%)',
             pointerEvents: 'none'
           }} />
 
-          <div style={{ maxWidth: '850px', width: '100%', position: 'relative', zIndex: 1 }}>
+          <div style={{ maxWidth: '880px', width: '100%', position: 'relative', zIndex: 1 }}>
             
             {/* Tag Badge */}
             <div style={{ 
@@ -53,53 +53,100 @@ export default function CursoEletricaLP() {
               letterSpacing: '0.05em',
               marginBottom: '2rem',
               textTransform: 'uppercase',
-              boxShadow: '0 4px 12px rgba(245, 158, 11, 0.1)'
+              boxShadow: '0 4px 12px rgba(217, 119, 6, 0.1)'
             }}>
-              ⚡ LIBERAÇÃO IMEDIATA NO SEU WHATSAPP E E-MAIL
+              ⚡ O ATALHO PROFISSIONAL: RECEBA IMEDIATAMENTE NO WHATSAPP
             </div>
             
-            {/* Headline Principal Agressiva */}
+            {/* Headline Principal Focada em Facilidade e Ganhos Rápidos */}
             <h1 style={{ 
-              fontSize: '2.8rem',
+              fontSize: '3rem',
               fontWeight: 950, 
               color: '#0f172a', 
               lineHeight: 1.15,
               marginBottom: '1.5rem',
-              letterSpacing: '-1.2px'
+              letterSpacing: '-1.5px'
             }}>
-              Pare de Correr Riscos e Cometer Erros Bobos. Tenha <span style={{ color: '#d97706', textShadow: '0 2px 10px rgba(217,119,6,0.1)' }}>500 Esquemas Elétricos Prontos</span> no Celular!
+              Acelere Seus Serviços de Elétrica e <span style={{ color: '#d97706', textShadow: '0 2px 10px rgba(217,119,6,0.1)' }}>Fature Muito Mais</span> Entregando Projetos Prontos!
             </h1>
             
-            {/* Subheadline Focada em Dor/Urgência */}
+            {/* Subheadline Focada em Agilidade, Facilidade e Eliminar Dor de Cabeça */}
             <p style={{ 
-              fontSize: '1.15rem', 
+              fontSize: '1.2rem', 
               color: '#475569', 
               marginBottom: '2.5rem', 
               lineHeight: 1.6,
-              maxWidth: '750px',
+              maxWidth: '780px',
               margin: '0 auto 2.5rem'
             }}>
-              Chega de queimar componentes caros de clientes ou travar na hora de ligar um motor ou QDC completo. Acesse agora o maior acervo prático de diagramas elétricos residenciais, comerciais e industriais.
+              Esqueça as pesquisas demoradas no YouTube ou o medo de ligar comandos errados. Acesse o maior acervo prático de diagramas elétricos residenciais, comerciais e industriais. Olhe o esquema pronto, ligue os cabos com segurança e ganhe tempo para fechar o próximo cliente.
             </p>
 
-            {/* Caixa de Oferta Única */}
+            {/* Grid dos Benefícios Rápidos (Antes da Caixa de Preço) */}
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+              gap: '1.5rem',
+              maxWidth: '780px',
+              margin: '0 auto 3rem',
+              textAlign: 'left'
+            }}>
+              <div style={{ display: 'flex', gap: '0.8rem', alignItems: 'flex-start' }}>
+                <span style={{ fontSize: '1.5rem', color: '#d97706' }}>🚀</span>
+                <div>
+                  <strong style={{ color: '#0f172a', display: 'block', fontSize: '0.95rem' }}>Serviços 3x Mais Rápidos</strong>
+                  <span style={{ color: '#64748b', fontSize: '0.85rem', lineHeight: 1.4, display: 'block' }}>Esquemas na tela do celular para resolver a instalação em minutos.</span>
+                </div>
+              </div>
+              <div style={{ display: 'flex', gap: '0.8rem', alignItems: 'flex-start' }}>
+                <span style={{ fontSize: '1.5rem', color: '#d97706' }}>📈</span>
+                <div>
+                  <strong style={{ color: '#0f172a', display: 'block', fontSize: '0.95rem' }}>Aumente Suas Diárias</strong>
+                  <span style={{ color: '#64748b', fontSize: '0.85rem', lineHeight: 1.4, display: 'block' }}>Economize tempo de execução para fechar e entregar muito mais projetos no mês.</span>
+                </div>
+              </div>
+              <div style={{ display: 'flex', gap: '0.8rem', alignItems: 'flex-start' }}>
+                <span style={{ fontSize: '1.5rem', color: '#d97706' }}>🛡️</span>
+                <div>
+                  <strong style={{ color: '#0f172a', display: 'block', fontSize: '0.95rem' }}>Risco Zero de Curtos</strong>
+                  <span style={{ color: '#64748b', fontSize: '0.85rem', lineHeight: 1.4, display: 'block' }}>Esquemas testados seguindo as normas técnicas para evitar queima de equipamentos.</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Caixa de Oferta Única com Selo de Escassez */}
             <div style={{ 
               background: '#f8fafc',
               border: '1px solid #e2e8f0',
-              padding: '2rem 1.5rem',
-              borderRadius: '16px',
+              padding: '2.2rem 1.8rem',
+              borderRadius: '20px',
               maxWidth: '480px',
               margin: '0 auto 2.5rem',
-              boxShadow: '0 15px 35px rgba(0, 0, 0, 0.05)'
+              boxShadow: '0 15px 35px rgba(0, 0, 0, 0.05)',
+              position: 'relative'
             }}>
+              <div style={{
+                position: 'absolute',
+                top: '-12px', left: '50%',
+                transform: 'translateX(-50%)',
+                backgroundColor: '#ef4444',
+                color: '#fff',
+                fontSize: '0.7rem',
+                fontWeight: 900,
+                padding: '0.3rem 1.2rem',
+                borderRadius: '9999px',
+                letterSpacing: '0.5px'
+              }}>
+                🔥 PROMOÇÃO VÁLIDA HOJE
+              </div>
               <span style={{ display: 'block', fontSize: '0.95rem', color: '#64748b', marginBottom: '0.5rem', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: 700 }}>
-                🔥 OFERTA DE LANÇAMENTO EXCLUSIVA
+                Acesso Vitalício + Atualizações
               </span>
               <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'baseline', gap: '0.6rem', marginBottom: '0.5rem' }}>
                 <span style={{ fontSize: '1.2rem', color: '#ef4444', textDecoration: 'line-through', fontWeight: 600 }}>R$ 97,00</span>
                 <span style={{ fontSize: '3.8rem', fontWeight: 950, color: '#d97706', lineHeight: 1 }}>R$ 9,90</span>
               </div>
-              <span style={{ fontSize: '0.85rem', color: '#16a34a', fontWeight: 700 }}>✓ Pagamento único. Sem mensalidades ou taxas escondidas.</span>
+              <span style={{ fontSize: '0.85rem', color: '#16a34a', fontWeight: 700 }}>✓ Pagamento único via PIX. Envio instantâneo.</span>
             </div>
 
             {/* Botão de Compra Ultra Pulsante */}
