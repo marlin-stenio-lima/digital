@@ -4,7 +4,7 @@ import styles from '../fabrica-de-bones/page.module.css';
 
 export const metadata = {
   title: '500 Projetos Prontos de Elétrica + Manual de Comandos | ElectroPro',
-  description: 'Pare de improvisar e levar choque. Tenha em mãos 500 esquemas de ligações elétricas residenciais e industriais detalhados e prontos para executar.',
+  description: 'Aprenda comandos elétricos e ligações residenciais e industriais. Tenha 500 esquemas prontos no celular e elimine o retrabalho.',
 };
 
 export default function CursoEletricaLP() {
@@ -12,15 +12,15 @@ export default function CursoEletricaLP() {
   
   return (
     <>
-      <main className={styles.container} style={{ backgroundColor: '#090d1a', color: '#f8fafc', fontFamily: 'Inter, sans-serif' }}>
+      <main className={styles.container} style={{ backgroundColor: '#ffffff', color: '#1e293b', fontFamily: 'Inter, sans-serif' }}>
         
-        {/* ===== HERO SECTION (Premium Dark Blue with Amber Yellow Highlight) ===== */}
+        {/* ===== HERO SECTION (Light Premium Theme with Electrical Blueprint Watermark Background) ===== */}
         <section style={{ 
-          backgroundImage: 'linear-gradient(135deg, rgba(15, 23, 42, 0.98) 0%, rgba(9, 13, 26, 0.99) 100%), url("/acm_background_1783791906895.png")', 
+          backgroundImage: 'linear-gradient(rgba(255, 255, 255, 0.94), rgba(255, 255, 255, 0.98)), url("/curral_background_light.png")', 
           backgroundSize: 'cover',
           backgroundPosition: 'center',
-          borderBottom: '1px solid rgba(245, 158, 11, 0.15)', 
-          padding: '6rem 1.5rem 5rem',
+          borderBottom: '1px solid #e2e8f0', 
+          padding: '6.5rem 1.5rem 5.5rem',
           textAlign: 'center',
           display: 'flex',
           flexDirection: 'column',
@@ -28,11 +28,11 @@ export default function CursoEletricaLP() {
           position: 'relative'
         }}>
           
-          {/* Amber Radial Glow Overlay */}
+          {/* Subtle blueprint pattern overlay */}
           <div style={{
             position: 'absolute',
             top: 0, left: 0, right: 0, bottom: 0,
-            background: 'radial-gradient(circle at 50% 20%, rgba(245, 158, 11, 0.08) 0%, transparent 60%)',
+            background: 'radial-gradient(circle at 50% 20%, rgba(245, 158, 11, 0.05) 0%, transparent 60%)',
             pointerEvents: 'none'
           }} />
 
@@ -43,9 +43,9 @@ export default function CursoEletricaLP() {
               display: 'inline-flex',
               alignItems: 'center',
               gap: '0.5rem',
-              backgroundColor: 'rgba(245, 158, 11, 0.1)', 
-              border: '1px solid rgba(245, 158, 11, 0.3)', 
-              color: '#f59e0b', 
+              backgroundColor: '#fff7ed', 
+              border: '1px solid #ffedd5', 
+              color: '#d97706', 
               padding: '0.6rem 1.4rem',
               borderRadius: '9999px',
               fontSize: '0.8rem',
@@ -53,60 +53,59 @@ export default function CursoEletricaLP() {
               letterSpacing: '0.05em',
               marginBottom: '2rem',
               textTransform: 'uppercase',
-              boxShadow: '0 0 20px rgba(245, 158, 11, 0.1)'
+              boxShadow: '0 4px 12px rgba(245, 158, 11, 0.1)'
             }}>
-              ⚡ DOWNLOAD IMEDIATO NO WHATSAPP E E-MAIL
+              ⚡ LIBERAÇÃO IMEDIATA NO SEU WHATSAPP E E-MAIL
             </div>
             
             {/* Headline Principal Agressiva */}
             <h1 style={{ 
               fontSize: '2.8rem',
-              fontWeight: 900, 
-              color: '#ffffff', 
+              fontWeight: 950, 
+              color: '#0f172a', 
               lineHeight: 1.15,
               marginBottom: '1.5rem',
-              letterSpacing: '-1px'
+              letterSpacing: '-1.2px'
             }}>
-              Pare de Correr Riscos e Cometer Erros Bobos. Tenha <span style={{ color: '#f59e0b', textShadow: '0 0 25px rgba(245,158,11,0.25)' }}>500 Esquemas Elétricos Prontos</span> no Celular!
+              Pare de Correr Riscos e Cometer Erros Bobos. Tenha <span style={{ color: '#d97706', textShadow: '0 2px 10px rgba(217,119,6,0.1)' }}>500 Esquemas Elétricos Prontos</span> no Celular!
             </h1>
             
             {/* Subheadline Focada em Dor/Urgência */}
             <p style={{ 
               fontSize: '1.15rem', 
-              color: '#cbd5e1', 
+              color: '#475569', 
               marginBottom: '2.5rem', 
               lineHeight: 1.6,
               maxWidth: '750px',
               margin: '0 auto 2.5rem'
             }}>
-              Chega de queimar componentes de clientes ou ficar na dúvida ao ligar um motor ou QDC completo. Acesse agora o maior acervo prático de diagramas elétricos residenciais, comerciais e industriais.
+              Chega de queimar componentes caros de clientes ou travar na hora de ligar um motor ou QDC completo. Acesse agora o maior acervo prático de diagramas elétricos residenciais, comerciais e industriais.
             </p>
 
             {/* Caixa de Oferta Única */}
             <div style={{ 
-              background: 'rgba(30, 41, 59, 0.6)',
-              border: '1px solid rgba(255,255,255,0.08)',
+              background: '#f8fafc',
+              border: '1px solid #e2e8f0',
               padding: '2rem 1.5rem',
               borderRadius: '16px',
               maxWidth: '480px',
               margin: '0 auto 2.5rem',
-              backdropFilter: 'blur(8px)',
-              boxShadow: '0 15px 35px rgba(0, 0, 0, 0.3)'
+              boxShadow: '0 15px 35px rgba(0, 0, 0, 0.05)'
             }}>
-              <span style={{ display: 'block', fontSize: '0.95rem', color: '#94a3b8', marginBottom: '0.5rem', textTransform: 'uppercase', letterSpacing: '1px' }}>
+              <span style={{ display: 'block', fontSize: '0.95rem', color: '#64748b', marginBottom: '0.5rem', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: 700 }}>
                 🔥 OFERTA DE LANÇAMENTO EXCLUSIVA
               </span>
               <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'baseline', gap: '0.6rem', marginBottom: '0.5rem' }}>
-                <span style={{ fontSize: '1.2rem', color: '#ef4444', textDecoration: 'line-through' }}>R$ 97,00</span>
-                <span style={{ fontSize: '3.8rem', fontWeight: 950, color: '#f59e0b', lineHeight: 1 }}>R$ 9,90</span>
+                <span style={{ fontSize: '1.2rem', color: '#ef4444', textDecoration: 'line-through', fontWeight: 600 }}>R$ 97,00</span>
+                <span style={{ fontSize: '3.8rem', fontWeight: 950, color: '#d97706', lineHeight: 1 }}>R$ 9,90</span>
               </div>
-              <span style={{ fontSize: '0.85rem', color: '#22c55e', fontWeight: 700 }}>✓ Pagamento único. Sem mensalidades ou taxas escondidas.</span>
+              <span style={{ fontSize: '0.85rem', color: '#16a34a', fontWeight: 700 }}>✓ Pagamento único. Sem mensalidades ou taxas escondidas.</span>
             </div>
 
             {/* Botão de Compra Ultra Pulsante */}
             <Link href={`/checkout-eletrica?p=${pId}`} className={styles.ctaButtonPulse} style={{ 
               background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)',
-              boxShadow: '0 8px 35px rgba(245, 158, 11, 0.45)',
+              boxShadow: '0 8px 30px rgba(217, 119, 6, 0.35)',
               color: '#ffffff',
               display: 'inline-flex',
               padding: '1.4rem 3rem',
@@ -129,7 +128,7 @@ export default function CursoEletricaLP() {
               marginTop: '2rem',
               fontSize: '0.88rem',
               flexWrap: 'wrap',
-              fontWeight: 500
+              fontWeight: 600
             }}>
               <span>🔒 Ambiente de Compra Criptografado</span>
               <span>⚡ Envio Automatizado via API</span>
@@ -138,17 +137,17 @@ export default function CursoEletricaLP() {
           </div>
         </section>
 
-        {/* ===== SEÇÃO: A DOR / MEDO DO PROFISSIONAL ===== */}
-        <section style={{ padding: '5rem 1.5rem', background: '#0b0f19', borderBottom: '1px solid rgba(245, 158, 11, 0.05)' }}>
+        {/* ===== SEÇÃO: A DOR / MEDO DO PROFISSIONAL (Modelo PAS - Problema, Agitação, Solução) ===== */}
+        <section style={{ padding: '5rem 1.5rem', background: '#f8fafc', borderBottom: '1px solid #e2e8f0' }}>
           <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
             
             <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
-              <span style={{ fontSize: '0.85rem', fontWeight: 800, color: '#f59e0b', textTransform: 'uppercase', letterSpacing: '2px' }}>O CUSTO DO ERRO</span>
-              <h2 style={{ fontSize: '2.2rem', fontWeight: 900, marginTop: '0.5rem', color: '#ffffff', letterSpacing: '-0.5px' }}>
+              <span style={{ fontSize: '0.85rem', fontWeight: 800, color: '#d97706', textTransform: 'uppercase', letterSpacing: '2px' }}>O RISCO DO TRABALHO</span>
+              <h2 style={{ fontSize: '2.2rem', fontWeight: 950, marginTop: '0.5rem', color: '#0f172a', letterSpacing: '-0.5px' }}>
                 O Erro de um Eletricista Custa Muito Caro
               </h2>
-              <p style={{ color: '#94a3b8', fontSize: '1.05rem', maxWidth: '650px', margin: '0.5rem auto 0', lineHeight: 1.6 }}>
-                Na eletricidade não existe meio-termo. Um fechamento de motor ou dimensionamento errado queima o equipamento e queima o seu nome no mercado.
+              <p style={{ color: '#475569', fontSize: '1.05rem', maxWidth: '650px', margin: '0.5rem auto 0', lineHeight: 1.6 }}>
+                Na eletricidade não existe meio-termo. Um fechamento de motor ou dimensionamento errado queima o equipamento e destrói o seu nome no mercado.
               </p>
             </div>
 
@@ -157,33 +156,33 @@ export default function CursoEletricaLP() {
               
               {/* Lado da Dor */}
               <div style={{ 
-                background: 'rgba(239, 68, 68, 0.03)', 
-                border: '1.5px solid rgba(239, 68, 68, 0.15)', 
+                background: '#fff5f5', 
+                border: '1.5px solid #fed7d7', 
                 borderRadius: '16px', 
                 padding: '2.5rem 2rem' 
               }}>
-                <h3 style={{ color: '#f87171', fontSize: '1.25rem', fontWeight: 800, marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+                <h3 style={{ color: '#c53030', fontSize: '1.25rem', fontWeight: 800, marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
                   ⚠️ O Perigo de Trabalhar no Improviso:
                 </h3>
-                <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '1.2rem', color: '#94a3b8', fontSize: '0.95rem' }}>
+                <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '1.2rem', color: '#475569', fontSize: '0.95rem' }}>
                   <li style={{ display: 'flex', gap: '0.8rem', alignItems: 'flex-start' }}>
                     <span style={{ color: '#ef4444', fontWeight: 'bold' }}>✕</span>
                     <div>
-                      <strong style={{ color: '#f8fafc' }}>Queimar Motores ou Placas de Comando:</strong>
+                      <strong style={{ color: '#2d3748' }}>Queimar Motores ou Placas de Comando:</strong>
                       <p style={{ margin: '0.2rem 0 0' }}>Não saber parametrizar contatores, relés ou chaves de partida e queimar instalações industriais caras.</p>
                     </div>
                   </li>
                   <li style={{ display: 'flex', gap: '0.8rem', alignItems: 'flex-start' }}>
                     <span style={{ color: '#ef4444', fontWeight: 'bold' }}>✕</span>
                     <div>
-                      <strong style={{ color: '#f8fafc' }}>Perda de tempo procurando esquemas na internet:</strong>
+                      <strong style={{ color: '#2d3748' }}>Perda de tempo procurando esquemas na internet:</strong>
                       <p style={{ margin: '0.2rem 0 0' }}>Ficar horas pesquisando no YouTube diagramas que muitas vezes vêm errados ou fora de normas.</p>
                     </div>
                   </li>
                   <li style={{ display: 'flex', gap: '0.8rem', alignItems: 'flex-start' }}>
                     <span style={{ color: '#ef4444', fontWeight: 'bold' }}>✕</span>
                     <div>
-                      <strong style={{ color: '#f8fafc' }}>Dúvida na fiação e risco de curto-circuito:</strong>
+                      <strong style={{ color: '#2d3748' }}>Dúvida na fiação e risco de curto-circuito:</strong>
                       <p style={{ margin: '0.2rem 0 0' }}>Falta de confiança ao passar cabos de comando ou fechar quadros elétricos residenciais complexos.</p>
                     </div>
                   </li>
@@ -192,33 +191,34 @@ export default function CursoEletricaLP() {
 
               {/* Lado da Solução */}
               <div style={{ 
-                background: 'rgba(34, 197, 94, 0.03)', 
-                border: '1.5px solid rgba(34, 197, 94, 0.15)', 
+                background: '#f0fdf4', 
+                border: '1.5px solid #bbf7d0', 
                 borderRadius: '16px', 
-                padding: '2.5rem 2rem' 
+                padding: '2.5rem 2rem',
+                boxShadow: '0 10px 25px rgba(22, 163, 74, 0.03)'
               }}>
-                <h3 style={{ color: '#4ade80', fontSize: '1.25rem', fontWeight: 800, marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+                <h3 style={{ color: '#15803d', fontSize: '1.25rem', fontWeight: 800, marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
                   ✅ A Segurança do Nosso Material:
                 </h3>
-                <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '1.2rem', color: '#94a3b8', fontSize: '0.95rem' }}>
+                <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '1.2rem', color: '#475569', fontSize: '0.95rem' }}>
                   <li style={{ display: 'flex', gap: '0.8rem', alignItems: 'flex-start' }}>
                     <span style={{ color: '#22c55e', fontWeight: 'bold' }}>✓</span>
                     <div>
-                      <strong style={{ color: '#f8fafc' }}>Esquemas Prontos de Partida de Motores:</strong>
+                      <strong style={{ color: '#2d3748' }}>Esquemas Prontos de Partida de Motores:</strong>
                       <p style={{ margin: '0.2rem 0 0' }}>Estrela-triângulo, partidas diretas e circuitos de reversão com proteção térmica detalhada.</p>
                     </div>
                   </li>
                   <li style={{ display: 'flex', gap: '0.8rem', alignItems: 'flex-start' }}>
                     <span style={{ color: '#22c55e', fontWeight: 'bold' }}>✓</span>
                     <div>
-                      <strong style={{ color: '#f8fafc' }}>Padrão Profissional Organizado:</strong>
+                      <strong style={{ color: '#2d3748' }}>Padrão Profissional Organizado:</strong>
                       <p style={{ margin: '0.2rem 0 0' }}>Tenha tudo salvo offline no celular. Consulte na obra sem depender de internet de dados móveis.</p>
                     </div>
                   </li>
                   <li style={{ display: 'flex', gap: '0.8rem', alignItems: 'flex-start' }}>
                     <span style={{ color: '#22c55e', fontWeight: 'bold' }}>✓</span>
                     <div>
-                      <strong style={{ color: '#f8fafc' }}>Confiança e Velocidade no Serviço:</strong>
+                      <strong style={{ color: '#2d3748' }}>Confiança e Velocidade no Serviço:</strong>
                       <p style={{ margin: '0.2rem 0 0' }}>Agilize suas entregas técnicas sabendo exatamente onde ligar cada fio do comando de controle.</p>
                     </div>
                   </li>
@@ -230,12 +230,12 @@ export default function CursoEletricaLP() {
         </section>
 
         {/* ===== CONTEÚDO DETALHADO DO MATERIAL ===== */}
-        <section style={{ backgroundColor: '#090d1a', padding: '5rem 1.5rem', color: '#f8fafc' }}>
+        <section style={{ backgroundColor: '#ffffff', padding: '5rem 1.5rem', color: '#1e293b', borderBottom: '1px solid #e2e8f0' }}>
           <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
             
             <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
-              <span style={{ fontSize: '0.85rem', fontWeight: 800, color: '#f59e0b', textTransform: 'uppercase', letterSpacing: '2px' }}>CONTEÚDO PROGRAMÁTICO</span>
-              <h2 style={{ fontSize: '2.4rem', fontWeight: 900, marginTop: '0.5rem', color: '#ffffff', letterSpacing: '-0.5px' }}>
+              <span style={{ fontSize: '0.85rem', fontWeight: 800, color: '#d97706', textTransform: 'uppercase', letterSpacing: '2px' }}>CONTEÚDO PROGRAMÁTICO</span>
+              <h2 style={{ fontSize: '2.4rem', fontWeight: 950, marginTop: '0.5rem', color: '#0f172a', letterSpacing: '-0.5px' }}>
                 O que você leva no Pacote Eletricista Profissional:
               </h2>
             </div>
@@ -248,45 +248,45 @@ export default function CursoEletricaLP() {
               
               {/* Card 1: 500 Projetos */}
               <div style={{ 
-                background: '#111827', 
-                border: '1px solid rgba(255,255,255,0.06)', 
+                background: '#f8fafc', 
+                border: '1px solid #e2e8f0', 
                 borderRadius: '16px', 
                 padding: '2.5rem 2rem',
-                boxShadow: '0 4px 30px rgba(0,0,0,0.2)'
+                boxShadow: '0 4px 30px rgba(0,0,0,0.02)'
               }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.8rem', marginBottom: '1.5rem' }}>
                   <span style={{ fontSize: '2.5rem' }}>📖</span>
                   <div>
-                    <h3 style={{ color: '#ffffff', fontSize: '1.3rem', fontWeight: 800, margin: 0 }}>500 Projetos Prontos</h3>
-                    <span style={{ fontSize: '0.72rem', color: '#f59e0b', fontWeight: 700, textTransform: 'uppercase' }}>Biblioteca Completa em PDF</span>
+                    <h3 style={{ color: '#0f172a', fontSize: '1.3rem', fontWeight: 800, margin: 0 }}>500 Projetos Prontos</h3>
+                    <span style={{ fontSize: '0.72rem', color: '#d97706', fontWeight: 700, textTransform: 'uppercase' }}>Biblioteca Completa em PDF</span>
                   </div>
                 </div>
-                <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '0.9rem', color: '#cbd5e1', fontSize: '0.92rem' }}>
-                  <li style={{ display: 'flex', gap: '0.5rem' }}><span style={{ color: '#f59e0b' }}>✓</span> Instalação de sensores, fotocélulas e chaves magnéticas</li>
-                  <li style={{ display: 'flex', gap: '0.5rem' }}><span style={{ color: '#f59e0b' }}>✓</span> Quadros de Distribuição (QDC) Monofásicos, Bifásicos e Trifásicos</li>
-                  <li style={{ display: 'flex', gap: '0.5rem' }}><span style={{ color: '#f59e0b' }}>✓</span> Infraestrutura residencial e ligação de tomadas/iluminação sem erros</li>
+                <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '0.9rem', color: '#475569', fontSize: '0.92rem' }}>
+                  <li style={{ display: 'flex', gap: '0.5rem' }}><span style={{ color: '#d97706' }}>✓</span> Instalação de sensores, fotocélulas e chaves magnéticas</li>
+                  <li style={{ display: 'flex', gap: '0.5rem' }}><span style={{ color: '#d97706' }}>✓</span> Quadros de Distribuição (QDC) Monofásicos, Bifásicos e Trifásicos</li>
+                  <li style={{ display: 'flex', gap: '0.5rem' }}><span style={{ color: '#d97706' }}>✓</span> Infraestrutura residencial e ligação de tomadas/iluminação sem erros</li>
                 </ul>
               </div>
 
               {/* Card 2: Manual Comandos */}
               <div style={{ 
-                background: '#111827', 
-                border: '1px solid rgba(255,255,255,0.06)', 
+                background: '#f8fafc', 
+                border: '1px solid #e2e8f0', 
                 borderRadius: '16px', 
                 padding: '2.5rem 2rem',
-                boxShadow: '0 4px 30px rgba(0,0,0,0.2)'
+                boxShadow: '0 4px 30px rgba(0,0,0,0.02)'
               }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.8rem', marginBottom: '1.5rem' }}>
                   <span style={{ fontSize: '2.5rem' }}>🛠️</span>
                   <div>
-                    <h3 style={{ color: '#ffffff', fontSize: '1.3rem', fontWeight: 800, margin: 0 }}>Guia Comandos Elétricos</h3>
-                    <span style={{ fontSize: '0.72rem', color: '#f59e0b', fontWeight: 700, textTransform: 'uppercase' }}>Manual Prático e Potência</span>
+                    <h3 style={{ color: '#0f172a', fontSize: '1.3rem', fontWeight: 800, margin: 0 }}>Guia Comandos Elétricos</h3>
+                    <span style={{ fontSize: '0.72rem', color: '#d97706', fontWeight: 700, textTransform: 'uppercase' }}>Manual Prático e Potência</span>
                   </div>
                 </div>
-                <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '0.9rem', color: '#cbd5e1', fontSize: '0.92rem' }}>
-                  <li style={{ display: 'flex', gap: '0.5rem' }}><span style={{ color: '#f59e0b' }}>✓</span> Partida de Motores: Direta, Estrela-Triângulo, Reversão e Proteção</li>
-                  <li style={{ display: 'flex', gap: '0.5rem' }}><span style={{ color: '#f59e0b' }}>✓</span> Parametrização e funcionamento de contatores, relés térmicos e DPs</li>
-                  <li style={{ display: 'flex', gap: '0.5rem' }}><span style={{ color: '#f59e0b' }}>✓</span> Selos de contato, lógica de botoeiras de comando e sinalização visual</li>
+                <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '0.9rem', color: '#475569', fontSize: '0.92rem' }}>
+                  <li style={{ display: 'flex', gap: '0.5rem' }}><span style={{ color: '#d97706' }}>✓</span> Partida de Motores: Direta, Estrela-Triângulo, Reversão e Proteção</li>
+                  <li style={{ display: 'flex', gap: '0.5rem' }}><span style={{ color: '#d97706' }}>✓</span> Parametrização e funcionamento de contatores, relés térmicos e DPs</li>
+                  <li style={{ display: 'flex', gap: '0.5rem' }}><span style={{ color: '#d97706' }}>✓</span> Selos de contato, lógica de botoeiras de comando e sinalização visual</li>
                 </ul>
               </div>
 
@@ -295,16 +295,16 @@ export default function CursoEletricaLP() {
         </section>
 
         {/* ===== AÇÃO FINAL (Caixa Focada em Urgência) ===== */}
-        <section style={{ background: '#0b0f19', padding: '5rem 1.5rem' }}>
+        <section style={{ background: '#f8fafc', padding: '5rem 1.5rem' }}>
           <div style={{ 
             maxWidth: '650px',
             margin: '0 auto',
             textAlign: 'center',
-            backgroundColor: '#111827',
-            border: '1px solid rgba(245, 158, 11, 0.2)',
+            backgroundColor: '#ffffff',
+            border: '1px solid #e2e8f0',
             padding: '3.5rem 2rem',
             borderRadius: '24px',
-            boxShadow: '0 15px 45px rgba(0,0,0,0.4)',
+            boxShadow: '0 15px 45px rgba(0,0,0,0.05)',
             position: 'relative'
           }}>
             {/* Urgência Tag */}
@@ -318,24 +318,24 @@ export default function CursoEletricaLP() {
               fontWeight: 900,
               padding: '0.5rem 1.5rem',
               borderRadius: '9999px',
-              boxShadow: '0 5px 15px rgba(239, 68, 68, 0.4)'
+              boxShadow: '0 5px 15px rgba(239, 68, 68, 0.2)'
             }}>
               🚨 ESSA OFERTA PODE ACABAR A QUALQUER MOMENTO
             </div>
 
-            <h2 style={{ color: '#ffffff', fontSize: '1.8rem', fontWeight: 900, marginBottom: '1rem' }}>Faça Seu Trabalho com Segurança</h2>
-            <p style={{ color: '#94a3b8', margin: '0 auto 2rem', fontSize: '0.98rem', maxWidth: '450px', lineHeight: 1.5 }}>
+            <h2 style={{ color: '#0f172a', fontSize: '1.8rem', fontWeight: 900, marginBottom: '1rem' }}>Faça Seu Trabalho com Segurança</h2>
+            <p style={{ color: '#475569', margin: '0 auto 2rem', fontSize: '0.98rem', maxWidth: '450px', lineHeight: 1.5 }}>
               Não corra riscos desnecessários. Invista no seu conhecimento prático agora pelo preço de um cafezinho.
             </p>
             
             <div style={{ marginBottom: '2.5rem' }}>
-              <span style={{ fontSize: '1.1rem', color: '#64748b', display: 'block', textDecoration: 'line-through', marginBottom: '0.3rem' }}>De R$ 97,00 por apenas</span>
-              <span style={{ fontSize: '3.6rem', fontWeight: 950, color: '#f59e0b', lineHeight: 1 }}>R$ 9,90</span>
+              <span style={{ fontSize: '1.1rem', color: '#94a3b8', display: 'block', textDecoration: 'line-through', marginBottom: '0.3rem' }}>De R$ 97,00 por apenas</span>
+              <span style={{ fontSize: '3.6rem', fontWeight: 950, color: '#d97706', lineHeight: 1 }}>R$ 9,90</span>
             </div>
             
             <Link href={`/checkout-eletrica?p=${pId}`} className={styles.ctaButtonPulse} style={{ 
               background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)',
-              boxShadow: '0 8px 30px rgba(245, 158, 11, 0.35)',
+              boxShadow: '0 8px 30px rgba(217, 119, 6, 0.25)',
               color: '#ffffff',
               display: 'inline-flex',
               padding: '1.3rem 2.8rem',
