@@ -215,6 +215,7 @@ export async function POST(request: Request) {
     if (course_id === 'bones') courseName = 'Fábrica de Bonés';
     else if (course_id === 'pedreiro') courseName = 'Mestre de Obra';
     else if (course_id === 'currais') courseName = 'Currais';
+    else if (course_id === 'currais2') courseName = 'Currais 2';
     else if (course_id === 'acm') courseName = 'ACM';
 
     const adminMessage = `⚠️ *Pix Gerado (${courseName})*\n\nNome: ${name}\nValor: ${formattedAmount}\nNúmero: ${cleanPhone}`;
