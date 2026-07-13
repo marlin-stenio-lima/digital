@@ -60,7 +60,7 @@ export default function CursoEletricaLP() {
             
             {/* Headline Principal Focada em Facilidade e Ganhos Rápidos */}
             <h1 style={{ 
-              fontSize: '3rem',
+              fontSize: 'clamp(1.8rem, 6vw, 3rem)',
               fontWeight: 950, 
               color: '#0f172a', 
               lineHeight: 1.15,

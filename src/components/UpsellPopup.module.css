@@ -195,3 +195,46 @@
   text-decoration: underline;
 }
 
+@media (max-width: 600px) {
+  .modal {
+    padding: 1rem 0.8rem;
+    margin: 0.2rem;
+    border-width: 2px;
+  }
+  .title {
+    font-size: 1.2rem;
+  }
+  .subtitle {
+    font-size: 0.78rem;
+    margin-bottom: 0.8rem;
+  }
+  .checklist {
+    padding: 0.6rem;
+    gap: 0.6rem;
+    margin-bottom: 0.8rem;
+  }
+  .checkItem strong {
+    font-size: 0.8rem;
+  }
+  .checkItem p {
+    font-size: 0.72rem;
+  }
+  .checkIcon {
+    font-size: 0.9rem;
+  }
+  .urgencyText {
+    font-size: 0.75rem;
+  }
+  .newPrice {
+    font-size: 2.1rem;
+  }
+  .acceptBtn {
+    padding: 0.75rem;
+    font-size: 0.88rem;
+    margin-bottom: 0.6rem;
+  }
+  .declineBtn {
+    font-size: 0.75rem;
+  }
+}
+
