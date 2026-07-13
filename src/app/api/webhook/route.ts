@@ -395,7 +395,67 @@ export async function POST(request: Request) {
         message += `📌 Salve esta mensagem para não perder os seus links de estudo e trabalho!`;
 
         await sendWhatsAppMessage(customerPhone, message);
-        console.log(`[Webhook] Successfully processed currais for ${customerName} (${customerPhone}). Arrendamento: ${comprouArrendamento}, Planilha: ${comprouPlanilha}`);
+        console.log(`[Webhook] Successfully processed acm for ${customerName} (${customerPhone})`);
+
+      } else if (cursoId === 'eletrica_completa') {
+        const hasPedreiro = productsBought.includes('pedreiro');
+        const hasPorcelanato = productsBought.includes('porcelanato');
+        const hasCubas = productsBought.includes('cubas');
+
+        // Salva os dados no banco associado às flags correspondentes
+        try {
+          await supabaseAdmin
+            .from('bones_alunos')
+            .upsert({ 
+              telefone: customerPhone, 
+              token: crypto.randomUUID(),
+              comprou_ads: hasPedreiro, // Mapeia pedreiro para a flag comprou_ads
+              comprou_porcelanato: hasPorcelanato,
+              comprou_cubas: hasCubas,
+              data_acesso: new Date().toISOString()
+            }, { onConflict: 'telefone' });
+        } catch (dbErr) {
+          console.error('[Webhook] Error saving eletrica status to DB:', dbErr);
+        }
+
+        const linkPlataforma = 'https://eletrica-para-todos.tinyhugs.online/';
+        const linkDriveComplementar = 'https://drive.google.com/drive/folders/18UotVoZspA-aiuNqRhWlcuME2sV7k8Qr?usp=sharing';
+        const link500Projetos = `${new URL(request.url).origin}/eletrica/500 Projetos Prontos.pdf`;
+        const linkComandosEletricos = `${new URL(request.url).origin}/eletrica/Guia Comando Eletricos.pdf`;
+
+        let message = `🎉 *Acesso confirmado!* 🎉\n\n` +
+          `Olá, ${customerName.split(' ')[0]}! Seu pagamento do curso *500 Projetos e Comandos Elétricos* foi aprovado com sucesso.\n\n` +
+          `👉 *Acesse a plataforma de vídeos por aqui:* ${linkPlataforma}\n` +
+          `🆔 *Matrícula:* 061168\n\n` +
+          `📥 *Baixe seus materiais em PDF diretamente aqui:*\n` +
+          `⚡ *500 Projetos de Elétrica:* ${link500Projetos}\n` +
+          `📘 *Guia de Comandos Elétricos:* ${linkComandosEletricos}\n` +
+          `📂 *Materiais Complementares (Drive):* ${linkDriveComplementar}\n\n`;
+
+        const extrasLiberados = [];
+        if (hasPedreiro) extrasLiberados.push('*Curso Mestre da Obra*');
+        if (hasPorcelanato) extrasLiberados.push('*Projetos de Porcelanato*');
+        if (hasCubas) extrasLiberados.push('*Fabricação de Cubas*');
+
+        if (extrasLiberados.length > 0) {
+          message += `🔓 *PACOTES EXTRAS LIBERADOS:* Como você adicionou no seu pedido, o acesso aos módulos de ${extrasLiberados.join(', ')} já está 100% liberado! Para assistir às videoaulas dos extras, basta entrar na área de membros de obras:\n`;
+          message += `👉 *Área de Obras:* ${new URL(request.url).origin}/plataforma/login?course=pedreiro\n`;
+          message += `🔑 *Login e Senha:* Seu próprio WhatsApp: ${customerPhone}\n\n`;
+        }
+
+        const faltantes = [];
+        if (!hasPedreiro) faltantes.push('Mestre de Obra');
+        if (!hasPorcelanato) faltantes.push('Projetos de Porcelanato');
+        if (!hasCubas) faltantes.push('Fabricação de Cubas');
+
+        if (faltantes.length > 0) {
+          message += `💡 *Oportunidade:* Vi que você não levou os pacotes de ${faltantes.join(' e ')}. Caso queira liberá-los posteriormente por apenas R$ 9,90 cada, me responda aqui no WhatsApp.\n\n`;
+        }
+
+        message += `📌 Salve esta mensagem para acessar seus arquivos e aulas sempre que precisar!`;
+
+        await sendWhatsAppMessage(customerPhone, message);
+        console.log(`[Webhook] Successfully processed eletrica_completa for ${customerName} (${customerPhone}). Pedreiro: ${hasPedreiro}, Porcelanato: ${hasPorcelanato}, Cubas: ${hasCubas}`);
 
       } else if (cursoId === 'acm') {
         // Salvar no banco para habilitar o status de redirecionamento no checkout
@@ -539,6 +599,7 @@ export async function POST(request: Request) {
       else if (cursoId === 'pedreiro') courseName = 'Mestre de Obra';
       else if (cursoId === 'currais') courseName = 'Currais';
       else if (cursoId === 'currais2') courseName = 'Currais 2';
+      else if (cursoId === 'eletrica_completa') courseName = 'Elétrica';
       else if (cursoId === 'acm') courseName = 'ACM';
       else if (cursoId === 'eletrica_hidraulica') courseName = 'Mestre de Obra (Upgrade Eletrica/Hidraulica)';
       else if (cursoId === 'porcelanato') courseName = 'Mestre de Obra (Upgrade Porcelanato)';

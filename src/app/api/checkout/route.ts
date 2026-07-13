@@ -143,6 +143,7 @@ export async function POST(request: Request) {
     else if (course_id === 'currais2') paymentDescription = '75 Projetos de Currais & Manejo A2';
     else if (course_id === 'acm') paymentDescription = 'Projetos e Guia de ACM';
     else if (course_id === 'pedreiro') paymentDescription = 'Curso Mestre da Obra';
+    else if (course_id === 'eletrica_completa') paymentDescription = '500 Projetos e Comandos Elétricos';
     else if (course_id === 'eletrica_hidraulica') paymentDescription = 'Upgrade Mestre da Obra (Elétrica/Hidráulica)';
     else if (course_id === 'porcelanato') paymentDescription = 'Upgrade Mestre da Obra (Porcelanato)';
     else if (course_id === 'cubas') paymentDescription = 'Upgrade Mestre da Obra (Cubas)';
@@ -216,6 +217,7 @@ export async function POST(request: Request) {
     else if (course_id === 'pedreiro') courseName = 'Mestre de Obra';
     else if (course_id === 'currais') courseName = 'Currais';
     else if (course_id === 'currais2') courseName = 'Currais 2';
+    else if (course_id === 'eletrica_completa') courseName = 'Elétrica';
     else if (course_id === 'acm') courseName = 'ACM';
 
     const adminMessage = `⚠️ *Pix Gerado (${courseName})*\n\nNome: ${name}\nValor: ${formattedAmount}\nNúmero: ${cleanPhone}`;
