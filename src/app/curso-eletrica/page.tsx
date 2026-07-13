@@ -14,12 +14,12 @@ export default function CursoEletricaLP() {
     <>
       <main className={styles.container} style={{ backgroundColor: '#090d1a', color: '#f8fafc', fontFamily: 'Inter, sans-serif' }}>
         
-        {/* ===== HERO SECTION (Premium Dark Blue Gradient) ===== */}
+        {/* ===== HERO SECTION (Premium Dark Blue with Amber Yellow Highlight) ===== */}
         <section style={{ 
-          backgroundImage: 'linear-gradient(135deg, rgba(15, 23, 42, 0.97) 0%, rgba(9, 13, 26, 0.99) 100%), url("/acm_background_1783791906895.png")', 
+          backgroundImage: 'linear-gradient(135deg, rgba(15, 23, 42, 0.98) 0%, rgba(9, 13, 26, 0.99) 100%), url("/acm_background_1783791906895.png")', 
           backgroundSize: 'cover',
           backgroundPosition: 'center',
-          borderBottom: '1px solid rgba(56, 189, 248, 0.1)', 
+          borderBottom: '1px solid rgba(245, 158, 11, 0.15)', 
           padding: '6rem 1.5rem 5rem',
           textAlign: 'center',
           display: 'flex',
@@ -28,11 +28,11 @@ export default function CursoEletricaLP() {
           position: 'relative'
         }}>
           
-          {/* Neon Grid Effect Overlay */}
+          {/* Amber Radial Glow Overlay */}
           <div style={{
             position: 'absolute',
             top: 0, left: 0, right: 0, bottom: 0,
-            background: 'radial-gradient(circle at 50% 20%, rgba(56, 189, 248, 0.08) 0%, transparent 60%)',
+            background: 'radial-gradient(circle at 50% 20%, rgba(245, 158, 11, 0.08) 0%, transparent 60%)',
             pointerEvents: 'none'
           }} />
 
@@ -43,9 +43,9 @@ export default function CursoEletricaLP() {
               display: 'inline-flex',
               alignItems: 'center',
               gap: '0.5rem',
-              backgroundColor: 'rgba(56, 189, 248, 0.1)', 
-              border: '1px solid rgba(56, 189, 248, 0.3)', 
-              color: '#38bdf8', 
+              backgroundColor: 'rgba(245, 158, 11, 0.1)', 
+              border: '1px solid rgba(245, 158, 11, 0.3)', 
+              color: '#f59e0b', 
               padding: '0.6rem 1.4rem',
               borderRadius: '9999px',
               fontSize: '0.8rem',
@@ -53,7 +53,7 @@ export default function CursoEletricaLP() {
               letterSpacing: '0.05em',
               marginBottom: '2rem',
               textTransform: 'uppercase',
-              boxShadow: '0 0 20px rgba(56, 189, 248, 0.15)'
+              boxShadow: '0 0 20px rgba(245, 158, 11, 0.1)'
             }}>
               ⚡ DOWNLOAD IMEDIATO NO WHATSAPP E E-MAIL
             </div>
@@ -67,7 +67,7 @@ export default function CursoEletricaLP() {
               marginBottom: '1.5rem',
               letterSpacing: '-1px'
             }}>
-              Pare de Correr Riscos e Cometer Erros Bobos. Tenha <span style={{ color: '#38bdf8', textShadow: '0 0 25px rgba(56,189,248,0.3)' }}>500 Esquemas Elétricos Prontos</span> no Celular!
+              Pare de Correr Riscos e Cometer Erros Bobos. Tenha <span style={{ color: '#f59e0b', textShadow: '0 0 25px rgba(245,158,11,0.25)' }}>500 Esquemas Elétricos Prontos</span> no Celular!
             </h1>
             
             {/* Subheadline Focada em Dor/Urgência */}
@@ -98,15 +98,15 @@ export default function CursoEletricaLP() {
               </span>
               <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'baseline', gap: '0.6rem', marginBottom: '0.5rem' }}>
                 <span style={{ fontSize: '1.2rem', color: '#ef4444', textDecoration: 'line-through' }}>R$ 97,00</span>
-                <span style={{ fontSize: '3.8rem', fontWeight: 950, color: '#38bdf8', lineHeight: 1 }}>R$ 9,90</span>
+                <span style={{ fontSize: '3.8rem', fontWeight: 950, color: '#f59e0b', lineHeight: 1 }}>R$ 9,90</span>
               </div>
               <span style={{ fontSize: '0.85rem', color: '#22c55e', fontWeight: 700 }}>✓ Pagamento único. Sem mensalidades ou taxas escondidas.</span>
             </div>
 
             {/* Botão de Compra Ultra Pulsante */}
             <Link href={`/checkout-eletrica?p=${pId}`} className={styles.ctaButtonPulse} style={{ 
-              background: 'linear-gradient(135deg, #38bdf8 0%, #0284c7 100%)',
-              boxShadow: '0 8px 35px rgba(56, 189, 248, 0.45)',
+              background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)',
+              boxShadow: '0 8px 35px rgba(245, 158, 11, 0.45)',
               color: '#ffffff',
               display: 'inline-flex',
               padding: '1.4rem 3rem',
@@ -139,11 +139,11 @@ export default function CursoEletricaLP() {
         </section>
 
         {/* ===== SEÇÃO: A DOR / MEDO DO PROFISSIONAL ===== */}
-        <section style={{ padding: '5rem 1.5rem', background: '#0b0f19', borderBottom: '1px solid rgba(56, 189, 248, 0.05)' }}>
+        <section style={{ padding: '5rem 1.5rem', background: '#0b0f19', borderBottom: '1px solid rgba(245, 158, 11, 0.05)' }}>
           <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
             
             <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
-              <span style={{ fontSize: '0.85rem', fontWeight: 800, color: '#38bdf8', textTransform: 'uppercase', letterSpacing: '2px' }}>O CUSTO DO ERRO</span>
+              <span style={{ fontSize: '0.85rem', fontWeight: 800, color: '#f59e0b', textTransform: 'uppercase', letterSpacing: '2px' }}>O CUSTO DO ERRO</span>
               <h2 style={{ fontSize: '2.2rem', fontWeight: 900, marginTop: '0.5rem', color: '#ffffff', letterSpacing: '-0.5px' }}>
                 O Erro de um Eletricista Custa Muito Caro
               </h2>
@@ -234,7 +234,7 @@ export default function CursoEletricaLP() {
           <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
             
             <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
-              <span style={{ fontSize: '0.85rem', fontWeight: 800, color: '#38bdf8', textTransform: 'uppercase', letterSpacing: '2px' }}>CONTEÚDO PROGRAMÁTICO</span>
+              <span style={{ fontSize: '0.85rem', fontWeight: 800, color: '#f59e0b', textTransform: 'uppercase', letterSpacing: '2px' }}>CONTEÚDO PROGRAMÁTICO</span>
               <h2 style={{ fontSize: '2.4rem', fontWeight: 900, marginTop: '0.5rem', color: '#ffffff', letterSpacing: '-0.5px' }}>
                 O que você leva no Pacote Eletricista Profissional:
               </h2>
@@ -258,13 +258,13 @@ export default function CursoEletricaLP() {
                   <span style={{ fontSize: '2.5rem' }}>📖</span>
                   <div>
                     <h3 style={{ color: '#ffffff', fontSize: '1.3rem', fontWeight: 800, margin: 0 }}>500 Projetos Prontos</h3>
-                    <span style={{ fontSize: '0.72rem', color: '#38bdf8', fontWeight: 700, textTransform: 'uppercase' }}>Biblioteca Completa em PDF</span>
+                    <span style={{ fontSize: '0.72rem', color: '#f59e0b', fontWeight: 700, textTransform: 'uppercase' }}>Biblioteca Completa em PDF</span>
                   </div>
                 </div>
                 <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '0.9rem', color: '#cbd5e1', fontSize: '0.92rem' }}>
-                  <li style={{ display: 'flex', gap: '0.5rem' }}><span style={{ color: '#38bdf8' }}>✓</span> Instalação de sensores, fotocélulas e chaves magnéticas</li>
-                  <li style={{ display: 'flex', gap: '0.5rem' }}><span style={{ color: '#38bdf8' }}>✓</span> Quadros de Distribuição (QDC) Monofásicos, Bifásicos e Trifásicos</li>
-                  <li style={{ display: 'flex', gap: '0.5rem' }}><span style={{ color: '#38bdf8' }}>✓</span> Infraestrutura residencial e ligação de tomadas/iluminação sem erros</li>
+                  <li style={{ display: 'flex', gap: '0.5rem' }}><span style={{ color: '#f59e0b' }}>✓</span> Instalação de sensores, fotocélulas e chaves magnéticas</li>
+                  <li style={{ display: 'flex', gap: '0.5rem' }}><span style={{ color: '#f59e0b' }}>✓</span> Quadros de Distribuição (QDC) Monofásicos, Bifásicos e Trifásicos</li>
+                  <li style={{ display: 'flex', gap: '0.5rem' }}><span style={{ color: '#f59e0b' }}>✓</span> Infraestrutura residencial e ligação de tomadas/iluminação sem erros</li>
                 </ul>
               </div>
 
@@ -280,13 +280,13 @@ export default function CursoEletricaLP() {
                   <span style={{ fontSize: '2.5rem' }}>🛠️</span>
                   <div>
                     <h3 style={{ color: '#ffffff', fontSize: '1.3rem', fontWeight: 800, margin: 0 }}>Guia Comandos Elétricos</h3>
-                    <span style={{ fontSize: '0.72rem', color: '#38bdf8', fontWeight: 700, textTransform: 'uppercase' }}>Manual Prático e Potência</span>
+                    <span style={{ fontSize: '0.72rem', color: '#f59e0b', fontWeight: 700, textTransform: 'uppercase' }}>Manual Prático e Potência</span>
                   </div>
                 </div>
                 <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '0.9rem', color: '#cbd5e1', fontSize: '0.92rem' }}>
-                  <li style={{ display: 'flex', gap: '0.5rem' }}><span style={{ color: '#38bdf8' }}>✓</span> Partida de Motores: Direta, Estrela-Triângulo, Reversão e Proteção</li>
-                  <li style={{ display: 'flex', gap: '0.5rem' }}><span style={{ color: '#38bdf8' }}>✓</span> Parametrização e funcionamento de contatores, relés térmicos e DPs</li>
-                  <li style={{ display: 'flex', gap: '0.5rem' }}><span style={{ color: '#38bdf8' }}>✓</span> Selos de contato, lógica de botoeiras de comando e sinalização visual</li>
+                  <li style={{ display: 'flex', gap: '0.5rem' }}><span style={{ color: '#f59e0b' }}>✓</span> Partida de Motores: Direta, Estrela-Triângulo, Reversão e Proteção</li>
+                  <li style={{ display: 'flex', gap: '0.5rem' }}><span style={{ color: '#f59e0b' }}>✓</span> Parametrização e funcionamento de contatores, relés térmicos e DPs</li>
+                  <li style={{ display: 'flex', gap: '0.5rem' }}><span style={{ color: '#f59e0b' }}>✓</span> Selos de contato, lógica de botoeiras de comando e sinalização visual</li>
                 </ul>
               </div>
 
@@ -301,7 +301,7 @@ export default function CursoEletricaLP() {
             margin: '0 auto',
             textAlign: 'center',
             backgroundColor: '#111827',
-            border: '1px solid rgba(56, 189, 248, 0.2)',
+            border: '1px solid rgba(245, 158, 11, 0.2)',
             padding: '3.5rem 2rem',
             borderRadius: '24px',
             boxShadow: '0 15px 45px rgba(0,0,0,0.4)',
@@ -330,12 +330,12 @@ export default function CursoEletricaLP() {
             
             <div style={{ marginBottom: '2.5rem' }}>
               <span style={{ fontSize: '1.1rem', color: '#64748b', display: 'block', textDecoration: 'line-through', marginBottom: '0.3rem' }}>De R$ 97,00 por apenas</span>
-              <span style={{ fontSize: '3.6rem', fontWeight: 950, color: '#38bdf8', lineHeight: 1 }}>R$ 9,90</span>
+              <span style={{ fontSize: '3.6rem', fontWeight: 950, color: '#f59e0b', lineHeight: 1 }}>R$ 9,90</span>
             </div>
             
             <Link href={`/checkout-eletrica?p=${pId}`} className={styles.ctaButtonPulse} style={{ 
-              background: 'linear-gradient(135deg, #38bdf8 0%, #0284c7 100%)',
-              boxShadow: '0 8px 30px rgba(56, 189, 248, 0.35)',
+              background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)',
+              boxShadow: '0 8px 30px rgba(245, 158, 11, 0.35)',
               color: '#ffffff',
               display: 'inline-flex',
               padding: '1.3rem 2.8rem',
@@ -351,7 +351,7 @@ export default function CursoEletricaLP() {
 
         {/* STICKY MOBILE CTA */}
         <div className={styles.stickyMobileCta}>
-          <Link href={`/checkout-eletrica?p=${pId}`} className={styles.stickyButton} style={{ backgroundColor: '#0284c7' }}>
+          <Link href={`/checkout-eletrica?p=${pId}`} className={styles.stickyButton} style={{ backgroundColor: '#d97706' }}>
             RECEBER PROJETOS POR R$ 9,90
           </Link>
         </div>
