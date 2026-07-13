@@ -137,10 +137,20 @@ export async function POST(request: Request) {
     const priceInCents = Math.round(totalAmount * 100);
     const productList = products || ['serralheiro-pack'];
 
+    let paymentDescription = 'Arsenal do Serralheiro Mestre';
+    if (course_id === 'bones') paymentDescription = 'Mini-curso Fábrica de Bonés';
+    else if (course_id === 'currais') paymentDescription = '75 Projetos de Currais & Manejo';
+    else if (course_id === 'currais2') paymentDescription = '75 Projetos de Currais & Manejo A2';
+    else if (course_id === 'acm') paymentDescription = 'Projetos e Guia de ACM';
+    else if (course_id === 'pedreiro') paymentDescription = 'Curso Mestre da Obra';
+    else if (course_id === 'eletrica_hidraulica') paymentDescription = 'Upgrade Mestre da Obra (Elétrica/Hidráulica)';
+    else if (course_id === 'porcelanato') paymentDescription = 'Upgrade Mestre da Obra (Porcelanato)';
+    else if (course_id === 'cubas') paymentDescription = 'Upgrade Mestre da Obra (Cubas)';
+
     const abacateBody = {
       amount: priceInCents,
       expiresIn: 3600,
-      description: course_id === 'bones' ? 'Mini-curso Fábrica de Bonés' : 'Arsenal do Serralheiro Mestre',
+      description: paymentDescription,
       customer: {
         name: name,
         email: email,

@@ -342,7 +342,7 @@ export async function POST(request: Request) {
           }, 2000);
         }
 
-      } else if (cursoId === 'currais') {
+      } else if (cursoId === 'currais' || cursoId === 'currais2') {
         // Salvar no banco para registro
         try {
           await supabaseAdmin
@@ -353,7 +353,7 @@ export async function POST(request: Request) {
               data_acesso: new Date().toISOString()
             }, { onConflict: 'telefone' });
         } catch (dbErr) {
-          console.error('[Webhook] Error saving currais status to DB:', dbErr);
+          console.error(`[Webhook] Error saving ${cursoId} status to DB:`, dbErr);
         }
 
         const link75Projetos = 'https://digital-beryl-five.vercel.app/Entregavel%2075%20projetos%20de%20currais_compressed%202.pdf';
@@ -538,6 +538,7 @@ export async function POST(request: Request) {
       if (cursoId === 'bones') courseName = 'Fábrica de Bonés';
       else if (cursoId === 'pedreiro') courseName = 'Mestre de Obra';
       else if (cursoId === 'currais') courseName = 'Currais';
+      else if (cursoId === 'currais2') courseName = 'Currais 2';
       else if (cursoId === 'acm') courseName = 'ACM';
       else if (cursoId === 'eletrica_hidraulica') courseName = 'Mestre de Obra (Upgrade Eletrica/Hidraulica)';
       else if (cursoId === 'porcelanato') courseName = 'Mestre de Obra (Upgrade Porcelanato)';
