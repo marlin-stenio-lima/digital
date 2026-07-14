@@ -44,7 +44,7 @@ const PRODUCTS_MAP: Record<string, ProductDetails> = {
     name: 'Pacote 75 Projetos de Currais',
     description: 'Desenhos técnicos estruturados e prontos para construir',
     originalPrice: 97.00,
-    salePrice: 9.90,
+    salePrice: 13.90,
   },
   acm: {
     id: 'acm',

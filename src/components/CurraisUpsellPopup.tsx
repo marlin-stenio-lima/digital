@@ -41,21 +41,21 @@ export default function CurraisUpsellPopup({ isOpen, onAccept, onDecline }: Curr
 
         <div className={styles.priceContainer}>
           <span className={styles.priceLabel}>Valor normal de cada arquivo: ~~R$ 39,90~~</span>
-          <span className={styles.urgencyText}>Adicione os dois treinamentos complementares por apenas R$ 19,80 adicionais:</span>
+          <span className={styles.urgencyText}>Adicione os dois adicionais por apenas R$ 19,80 adicionais:</span>
           
           <div style={{ marginTop: '1rem', display: 'flex', flexDirection: 'column', gap: '0.2rem' }}>
             <span className={styles.totalLabel}>VALOR TOTAL DO COMBO (75 Projetos + Extras):</span>
-            <span className={styles.newPrice}>R$ 29,70</span>
-            <span className={styles.priceSub}>Parabéns! Você economizou R$ 50,10 nesta compra.</span>
+            <span className={styles.newPrice}>R$ 33,70</span>
+            <span className={styles.priceSub}>Parabéns! Você economizou R$ 60,10 nesta compra.</span>
           </div>
         </div>
 
         <button className={styles.acceptBtn} onClick={onAccept}>
-          ⚡ ADICIONAR EXTRAS AO MEU PEDIDO — R$ 29,70
+          ⚡ ADICIONAR EXTRAS AO MEU PEDIDO — R$ 33,70
         </button>
         
         <button className={styles.declineBtn} onClick={onDecline}>
-          Não quero o desconto. Seguir apenas com os 75 Projetos por R$ 9,90
+          Não quero o desconto. Seguir apenas com os 75 Projetos por R$ 13,90
         </button>
       </div>
     </div>

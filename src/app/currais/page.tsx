@@ -69,7 +69,7 @@ export default function ProjetosCurraisLP() {
                 De <del style={{ color: '#ef4444' }}>R$ 97,00</del> por apenas
               </span>
               <span style={{ display: 'block', fontSize: '4.2rem', fontWeight: 950, color: '#ea580c', lineHeight: 1 }}>
-                R$ 9,90
+                R$ 13,90
               </span>
             </div>
 
@@ -334,7 +334,7 @@ export default function ProjetosCurraisLP() {
 
             <div className={styles.priceTag} style={{ color: '#475569' }}>
               Pacote Completo por apenas<br/>
-              <span className={styles.priceHighlight} style={{ color: '#ea580c' }}>R$ 9,90</span>
+              <span className={styles.priceHighlight} style={{ color: '#ea580c' }}>R$ 13,90</span>
             </div>
             
             <Link href={`/checkout?p=${pId}`} className={styles.ctaButtonPulse} style={{ 
@@ -356,7 +356,7 @@ export default function ProjetosCurraisLP() {
         {/* STICKY MOBILE CTA */}
         <div className={styles.stickyMobileCta}>
           <Link href={`/checkout?p=${pId}`} className={styles.stickyButton} style={{ backgroundColor: '#ea580c' }}>
-            RECEBER PROJETOS POR R$ 9,90
+            RECEBER PROJETOS POR R$ 13,90
           </Link>
         </div>
       </main>
