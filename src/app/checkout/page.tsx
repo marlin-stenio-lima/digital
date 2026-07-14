@@ -44,7 +44,7 @@ const PRODUCTS_MAP: Record<string, ProductDetails> = {
     name: 'Pacote 75 Projetos de Currais',
     description: 'Desenhos técnicos estruturados e prontos para construir',
     originalPrice: 97.00,
-    salePrice: 13.90,
+    salePrice: 9.99,
   },
   acm: {
     id: 'acm',
@@ -333,7 +333,7 @@ function CheckoutForm() {
     setArrendamentoSelected(true);
     setPlanilhaSelected(true);
     
-    // 2 upsells por R$ 9,90 cada = R$ 19,80 adicionais (Total: R$ 13,90 + R$ 19,80 = R$ 33,70)
+    // 2 upsells por R$ 9,90 cada = R$ 19,80 adicionais (Total: R$ 9,99 + R$ 19,80 = R$ 29,79)
     const buyList = [product.id, 'arrendamento', 'planilha'];
     generatePix(product.salePrice + 19.80, buyList);
   };
