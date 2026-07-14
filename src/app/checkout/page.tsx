@@ -333,7 +333,7 @@ function CheckoutForm() {
     setArrendamentoSelected(true);
     setPlanilhaSelected(true);
     
-    // 2 upsells por R$ 9,90 cada = R$ 19,80 adicionais (Total: R$ 29,70)
+    // 2 upsells por R$ 9,90 cada = R$ 19,80 adicionais (Total: R$ 13,90 + R$ 19,80 = R$ 33,70)
     const buyList = [product.id, 'arrendamento', 'planilha'];
     generatePix(product.salePrice + 19.80, buyList);
   };
