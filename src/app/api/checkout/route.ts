@@ -220,12 +220,10 @@ export async function POST(request: Request) {
     else if (course_id === 'eletrica_completa') courseName = 'Elétrica';
     else if (course_id === 'acm') courseName = 'ACM';
 
-    const clientWaLink = `https://wa.me/${cleanPhone}`;
     const adminMessage = `⚠️ *Pix Gerado (${courseName})*\n\n` +
       `👤 *Nome:* ${name}\n` +
       `💵 *Valor:* ${formattedAmount}\n` +
-      `📞 *Número:* ${cleanPhone}\n` +
-      `💬 *Conversar:* ${clientWaLink}\n\n` +
+      `📞 *Número:* ${cleanPhone}\n\n` +
       `🔑 *Pix Copia e Cola:*\n\`${brCode}\``;
     
     try {
