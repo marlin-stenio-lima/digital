@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import styles from './PixDisplay.module.css';
+import { trackGoogleAdsPurchase } from '@/components/GoogleAdsTag';
 
 interface PixDisplayProps {
   billingId: string;
@@ -20,10 +21,18 @@ export default function PixDisplay({ billingId, brCode, qrCodeBase64, amount, cu
 
   useEffect(() => {
     document.body.style.overflow = 'hidden';
+    
+    // Dispara a conversão de compra no Google Ads
+    try {
+      trackGoogleAdsPurchase(amount, billingId);
+    } catch (e) {
+      console.error('[Google Ads] Failed to track conversion:', e);
+    }
+
     return () => {
       document.body.style.overflow = '';
     };
-  }, []);
+  }, [amount, billingId]);
 
   useEffect(() => {
     if (timeLeft <= 0 || isPaid) return;

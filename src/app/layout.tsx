@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import FacebookPixel from '@/components/FacebookPixel';
+import GoogleAdsTag from '@/components/GoogleAdsTag';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -38,6 +39,7 @@ export default function RootLayout({
     <html lang="pt-BR">
       <body className={inter.className}>
         <FacebookPixel />
+        <GoogleAdsTag />
         {children}
       </body>
     </html>
