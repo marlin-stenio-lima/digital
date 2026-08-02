@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import styles from '../fabrica-de-bones/page.module.css';
+import styles from '@/app/fabrica-de-bones/page.module.css';
 
 export const metadata = {
   title: 'Projetos de Currais & Manejo Inteligente | AgroProjetos',
