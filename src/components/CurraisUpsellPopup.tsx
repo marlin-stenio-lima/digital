@@ -5,10 +5,15 @@ interface CurraisUpsellPopupProps {
   isOpen: boolean;
   onAccept: () => void;
   onDecline: () => void;
+  basePrice?: number;
 }
 
-export default function CurraisUpsellPopup({ isOpen, onAccept, onDecline }: CurraisUpsellPopupProps) {
+export default function CurraisUpsellPopup({ isOpen, onAccept, onDecline, basePrice = 9.99 }: CurraisUpsellPopupProps) {
   if (!isOpen) return null;
+
+  const totalCombo = basePrice + 19.80;
+  const formattedCombo = totalCombo.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+  const formattedBase = basePrice.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 
   return (
     <div className={styles.overlay}>
@@ -45,17 +50,17 @@ export default function CurraisUpsellPopup({ isOpen, onAccept, onDecline }: Curr
           
           <div style={{ marginTop: '1rem', display: 'flex', flexDirection: 'column', gap: '0.2rem' }}>
             <span className={styles.totalLabel}>VALOR TOTAL DO COMBO (75 Projetos + Extras):</span>
-            <span className={styles.newPrice}>R$ 29,79</span>
+            <span className={styles.newPrice}>{formattedCombo}</span>
             <span className={styles.priceSub}>Parabéns! Você economizou R$ 60,01 nesta compra.</span>
           </div>
         </div>
 
         <button className={styles.acceptBtn} onClick={onAccept}>
-          ⚡ ADICIONAR EXTRAS AO MEU PEDIDO — R$ 29,79
+          ⚡ ADICIONAR EXTRAS AO MEU PEDIDO — {formattedCombo}
         </button>
         
         <button className={styles.declineBtn} onClick={onDecline}>
-          Não quero o desconto. Seguir apenas com os 75 Projetos por R$ 9,99
+          Não quero o desconto. Seguir apenas com os 75 Projetos por {formattedBase}
         </button>
       </div>
     </div>

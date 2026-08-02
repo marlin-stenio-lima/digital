@@ -46,6 +46,13 @@ const PRODUCTS_MAP: Record<string, ProductDetails> = {
     originalPrice: 97.00,
     salePrice: 9.99,
   },
+  currais4: {
+    id: 'currais4',
+    name: 'Pacote 75 Projetos de Currais VIP',
+    description: 'Desenhos técnicos estruturados e prontos para construir',
+    originalPrice: 97.00,
+    salePrice: 27.90,
+  },
   acm: {
     id: 'acm',
     name: 'Projetos de ACM',
@@ -185,7 +192,7 @@ function CheckoutForm() {
       if (porcelanatoSelected) computedTotal += upsellAvulsoPrice;
       if (cubasSelected) computedTotal += upsellAvulsoPrice;
     }
-  } else if (product.id === 'currais') {
+  } else if (product.id === 'currais' || product.id === 'currais4') {
     const isComboActive = arrendamentoSelected && planilhaSelected;
     if (isComboActive) {
       computedTotal += 19.80; // Combo promocional: R$ 9,90 cada (Total: R$ 29,70)
@@ -293,7 +300,7 @@ function CheckoutForm() {
     if (product.id === 'pedreiro' && !eletricaSelected && !hidraulicaSelected && !porcelanatoSelected && !cubasSelected && !hasShownUpsell) {
       setShowUpsellPopup(true);
       setHasShownUpsell(true);
-    } else if (product.id === 'currais' && !arrendamentoSelected && !planilhaSelected && !hasShownUpsell) {
+    } else if ((product.id === 'currais' || product.id === 'currais4') && !arrendamentoSelected && !planilhaSelected && !hasShownUpsell) {
       setShowCurraisUpsellPopup(true);
       setHasShownUpsell(true);
     } else {
@@ -303,7 +310,7 @@ function CheckoutForm() {
         if (hidraulicaSelected) buyList.push('hidraulica');
         if (porcelanatoSelected) buyList.push('porcelanato');
         if (cubasSelected) buyList.push('cubas');
-      } else if (product.id === 'currais') {
+      } else if (product.id === 'currais' || product.id === 'currais4') {
         if (arrendamentoSelected) buyList.push('arrendamento');
         if (planilhaSelected) buyList.push('planilha');
       }
@@ -550,7 +557,7 @@ function CheckoutForm() {
           )}
 
           {/* ============ ORDER BUMPS (EXCLUSIVOS DE CURRAIS) ============ */}
-          {product.id === 'currais' && (
+          {(product.id === 'currais' || product.id === 'currais4') && (
             <div className={styles.orderBumpsSection}>
               <h3 className={styles.bumpsTitle}>Adicione ao seu pedido:</h3>
               
@@ -642,11 +649,12 @@ function CheckoutForm() {
         />
       )}
 
-      {product.id === 'currais' && (
+      {(showCurraisUpsellPopup && (product.id === 'currais' || product.id === 'currais4')) && (
         <CurraisUpsellPopup
           isOpen={showCurraisUpsellPopup}
           onAccept={handleAcceptCurraisUpsell}
           onDecline={handleDeclineCurraisUpsell}
+          basePrice={product.salePrice}
         />
       )}
 

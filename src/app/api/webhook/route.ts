@@ -342,7 +342,7 @@ export async function POST(request: Request) {
           }, 2000);
         }
 
-      } else if (cursoId === 'currais' || cursoId === 'currais2') {
+      } else if (cursoId === 'currais' || cursoId === 'currais2' || cursoId === 'currais4') {
         // Salvar no banco para registro
         try {
           await supabaseAdmin

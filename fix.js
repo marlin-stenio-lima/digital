@@ -1,0 +1,1 @@
+const fs = require('fs'); let f = 'D:\\DIGITAL\\serralheiro-pack\\public\\tv-outdoor-lp\\index.html'; let html = fs.readFileSync(f, 'utf8'); html = html.replace(/href="style.css"/g, 'href="/tv-outdoor-lp/style.css"').replace(/src="([^"]+\\.(png|js))"/g, 'src="/tv-outdoor-lp/"'); fs.writeFileSync(f, html);

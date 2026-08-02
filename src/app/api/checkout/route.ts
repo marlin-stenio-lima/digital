@@ -141,6 +141,7 @@ export async function POST(request: Request) {
     if (course_id === 'bones') paymentDescription = 'Mini-curso Fábrica de Bonés';
     else if (course_id === 'currais') paymentDescription = '75 Projetos de Currais & Manejo';
     else if (course_id === 'currais2') paymentDescription = '75 Projetos de Currais & Manejo A2';
+    else if (course_id === 'currais4') paymentDescription = '75 Projetos de Currais & Manejo A4';
     else if (course_id === 'acm') paymentDescription = 'Projetos e Guia de ACM';
     else if (course_id === 'pedreiro') paymentDescription = 'Curso Mestre da Obra';
     else if (course_id === 'eletrica_completa') paymentDescription = '500 Projetos e Comandos Elétricos';
@@ -217,6 +218,7 @@ export async function POST(request: Request) {
     else if (course_id === 'pedreiro') courseName = 'Mestre de Obra';
     else if (course_id === 'currais') courseName = 'Currais';
     else if (course_id === 'currais2') courseName = 'Currais 2';
+    else if (course_id === 'currais4') courseName = 'Currais 4';
     else if (course_id === 'eletrica_completa') courseName = 'Elétrica';
     else if (course_id === 'acm') courseName = 'ACM';
 
